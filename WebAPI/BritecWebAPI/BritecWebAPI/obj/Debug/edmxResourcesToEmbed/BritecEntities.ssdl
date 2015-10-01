@@ -1,0 +1,523 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="britecModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="abastecimento">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="data" Type="datetime" Precision="0" Nullable="false" />
+    <Property Name="horimetro" Type="double" Nullable="false" />
+    <Property Name="quantidade" Type="double" Nullable="false" />
+    <Property Name="VeiculoObra_id" Type="bigint" Nullable="false" />
+    <Property Name="CategoriaAbastecimento_id" Type="int" Nullable="false" />
+    <Property Name="ObservacaoAbastecimento_id" Type="bigint" />
+    <Property Name="Apontador_CloudId" Type="varchar" MaxLength="40" Nullable="false" />
+  </EntityType>
+  <EntityType Name="categoriaabastecimento">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="descricao" Type="varchar" MaxLength="45" Nullable="false" />
+  </EntityType>
+  <EntityType Name="categoriaveiculo">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="descricao" Type="varchar" MaxLength="45" Nullable="false" />
+  </EntityType>
+  <EntityType Name="controleaplicacaomassa">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="data" Type="datetime" Precision="0" Nullable="false" />
+    <Property Name="toneladasPrevisao" Type="double" Nullable="false" />
+    <Property Name="Apontador_CloudId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="Trecho_id" Type="bigint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="fasedaobra">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="descricao" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Obra_id" Type="bigint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="funcao">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="descricao" Type="varchar" MaxLength="45" Nullable="false" />
+  </EntityType>
+  <EntityType Name="funcaoprograma">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Funcao_id" Type="int" Nullable="false" />
+    <Property Name="Programa_id" Type="int" Nullable="false" />
+    <Property Name="NivelPermissao_id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="itemaplicacao">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nota" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="estaca" Type="double" Nullable="false" />
+    <Property Name="horaInicio" Type="datetime" Precision="0" Nullable="false" />
+    <Property Name="horaFim" Type="datetime" Precision="0" Nullable="false" />
+    <Property Name="largura" Type="double" Nullable="false" />
+    <Property Name="comprimento" Type="double" Nullable="false" />
+    <Property Name="espessura" Type="double" Nullable="false" />
+    <Property Name="toneladas" Type="double" Nullable="false" />
+    <Property Name="temperatura" Type="double" Nullable="false" />
+    <Property Name="Motorista_id" Type="bigint" Nullable="false" />
+    <Property Name="Veiculo_id" Type="bigint" Nullable="false" />
+    <Property Name="ControleAplicacaoMassa_id" Type="bigint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="motorista">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nome" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="sobrenome" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="dataCadastro" Type="datetime" Precision="0" Nullable="false" />
+  </EntityType>
+  <EntityType Name="nivelpermissao">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="descricao" Type="varchar" MaxLength="45" Nullable="false" />
+    <Property Name="valor" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="obra">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="descricao" Type="varchar" MaxLength="45" Nullable="false" />
+    <Property Name="dataInicio" Type="datetime" Precision="0" Nullable="false" />
+    <Property Name="dataFimPrevisto" Type="datetime" Precision="0" Nullable="false" />
+    <Property Name="dataFim" Type="datetime" Precision="0" />
+  </EntityType>
+  <EntityType Name="observacaoabastecimento">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="observacao" Type="varchar" MaxLength="500" Nullable="false" />
+  </EntityType>
+  <EntityType Name="programa">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="descricao" Type="varchar" MaxLength="45" Nullable="false" />
+  </EntityType>
+  <EntityType Name="proprietario">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nome" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="sobrenome" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="terceiro" Type="bool" Nullable="false" />
+  </EntityType>
+  <EntityType Name="usuario">
+    <Key>
+      <PropertyRef Name="CloudId" />
+    </Key>
+    <Property Name="CloudId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="Funcao_id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="usuarioobra">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="Usuario_CloudId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="Obra_id" Type="bigint" Nullable="false" />
+    <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+  </EntityType>
+  <EntityType Name="veiculo">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="descricao" Type="varchar" MaxLength="45" Nullable="false" />
+    <Property Name="placa" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="dataCadastro" Type="datetime" Precision="0" Nullable="false" />
+    <Property Name="CategoriaVeiculo_id" Type="int" Nullable="false" />
+    <Property Name="Proprietario_id" Type="bigint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="veiculoobra">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Veiculo_id" Type="bigint" Nullable="false" />
+    <Property Name="Obra_id" Type="bigint" Nullable="false" />
+    <Property Name="UsuarioCadastro_CloudId" Type="varchar" MaxLength="40" Nullable="false" />
+  </EntityType>
+  <Association Name="fk_Abastecimento_CategoriaAbastecimento1">
+    <End Role="categoriaabastecimento" Type="Self.categoriaabastecimento" Multiplicity="1" />
+    <End Role="abastecimento" Type="Self.abastecimento" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="categoriaabastecimento">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="abastecimento">
+        <PropertyRef Name="CategoriaAbastecimento_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Abastecimento_ObservacaoAbastecimento1">
+    <End Role="observacaoabastecimento" Type="Self.observacaoabastecimento" Multiplicity="0..1" />
+    <End Role="abastecimento" Type="Self.abastecimento" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="observacaoabastecimento">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="abastecimento">
+        <PropertyRef Name="ObservacaoAbastecimento_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Abastecimento_Usuario1">
+    <End Role="usuario" Type="Self.usuario" Multiplicity="1" />
+    <End Role="abastecimento" Type="Self.abastecimento" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="usuario">
+        <PropertyRef Name="CloudId" />
+      </Principal>
+      <Dependent Role="abastecimento">
+        <PropertyRef Name="Apontador_CloudId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Abastecimento_Veiculo_has_Obra1">
+    <End Role="veiculoobra" Type="Self.veiculoobra" Multiplicity="1" />
+    <End Role="abastecimento" Type="Self.abastecimento" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="veiculoobra">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="abastecimento">
+        <PropertyRef Name="VeiculoObra_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_ControleAplicacaoMassa_Trecho1">
+    <End Role="fasedaobra" Type="Self.fasedaobra" Multiplicity="1" />
+    <End Role="controleaplicacaomassa" Type="Self.controleaplicacaomassa" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="fasedaobra">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="controleaplicacaomassa">
+        <PropertyRef Name="Trecho_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_ControleAplicacaoMassa_Usuario1">
+    <End Role="usuario" Type="Self.usuario" Multiplicity="1" />
+    <End Role="controleaplicacaomassa" Type="Self.controleaplicacaomassa" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="usuario">
+        <PropertyRef Name="CloudId" />
+      </Principal>
+      <Dependent Role="controleaplicacaomassa">
+        <PropertyRef Name="Apontador_CloudId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Funcao_has_Programa_Funcao1">
+    <End Role="funcao" Type="Self.funcao" Multiplicity="1" />
+    <End Role="funcaoprograma" Type="Self.funcaoprograma" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="funcao">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="funcaoprograma">
+        <PropertyRef Name="Funcao_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Funcao_has_Programa_Programa1">
+    <End Role="programa" Type="Self.programa" Multiplicity="1" />
+    <End Role="funcaoprograma" Type="Self.funcaoprograma" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="programa">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="funcaoprograma">
+        <PropertyRef Name="Programa_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_FuncaoPrograma_NivelPermissao1">
+    <End Role="nivelpermissao" Type="Self.nivelpermissao" Multiplicity="1" />
+    <End Role="funcaoprograma" Type="Self.funcaoprograma" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="nivelpermissao">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="funcaoprograma">
+        <PropertyRef Name="NivelPermissao_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_ItemAplicacao_ControleAplicacaoMassa1">
+    <End Role="controleaplicacaomassa" Type="Self.controleaplicacaomassa" Multiplicity="1" />
+    <End Role="itemaplicacao" Type="Self.itemaplicacao" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="controleaplicacaomassa">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="itemaplicacao">
+        <PropertyRef Name="ControleAplicacaoMassa_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_ItemAplicacao_Motorista1">
+    <End Role="motorista" Type="Self.motorista" Multiplicity="1" />
+    <End Role="itemaplicacao" Type="Self.itemaplicacao" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="motorista">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="itemaplicacao">
+        <PropertyRef Name="Motorista_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_ItemAplicacao_Veiculo1">
+    <End Role="veiculo" Type="Self.veiculo" Multiplicity="1" />
+    <End Role="itemaplicacao" Type="Self.itemaplicacao" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="veiculo">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="itemaplicacao">
+        <PropertyRef Name="Veiculo_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Trecho_Obra1">
+    <End Role="obra" Type="Self.obra" Multiplicity="1" />
+    <End Role="fasedaobra" Type="Self.fasedaobra" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="obra">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="fasedaobra">
+        <PropertyRef Name="Obra_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Usuario_Funcao1">
+    <End Role="funcao" Type="Self.funcao" Multiplicity="1" />
+    <End Role="usuario" Type="Self.usuario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="funcao">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="usuario">
+        <PropertyRef Name="Funcao_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Usuario_has_Obra_Obra1">
+    <End Role="obra" Type="Self.obra" Multiplicity="1" />
+    <End Role="usuarioobra" Type="Self.usuarioobra" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="obra">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="usuarioobra">
+        <PropertyRef Name="Obra_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Usuario_has_Obra_Usuario">
+    <End Role="usuario" Type="Self.usuario" Multiplicity="1" />
+    <End Role="usuarioobra" Type="Self.usuarioobra" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="usuario">
+        <PropertyRef Name="CloudId" />
+      </Principal>
+      <Dependent Role="usuarioobra">
+        <PropertyRef Name="Usuario_CloudId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Veiculo_CategoriaVeiculo1">
+    <End Role="categoriaveiculo" Type="Self.categoriaveiculo" Multiplicity="1" />
+    <End Role="veiculo" Type="Self.veiculo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="categoriaveiculo">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="veiculo">
+        <PropertyRef Name="CategoriaVeiculo_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Veiculo_has_Obra_Obra1">
+    <End Role="obra" Type="Self.obra" Multiplicity="1" />
+    <End Role="veiculoobra" Type="Self.veiculoobra" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="obra">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="veiculoobra">
+        <PropertyRef Name="Obra_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Veiculo_has_Obra_Usuario1">
+    <End Role="usuario" Type="Self.usuario" Multiplicity="1" />
+    <End Role="veiculoobra" Type="Self.veiculoobra" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="usuario">
+        <PropertyRef Name="CloudId" />
+      </Principal>
+      <Dependent Role="veiculoobra">
+        <PropertyRef Name="UsuarioCadastro_CloudId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Veiculo_has_Obra_Veiculo1">
+    <End Role="veiculo" Type="Self.veiculo" Multiplicity="1" />
+    <End Role="veiculoobra" Type="Self.veiculoobra" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="veiculo">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="veiculoobra">
+        <PropertyRef Name="Veiculo_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Veiculo_Proprietario1">
+    <End Role="proprietario" Type="Self.proprietario" Multiplicity="1" />
+    <End Role="veiculo" Type="Self.veiculo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="proprietario">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="veiculo">
+        <PropertyRef Name="Proprietario_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="britecModelStoreContainer">
+    <EntitySet Name="abastecimento" EntityType="Self.abastecimento" Schema="britec" store:Type="Tables" />
+    <EntitySet Name="categoriaabastecimento" EntityType="Self.categoriaabastecimento" Schema="britec" store:Type="Tables" />
+    <EntitySet Name="categoriaveiculo" EntityType="Self.categoriaveiculo" Schema="britec" store:Type="Tables" />
+    <EntitySet Name="controleaplicacaomassa" EntityType="Self.controleaplicacaomassa" Schema="britec" store:Type="Tables" />
+    <EntitySet Name="fasedaobra" EntityType="Self.fasedaobra" Schema="britec" store:Type="Tables" />
+    <EntitySet Name="funcao" EntityType="Self.funcao" Schema="britec" store:Type="Tables" />
+    <EntitySet Name="funcaoprograma" EntityType="Self.funcaoprograma" Schema="britec" store:Type="Tables" />
+    <EntitySet Name="itemaplicacao" EntityType="Self.itemaplicacao" Schema="britec" store:Type="Tables" />
+    <EntitySet Name="motorista" EntityType="Self.motorista" Schema="britec" store:Type="Tables" />
+    <EntitySet Name="nivelpermissao" EntityType="Self.nivelpermissao" Schema="britec" store:Type="Tables" />
+    <EntitySet Name="obra" EntityType="Self.obra" Schema="britec" store:Type="Tables" />
+    <EntitySet Name="observacaoabastecimento" EntityType="Self.observacaoabastecimento" Schema="britec" store:Type="Tables" />
+    <EntitySet Name="programa" EntityType="Self.programa" Schema="britec" store:Type="Tables" />
+    <EntitySet Name="proprietario" EntityType="Self.proprietario" Schema="britec" store:Type="Tables" />
+    <EntitySet Name="usuario" EntityType="Self.usuario" Schema="britec" store:Type="Tables" />
+    <EntitySet Name="usuarioobra" EntityType="Self.usuarioobra" Schema="britec" store:Type="Tables" />
+    <EntitySet Name="veiculo" EntityType="Self.veiculo" Schema="britec" store:Type="Tables" />
+    <EntitySet Name="veiculoobra" EntityType="Self.veiculoobra" Schema="britec" store:Type="Tables" />
+    <AssociationSet Name="fk_Abastecimento_CategoriaAbastecimento1" Association="Self.fk_Abastecimento_CategoriaAbastecimento1">
+      <End Role="categoriaabastecimento" EntitySet="categoriaabastecimento" />
+      <End Role="abastecimento" EntitySet="abastecimento" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Abastecimento_ObservacaoAbastecimento1" Association="Self.fk_Abastecimento_ObservacaoAbastecimento1">
+      <End Role="observacaoabastecimento" EntitySet="observacaoabastecimento" />
+      <End Role="abastecimento" EntitySet="abastecimento" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Abastecimento_Usuario1" Association="Self.fk_Abastecimento_Usuario1">
+      <End Role="usuario" EntitySet="usuario" />
+      <End Role="abastecimento" EntitySet="abastecimento" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Abastecimento_Veiculo_has_Obra1" Association="Self.fk_Abastecimento_Veiculo_has_Obra1">
+      <End Role="veiculoobra" EntitySet="veiculoobra" />
+      <End Role="abastecimento" EntitySet="abastecimento" />
+    </AssociationSet>
+    <AssociationSet Name="fk_ControleAplicacaoMassa_Trecho1" Association="Self.fk_ControleAplicacaoMassa_Trecho1">
+      <End Role="fasedaobra" EntitySet="fasedaobra" />
+      <End Role="controleaplicacaomassa" EntitySet="controleaplicacaomassa" />
+    </AssociationSet>
+    <AssociationSet Name="fk_ControleAplicacaoMassa_Usuario1" Association="Self.fk_ControleAplicacaoMassa_Usuario1">
+      <End Role="usuario" EntitySet="usuario" />
+      <End Role="controleaplicacaomassa" EntitySet="controleaplicacaomassa" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Funcao_has_Programa_Funcao1" Association="Self.fk_Funcao_has_Programa_Funcao1">
+      <End Role="funcao" EntitySet="funcao" />
+      <End Role="funcaoprograma" EntitySet="funcaoprograma" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Funcao_has_Programa_Programa1" Association="Self.fk_Funcao_has_Programa_Programa1">
+      <End Role="programa" EntitySet="programa" />
+      <End Role="funcaoprograma" EntitySet="funcaoprograma" />
+    </AssociationSet>
+    <AssociationSet Name="fk_FuncaoPrograma_NivelPermissao1" Association="Self.fk_FuncaoPrograma_NivelPermissao1">
+      <End Role="nivelpermissao" EntitySet="nivelpermissao" />
+      <End Role="funcaoprograma" EntitySet="funcaoprograma" />
+    </AssociationSet>
+    <AssociationSet Name="fk_ItemAplicacao_ControleAplicacaoMassa1" Association="Self.fk_ItemAplicacao_ControleAplicacaoMassa1">
+      <End Role="controleaplicacaomassa" EntitySet="controleaplicacaomassa" />
+      <End Role="itemaplicacao" EntitySet="itemaplicacao" />
+    </AssociationSet>
+    <AssociationSet Name="fk_ItemAplicacao_Motorista1" Association="Self.fk_ItemAplicacao_Motorista1">
+      <End Role="motorista" EntitySet="motorista" />
+      <End Role="itemaplicacao" EntitySet="itemaplicacao" />
+    </AssociationSet>
+    <AssociationSet Name="fk_ItemAplicacao_Veiculo1" Association="Self.fk_ItemAplicacao_Veiculo1">
+      <End Role="veiculo" EntitySet="veiculo" />
+      <End Role="itemaplicacao" EntitySet="itemaplicacao" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Trecho_Obra1" Association="Self.fk_Trecho_Obra1">
+      <End Role="obra" EntitySet="obra" />
+      <End Role="fasedaobra" EntitySet="fasedaobra" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Usuario_Funcao1" Association="Self.fk_Usuario_Funcao1">
+      <End Role="funcao" EntitySet="funcao" />
+      <End Role="usuario" EntitySet="usuario" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Usuario_has_Obra_Obra1" Association="Self.fk_Usuario_has_Obra_Obra1">
+      <End Role="obra" EntitySet="obra" />
+      <End Role="usuarioobra" EntitySet="usuarioobra" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Usuario_has_Obra_Usuario" Association="Self.fk_Usuario_has_Obra_Usuario">
+      <End Role="usuario" EntitySet="usuario" />
+      <End Role="usuarioobra" EntitySet="usuarioobra" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Veiculo_CategoriaVeiculo1" Association="Self.fk_Veiculo_CategoriaVeiculo1">
+      <End Role="categoriaveiculo" EntitySet="categoriaveiculo" />
+      <End Role="veiculo" EntitySet="veiculo" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Veiculo_has_Obra_Obra1" Association="Self.fk_Veiculo_has_Obra_Obra1">
+      <End Role="obra" EntitySet="obra" />
+      <End Role="veiculoobra" EntitySet="veiculoobra" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Veiculo_has_Obra_Usuario1" Association="Self.fk_Veiculo_has_Obra_Usuario1">
+      <End Role="usuario" EntitySet="usuario" />
+      <End Role="veiculoobra" EntitySet="veiculoobra" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Veiculo_has_Obra_Veiculo1" Association="Self.fk_Veiculo_has_Obra_Veiculo1">
+      <End Role="veiculo" EntitySet="veiculo" />
+      <End Role="veiculoobra" EntitySet="veiculoobra" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Veiculo_Proprietario1" Association="Self.fk_Veiculo_Proprietario1">
+      <End Role="proprietario" EntitySet="proprietario" />
+      <End Role="veiculo" EntitySet="veiculo" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
