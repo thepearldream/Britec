@@ -20,11 +20,10 @@ namespace BritecWebAPI
             this.itemaplicacao = new HashSet<itemaplicacao>();
         }
     
-        public long id { get; set; }
         public System.DateTime data { get; set; }
         public double toneladasPrevisao { get; set; }
         public string Apontador_CloudId { get; set; }
-        public long Trecho_id { get; set; }
+        public long Fase_id { get; set; }
     
         public virtual fasedaobra fasedaobra { get; set; }
         public virtual usuario usuario { get; set; }

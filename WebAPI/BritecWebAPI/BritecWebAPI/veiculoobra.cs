@@ -20,7 +20,6 @@ namespace BritecWebAPI
             this.abastecimento = new HashSet<abastecimento>();
         }
     
-        public long id { get; set; }
         public long Veiculo_id { get; set; }
         public long Obra_id { get; set; }
         public string UsuarioCadastro_CloudId { get; set; }

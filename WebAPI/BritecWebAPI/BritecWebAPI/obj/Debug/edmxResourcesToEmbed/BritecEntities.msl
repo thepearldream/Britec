@@ -8,10 +8,11 @@
           <ScalarProperty Name="data" ColumnName="data" />
           <ScalarProperty Name="horimetro" ColumnName="horimetro" />
           <ScalarProperty Name="quantidade" ColumnName="quantidade" />
-          <ScalarProperty Name="VeiculoObra_id" ColumnName="VeiculoObra_id" />
           <ScalarProperty Name="CategoriaAbastecimento_id" ColumnName="CategoriaAbastecimento_id" />
           <ScalarProperty Name="ObservacaoAbastecimento_id" ColumnName="ObservacaoAbastecimento_id" />
           <ScalarProperty Name="Apontador_CloudId" ColumnName="Apontador_CloudId" />
+          <ScalarProperty Name="VeiculoObra_Veiculo_id" ColumnName="VeiculoObra_Veiculo_id" />
+          <ScalarProperty Name="VeiculoObra_Obra_id" ColumnName="VeiculoObra_Obra_id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -34,11 +35,10 @@
     <EntitySetMapping Name="controleaplicacaomassa">
       <EntityTypeMapping TypeName="britecModel.controleaplicacaomassa">
         <MappingFragment StoreEntitySet="controleaplicacaomassa">
-          <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="data" ColumnName="data" />
           <ScalarProperty Name="toneladasPrevisao" ColumnName="toneladasPrevisao" />
           <ScalarProperty Name="Apontador_CloudId" ColumnName="Apontador_CloudId" />
-          <ScalarProperty Name="Trecho_id" ColumnName="Trecho_id" />
+          <ScalarProperty Name="Fase_id" ColumnName="Fase_id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -62,7 +62,6 @@
     <EntitySetMapping Name="funcaoprograma">
       <EntityTypeMapping TypeName="britecModel.funcaoprograma">
         <MappingFragment StoreEntitySet="funcaoprograma">
-          <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="Funcao_id" ColumnName="Funcao_id" />
           <ScalarProperty Name="Programa_id" ColumnName="Programa_id" />
           <ScalarProperty Name="NivelPermissao_id" ColumnName="NivelPermissao_id" />
@@ -84,7 +83,9 @@
           <ScalarProperty Name="temperatura" ColumnName="temperatura" />
           <ScalarProperty Name="Motorista_id" ColumnName="Motorista_id" />
           <ScalarProperty Name="Veiculo_id" ColumnName="Veiculo_id" />
-          <ScalarProperty Name="ControleAplicacaoMassa_id" ColumnName="ControleAplicacaoMassa_id" />
+          <ScalarProperty Name="Fase_id" ColumnName="Fase_id" />
+          <ScalarProperty Name="Apontador_CloudId" ColumnName="Apontador_CloudId" />
+          <ScalarProperty Name="data" ColumnName="data" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -115,6 +116,9 @@
           <ScalarProperty Name="dataInicio" ColumnName="dataInicio" />
           <ScalarProperty Name="dataFimPrevisto" ColumnName="dataFimPrevisto" />
           <ScalarProperty Name="dataFim" ColumnName="dataFim" />
+          <ScalarProperty Name="cliente" ColumnName="cliente" />
+          <ScalarProperty Name="local" ColumnName="local" />
+          <ScalarProperty Name="ValorPorToneladaFrete" ColumnName="ValorPorToneladaFrete" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -152,15 +156,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="usuarioobra">
-      <EntityTypeMapping TypeName="britecModel.usuarioobra">
-        <MappingFragment StoreEntitySet="usuarioobra">
-          <ScalarProperty Name="Usuario_CloudId" ColumnName="Usuario_CloudId" />
-          <ScalarProperty Name="Obra_id" ColumnName="Obra_id" />
-          <ScalarProperty Name="id" ColumnName="id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="veiculo">
       <EntityTypeMapping TypeName="britecModel.veiculo">
         <MappingFragment StoreEntitySet="veiculo">
@@ -176,12 +171,19 @@
     <EntitySetMapping Name="veiculoobra">
       <EntityTypeMapping TypeName="britecModel.veiculoobra">
         <MappingFragment StoreEntitySet="veiculoobra">
-          <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="Veiculo_id" ColumnName="Veiculo_id" />
           <ScalarProperty Name="Obra_id" ColumnName="Obra_id" />
           <ScalarProperty Name="UsuarioCadastro_CloudId" ColumnName="UsuarioCadastro_CloudId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <AssociationSetMapping Name="usuarioobra" TypeName="britecModel.usuarioobra" StoreEntitySet="usuarioobra">
+      <EndProperty Name="obra">
+        <ScalarProperty Name="id" ColumnName="Obra_id" />
+      </EndProperty>
+      <EndProperty Name="usuario">
+        <ScalarProperty Name="CloudId" ColumnName="Usuario_CloudId" />
+      </EndProperty>
+    </AssociationSetMapping>
   </EntityContainerMapping>
 </Mapping>

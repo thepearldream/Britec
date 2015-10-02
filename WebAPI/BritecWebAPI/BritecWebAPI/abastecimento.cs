@@ -18,10 +18,11 @@ namespace BritecWebAPI
         public System.DateTime data { get; set; }
         public double horimetro { get; set; }
         public double quantidade { get; set; }
-        public long VeiculoObra_id { get; set; }
         public int CategoriaAbastecimento_id { get; set; }
         public Nullable<long> ObservacaoAbastecimento_id { get; set; }
         public string Apontador_CloudId { get; set; }
+        public long VeiculoObra_Veiculo_id { get; set; }
+        public long VeiculoObra_Obra_id { get; set; }
     
         public virtual categoriaabastecimento categoriaabastecimento { get; set; }
         public virtual observacaoabastecimento observacaoabastecimento { get; set; }

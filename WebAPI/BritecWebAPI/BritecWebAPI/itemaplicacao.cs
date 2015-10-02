@@ -26,7 +26,9 @@ namespace BritecWebAPI
         public double temperatura { get; set; }
         public long Motorista_id { get; set; }
         public long Veiculo_id { get; set; }
-        public long ControleAplicacaoMassa_id { get; set; }
+        public long Fase_id { get; set; }
+        public string Apontador_CloudId { get; set; }
+        public System.DateTime data { get; set; }
     
         public virtual controleaplicacaomassa controleaplicacaomassa { get; set; }
         public virtual motorista motorista { get; set; }

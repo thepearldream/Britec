@@ -14,7 +14,6 @@ namespace BritecWebAPI
     
     public partial class funcaoprograma
     {
-        public int id { get; set; }
         public int Funcao_id { get; set; }
         public int Programa_id { get; set; }
         public int NivelPermissao_id { get; set; }

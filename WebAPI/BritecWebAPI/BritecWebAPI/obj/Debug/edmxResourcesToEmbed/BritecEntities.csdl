@@ -8,14 +8,15 @@
     <Property Name="data" Type="DateTime" Nullable="false" />
     <Property Name="horimetro" Type="Double" Nullable="false" />
     <Property Name="quantidade" Type="Double" Nullable="false" />
-    <Property Name="VeiculoObra_id" Type="Int64" Nullable="false" />
     <Property Name="CategoriaAbastecimento_id" Type="Int32" Nullable="false" />
     <Property Name="ObservacaoAbastecimento_id" Type="Int64" />
     <Property Name="Apontador_CloudId" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="VeiculoObra_Veiculo_id" Type="Int64" Nullable="false" />
+    <Property Name="VeiculoObra_Obra_id" Type="Int64" Nullable="false" />
     <NavigationProperty Name="categoriaabastecimento" Relationship="Self.fk_Abastecimento_CategoriaAbastecimento1" FromRole="abastecimento" ToRole="categoriaabastecimento" />
     <NavigationProperty Name="observacaoabastecimento" Relationship="Self.fk_Abastecimento_ObservacaoAbastecimento1" FromRole="abastecimento" ToRole="observacaoabastecimento" />
     <NavigationProperty Name="usuario" Relationship="Self.fk_Abastecimento_Usuario1" FromRole="abastecimento" ToRole="usuario" />
-    <NavigationProperty Name="veiculoobra" Relationship="Self.fk_Abastecimento_Veiculo_has_Obra1" FromRole="abastecimento" ToRole="veiculoobra" />
+    <NavigationProperty Name="veiculoobra" Relationship="Self.fk_Abastecimento_VeiculoObra1" FromRole="abastecimento" ToRole="veiculoobra" />
   </EntityType>
   <EntityType Name="categoriaabastecimento">
     <Key>
@@ -35,13 +36,14 @@
   </EntityType>
   <EntityType Name="controleaplicacaomassa">
     <Key>
-      <PropertyRef Name="id" />
+      <PropertyRef Name="data" />
+      <PropertyRef Name="Apontador_CloudId" />
+      <PropertyRef Name="Fase_id" />
     </Key>
-    <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="data" Type="DateTime" Nullable="false" />
     <Property Name="toneladasPrevisao" Type="Double" Nullable="false" />
     <Property Name="Apontador_CloudId" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="Trecho_id" Type="Int64" Nullable="false" />
+    <Property Name="Fase_id" Type="Int64" Nullable="false" />
     <NavigationProperty Name="fasedaobra" Relationship="Self.fk_ControleAplicacaoMassa_Trecho1" FromRole="controleaplicacaomassa" ToRole="fasedaobra" />
     <NavigationProperty Name="usuario" Relationship="Self.fk_ControleAplicacaoMassa_Usuario1" FromRole="controleaplicacaomassa" ToRole="usuario" />
     <NavigationProperty Name="itemaplicacao" Relationship="Self.fk_ItemAplicacao_ControleAplicacaoMassa1" FromRole="controleaplicacaomassa" ToRole="itemaplicacao" />
@@ -67,9 +69,10 @@
   </EntityType>
   <EntityType Name="funcaoprograma">
     <Key>
-      <PropertyRef Name="id" />
+      <PropertyRef Name="Funcao_id" />
+      <PropertyRef Name="Programa_id" />
+      <PropertyRef Name="NivelPermissao_id" />
     </Key>
-    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Funcao_id" Type="Int32" Nullable="false" />
     <Property Name="Programa_id" Type="Int32" Nullable="false" />
     <Property Name="NivelPermissao_id" Type="Int32" Nullable="false" />
@@ -93,7 +96,9 @@
     <Property Name="temperatura" Type="Double" Nullable="false" />
     <Property Name="Motorista_id" Type="Int64" Nullable="false" />
     <Property Name="Veiculo_id" Type="Int64" Nullable="false" />
-    <Property Name="ControleAplicacaoMassa_id" Type="Int64" Nullable="false" />
+    <Property Name="Fase_id" Type="Int64" Nullable="false" />
+    <Property Name="Apontador_CloudId" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="data" Type="DateTime" Nullable="false" />
     <NavigationProperty Name="controleaplicacaomassa" Relationship="Self.fk_ItemAplicacao_ControleAplicacaoMassa1" FromRole="itemaplicacao" ToRole="controleaplicacaomassa" />
     <NavigationProperty Name="motorista" Relationship="Self.fk_ItemAplicacao_Motorista1" FromRole="itemaplicacao" ToRole="motorista" />
     <NavigationProperty Name="veiculo" Relationship="Self.fk_ItemAplicacao_Veiculo1" FromRole="itemaplicacao" ToRole="veiculo" />
@@ -126,9 +131,12 @@
     <Property Name="dataInicio" Type="DateTime" Nullable="false" />
     <Property Name="dataFimPrevisto" Type="DateTime" Nullable="false" />
     <Property Name="dataFim" Type="DateTime" />
+    <Property Name="cliente" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="local" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="ValorPorToneladaFrete" Type="Double" Nullable="false" />
     <NavigationProperty Name="fasedaobra" Relationship="Self.fk_Trecho_Obra1" FromRole="obra" ToRole="fasedaobra" />
-    <NavigationProperty Name="usuarioobra" Relationship="Self.fk_Usuario_has_Obra_Obra1" FromRole="obra" ToRole="usuarioobra" />
     <NavigationProperty Name="veiculoobra" Relationship="Self.fk_Veiculo_has_Obra_Obra1" FromRole="obra" ToRole="veiculoobra" />
+    <NavigationProperty Name="usuario" Relationship="Self.usuarioobra" FromRole="obra" ToRole="usuario" />
   </EntityType>
   <EntityType Name="observacaoabastecimento">
     <Key>
@@ -165,18 +173,8 @@
     <NavigationProperty Name="abastecimento" Relationship="Self.fk_Abastecimento_Usuario1" FromRole="usuario" ToRole="abastecimento" />
     <NavigationProperty Name="controleaplicacaomassa" Relationship="Self.fk_ControleAplicacaoMassa_Usuario1" FromRole="usuario" ToRole="controleaplicacaomassa" />
     <NavigationProperty Name="funcao" Relationship="Self.fk_Usuario_Funcao1" FromRole="usuario" ToRole="funcao" />
-    <NavigationProperty Name="usuarioobra" Relationship="Self.fk_Usuario_has_Obra_Usuario" FromRole="usuario" ToRole="usuarioobra" />
     <NavigationProperty Name="veiculoobra" Relationship="Self.fk_Veiculo_has_Obra_Usuario1" FromRole="usuario" ToRole="veiculoobra" />
-  </EntityType>
-  <EntityType Name="usuarioobra">
-    <Key>
-      <PropertyRef Name="id" />
-    </Key>
-    <Property Name="Usuario_CloudId" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="Obra_id" Type="Int64" Nullable="false" />
-    <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <NavigationProperty Name="obra" Relationship="Self.fk_Usuario_has_Obra_Obra1" FromRole="usuarioobra" ToRole="obra" />
-    <NavigationProperty Name="usuario" Relationship="Self.fk_Usuario_has_Obra_Usuario" FromRole="usuarioobra" ToRole="usuario" />
+    <NavigationProperty Name="obra" Relationship="Self.usuarioobra" FromRole="usuario" ToRole="obra" />
   </EntityType>
   <EntityType Name="veiculo">
     <Key>
@@ -195,13 +193,13 @@
   </EntityType>
   <EntityType Name="veiculoobra">
     <Key>
-      <PropertyRef Name="id" />
+      <PropertyRef Name="Veiculo_id" />
+      <PropertyRef Name="Obra_id" />
     </Key>
-    <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Veiculo_id" Type="Int64" Nullable="false" />
     <Property Name="Obra_id" Type="Int64" Nullable="false" />
     <Property Name="UsuarioCadastro_CloudId" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
-    <NavigationProperty Name="abastecimento" Relationship="Self.fk_Abastecimento_Veiculo_has_Obra1" FromRole="veiculoobra" ToRole="abastecimento" />
+    <NavigationProperty Name="abastecimento" Relationship="Self.fk_Abastecimento_VeiculoObra1" FromRole="veiculoobra" ToRole="abastecimento" />
     <NavigationProperty Name="obra" Relationship="Self.fk_Veiculo_has_Obra_Obra1" FromRole="veiculoobra" ToRole="obra" />
     <NavigationProperty Name="usuario" Relationship="Self.fk_Veiculo_has_Obra_Usuario1" FromRole="veiculoobra" ToRole="usuario" />
     <NavigationProperty Name="veiculo" Relationship="Self.fk_Veiculo_has_Obra_Veiculo1" FromRole="veiculoobra" ToRole="veiculo" />
@@ -242,15 +240,17 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="fk_Abastecimento_Veiculo_has_Obra1">
+  <Association Name="fk_Abastecimento_VeiculoObra1">
     <End Role="veiculoobra" Type="Self.veiculoobra" Multiplicity="1" />
     <End Role="abastecimento" Type="Self.abastecimento" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="veiculoobra">
-        <PropertyRef Name="id" />
+        <PropertyRef Name="Veiculo_id" />
+        <PropertyRef Name="Obra_id" />
       </Principal>
       <Dependent Role="abastecimento">
-        <PropertyRef Name="VeiculoObra_id" />
+        <PropertyRef Name="VeiculoObra_Veiculo_id" />
+        <PropertyRef Name="VeiculoObra_Obra_id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -274,7 +274,7 @@
         <PropertyRef Name="id" />
       </Principal>
       <Dependent Role="controleaplicacaomassa">
-        <PropertyRef Name="Trecho_id" />
+        <PropertyRef Name="Fase_id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -295,10 +295,14 @@
     <End Role="itemaplicacao" Type="Self.itemaplicacao" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="controleaplicacaomassa">
-        <PropertyRef Name="id" />
+        <PropertyRef Name="Fase_id" />
+        <PropertyRef Name="Apontador_CloudId" />
+        <PropertyRef Name="data" />
       </Principal>
       <Dependent Role="itemaplicacao">
-        <PropertyRef Name="ControleAplicacaoMassa_id" />
+        <PropertyRef Name="Fase_id" />
+        <PropertyRef Name="Apontador_CloudId" />
+        <PropertyRef Name="data" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -386,18 +390,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="fk_Usuario_has_Obra_Obra1">
-    <End Role="obra" Type="Self.obra" Multiplicity="1" />
-    <End Role="usuarioobra" Type="Self.usuarioobra" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="obra">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="usuarioobra">
-        <PropertyRef Name="Obra_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="fk_Veiculo_has_Obra_Obra1">
     <End Role="obra" Type="Self.obra" Multiplicity="1" />
     <End Role="veiculoobra" Type="Self.veiculoobra" Multiplicity="*" />
@@ -419,18 +411,6 @@
       </Principal>
       <Dependent Role="veiculo">
         <PropertyRef Name="Proprietario_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="fk_Usuario_has_Obra_Usuario">
-    <End Role="usuario" Type="Self.usuario" Multiplicity="1" />
-    <End Role="usuarioobra" Type="Self.usuarioobra" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="usuario">
-        <PropertyRef Name="CloudId" />
-      </Principal>
-      <Dependent Role="usuarioobra">
-        <PropertyRef Name="Usuario_CloudId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -458,6 +438,10 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="usuarioobra">
+    <End Role="obra" Type="Self.obra" Multiplicity="*" />
+    <End Role="usuario" Type="Self.usuario" Multiplicity="*" />
+  </Association>
   <EntityContainer Name="britecEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="abastecimento" EntityType="Self.abastecimento" />
     <EntitySet Name="categoriaabastecimento" EntityType="Self.categoriaabastecimento" />
@@ -474,7 +458,6 @@
     <EntitySet Name="programa" EntityType="Self.programa" />
     <EntitySet Name="proprietario" EntityType="Self.proprietario" />
     <EntitySet Name="usuario" EntityType="Self.usuario" />
-    <EntitySet Name="usuarioobra" EntityType="Self.usuarioobra" />
     <EntitySet Name="veiculo" EntityType="Self.veiculo" />
     <EntitySet Name="veiculoobra" EntityType="Self.veiculoobra" />
     <AssociationSet Name="fk_Abastecimento_CategoriaAbastecimento1" Association="Self.fk_Abastecimento_CategoriaAbastecimento1">
@@ -489,7 +472,7 @@
       <End Role="usuario" EntitySet="usuario" />
       <End Role="abastecimento" EntitySet="abastecimento" />
     </AssociationSet>
-    <AssociationSet Name="fk_Abastecimento_Veiculo_has_Obra1" Association="Self.fk_Abastecimento_Veiculo_has_Obra1">
+    <AssociationSet Name="fk_Abastecimento_VeiculoObra1" Association="Self.fk_Abastecimento_VeiculoObra1">
       <End Role="veiculoobra" EntitySet="veiculoobra" />
       <End Role="abastecimento" EntitySet="abastecimento" />
     </AssociationSet>
@@ -537,10 +520,6 @@
       <End Role="veiculo" EntitySet="veiculo" />
       <End Role="itemaplicacao" EntitySet="itemaplicacao" />
     </AssociationSet>
-    <AssociationSet Name="fk_Usuario_has_Obra_Obra1" Association="Self.fk_Usuario_has_Obra_Obra1">
-      <End Role="obra" EntitySet="obra" />
-      <End Role="usuarioobra" EntitySet="usuarioobra" />
-    </AssociationSet>
     <AssociationSet Name="fk_Veiculo_has_Obra_Obra1" Association="Self.fk_Veiculo_has_Obra_Obra1">
       <End Role="obra" EntitySet="obra" />
       <End Role="veiculoobra" EntitySet="veiculoobra" />
@@ -549,10 +528,6 @@
       <End Role="proprietario" EntitySet="proprietario" />
       <End Role="veiculo" EntitySet="veiculo" />
     </AssociationSet>
-    <AssociationSet Name="fk_Usuario_has_Obra_Usuario" Association="Self.fk_Usuario_has_Obra_Usuario">
-      <End Role="usuario" EntitySet="usuario" />
-      <End Role="usuarioobra" EntitySet="usuarioobra" />
-    </AssociationSet>
     <AssociationSet Name="fk_Veiculo_has_Obra_Usuario1" Association="Self.fk_Veiculo_has_Obra_Usuario1">
       <End Role="usuario" EntitySet="usuario" />
       <End Role="veiculoobra" EntitySet="veiculoobra" />
@@ -560,6 +535,10 @@
     <AssociationSet Name="fk_Veiculo_has_Obra_Veiculo1" Association="Self.fk_Veiculo_has_Obra_Veiculo1">
       <End Role="veiculo" EntitySet="veiculo" />
       <End Role="veiculoobra" EntitySet="veiculoobra" />
+    </AssociationSet>
+    <AssociationSet Name="usuarioobra" Association="Self.usuarioobra">
+      <End Role="obra" EntitySet="obra" />
+      <End Role="usuario" EntitySet="usuario" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

@@ -8,10 +8,11 @@
     <Property Name="data" Type="datetime" Precision="0" Nullable="false" />
     <Property Name="horimetro" Type="double" Nullable="false" />
     <Property Name="quantidade" Type="double" Nullable="false" />
-    <Property Name="VeiculoObra_id" Type="bigint" Nullable="false" />
     <Property Name="CategoriaAbastecimento_id" Type="int" Nullable="false" />
     <Property Name="ObservacaoAbastecimento_id" Type="bigint" />
     <Property Name="Apontador_CloudId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="VeiculoObra_Veiculo_id" Type="bigint" Nullable="false" />
+    <Property Name="VeiculoObra_Obra_id" Type="bigint" Nullable="false" />
   </EntityType>
   <EntityType Name="categoriaabastecimento">
     <Key>
@@ -29,13 +30,14 @@
   </EntityType>
   <EntityType Name="controleaplicacaomassa">
     <Key>
-      <PropertyRef Name="id" />
+      <PropertyRef Name="data" />
+      <PropertyRef Name="Apontador_CloudId" />
+      <PropertyRef Name="Fase_id" />
     </Key>
-    <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="data" Type="datetime" Precision="0" Nullable="false" />
     <Property Name="toneladasPrevisao" Type="double" Nullable="false" />
     <Property Name="Apontador_CloudId" Type="varchar" MaxLength="40" Nullable="false" />
-    <Property Name="Trecho_id" Type="bigint" Nullable="false" />
+    <Property Name="Fase_id" Type="bigint" Nullable="false" />
   </EntityType>
   <EntityType Name="fasedaobra">
     <Key>
@@ -54,9 +56,10 @@
   </EntityType>
   <EntityType Name="funcaoprograma">
     <Key>
-      <PropertyRef Name="id" />
+      <PropertyRef Name="Funcao_id" />
+      <PropertyRef Name="Programa_id" />
+      <PropertyRef Name="NivelPermissao_id" />
     </Key>
-    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Funcao_id" Type="int" Nullable="false" />
     <Property Name="Programa_id" Type="int" Nullable="false" />
     <Property Name="NivelPermissao_id" Type="int" Nullable="false" />
@@ -77,7 +80,9 @@
     <Property Name="temperatura" Type="double" Nullable="false" />
     <Property Name="Motorista_id" Type="bigint" Nullable="false" />
     <Property Name="Veiculo_id" Type="bigint" Nullable="false" />
-    <Property Name="ControleAplicacaoMassa_id" Type="bigint" Nullable="false" />
+    <Property Name="Fase_id" Type="bigint" Nullable="false" />
+    <Property Name="Apontador_CloudId" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="data" Type="datetime" Precision="0" Nullable="false" />
   </EntityType>
   <EntityType Name="motorista">
     <Key>
@@ -105,6 +110,9 @@
     <Property Name="dataInicio" Type="datetime" Precision="0" Nullable="false" />
     <Property Name="dataFimPrevisto" Type="datetime" Precision="0" Nullable="false" />
     <Property Name="dataFim" Type="datetime" Precision="0" />
+    <Property Name="cliente" Type="varchar" MaxLength="45" />
+    <Property Name="local" Type="varchar" MaxLength="150" />
+    <Property Name="ValorPorToneladaFrete" Type="double" Nullable="false" />
   </EntityType>
   <EntityType Name="observacaoabastecimento">
     <Key>
@@ -138,11 +146,11 @@
   </EntityType>
   <EntityType Name="usuarioobra">
     <Key>
-      <PropertyRef Name="id" />
+      <PropertyRef Name="Usuario_CloudId" />
+      <PropertyRef Name="Obra_id" />
     </Key>
     <Property Name="Usuario_CloudId" Type="varchar" MaxLength="40" Nullable="false" />
     <Property Name="Obra_id" Type="bigint" Nullable="false" />
-    <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
   </EntityType>
   <EntityType Name="veiculo">
     <Key>
@@ -157,9 +165,9 @@
   </EntityType>
   <EntityType Name="veiculoobra">
     <Key>
-      <PropertyRef Name="id" />
+      <PropertyRef Name="Veiculo_id" />
+      <PropertyRef Name="Obra_id" />
     </Key>
-    <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Veiculo_id" Type="bigint" Nullable="false" />
     <Property Name="Obra_id" Type="bigint" Nullable="false" />
     <Property Name="UsuarioCadastro_CloudId" Type="varchar" MaxLength="40" Nullable="false" />
@@ -200,15 +208,17 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="fk_Abastecimento_Veiculo_has_Obra1">
+  <Association Name="fk_Abastecimento_VeiculoObra1">
     <End Role="veiculoobra" Type="Self.veiculoobra" Multiplicity="1" />
     <End Role="abastecimento" Type="Self.abastecimento" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="veiculoobra">
-        <PropertyRef Name="id" />
+        <PropertyRef Name="Veiculo_id" />
+        <PropertyRef Name="Obra_id" />
       </Principal>
       <Dependent Role="abastecimento">
-        <PropertyRef Name="VeiculoObra_id" />
+        <PropertyRef Name="VeiculoObra_Veiculo_id" />
+        <PropertyRef Name="VeiculoObra_Obra_id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -220,7 +230,7 @@
         <PropertyRef Name="id" />
       </Principal>
       <Dependent Role="controleaplicacaomassa">
-        <PropertyRef Name="Trecho_id" />
+        <PropertyRef Name="Fase_id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -277,10 +287,14 @@
     <End Role="itemaplicacao" Type="Self.itemaplicacao" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="controleaplicacaomassa">
-        <PropertyRef Name="id" />
+        <PropertyRef Name="Fase_id" />
+        <PropertyRef Name="Apontador_CloudId" />
+        <PropertyRef Name="data" />
       </Principal>
       <Dependent Role="itemaplicacao">
-        <PropertyRef Name="ControleAplicacaoMassa_id" />
+        <PropertyRef Name="Fase_id" />
+        <PropertyRef Name="Apontador_CloudId" />
+        <PropertyRef Name="data" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -447,7 +461,7 @@
       <End Role="usuario" EntitySet="usuario" />
       <End Role="abastecimento" EntitySet="abastecimento" />
     </AssociationSet>
-    <AssociationSet Name="fk_Abastecimento_Veiculo_has_Obra1" Association="Self.fk_Abastecimento_Veiculo_has_Obra1">
+    <AssociationSet Name="fk_Abastecimento_VeiculoObra1" Association="Self.fk_Abastecimento_VeiculoObra1">
       <End Role="veiculoobra" EntitySet="veiculoobra" />
       <End Role="abastecimento" EntitySet="abastecimento" />
     </AssociationSet>

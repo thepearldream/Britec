@@ -56,9 +56,17 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="MySql.Data, Version=6.9.7.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Program Files (x86)\MySQL\Connector.NET 6.9\Assemblies\v4.5\MySql.Data.dll</HintPath>
+    </Reference>
     <Reference Include="MySql.Data.Entity.EF6, Version=6.9.7.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\Program Files (x86)\MySQL\Connector.NET 6.9\Assemblies\v4.5\MySql.Data.Entity.EF6.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Web, Version=6.9.7.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Program Files (x86)\MySQL\Connector.NET 6.9\Assemblies\v4.5\MySql.Web.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Runtime.Serialization" />
@@ -106,7 +114,9 @@
       <LastGenOutput>BritecEntities.cs</LastGenOutput>
     </Content>
     <Content Include="Global.asax" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="abastecimento.cs">
@@ -137,7 +147,11 @@
     <Compile Include="controleaplicacaomassa.cs">
       <DependentUpon>BritecEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Controllers\categoriaveiculoesController.cs" />
+    <Compile Include="Controllers\controleaplicacaomassasController.cs" />
+    <Compile Include="Controllers\funcaoprogramasController.cs" />
+    <Compile Include="Controllers\motoristasController.cs" />
+    <Compile Include="Controllers\obrasController.cs" />
+    <Compile Include="Controllers\veiculoesController.cs" />
     <Compile Include="fasedaobra.cs">
       <DependentUpon>BritecEntities.tt</DependentUpon>
     </Compile>
@@ -153,6 +167,17 @@
     <Compile Include="itemaplicacao.cs">
       <DependentUpon>BritecEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ControleAplicacao\AplicacaoMassa.cs" />
+    <Compile Include="Models\ControleAplicacao\Frete.cs" />
+    <Compile Include="Models\ControleAplicacao\Resumo.cs" />
+    <Compile Include="Models\InfoFaseDaObra.cs" />
+    <Compile Include="Models\InfoMotorista.cs" />
+    <Compile Include="Models\InfoVeiculo.cs" />
+    <Compile Include="Models\Obra.cs" />
+    <Compile Include="Models\ParansInfoUsuario.cs" />
+    <Compile Include="Models\ParansLista.cs" />
+    <Compile Include="Models\Permissao.cs" />
+    <Compile Include="Models\StatusRequisicao.cs" />
     <Compile Include="motorista.cs">
       <DependentUpon>BritecEntities.tt</DependentUpon>
     </Compile>
@@ -173,9 +198,6 @@
       <DependentUpon>BritecEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="usuario.cs">
-      <DependentUpon>BritecEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="usuarioobra.cs">
       <DependentUpon>BritecEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="veiculo.cs">
@@ -203,7 +225,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
+    <Folder Include="ClassesACS\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

@@ -18,8 +18,8 @@ namespace BritecWebAPI
         public obra()
         {
             this.fasedaobra = new HashSet<fasedaobra>();
-            this.usuarioobra = new HashSet<usuarioobra>();
             this.veiculoobra = new HashSet<veiculoobra>();
+            this.usuario = new HashSet<usuario>();
         }
     
         public long id { get; set; }
@@ -27,12 +27,15 @@ namespace BritecWebAPI
         public System.DateTime dataInicio { get; set; }
         public System.DateTime dataFimPrevisto { get; set; }
         public Nullable<System.DateTime> dataFim { get; set; }
+        public string cliente { get; set; }
+        public string local { get; set; }
+        public double ValorPorToneladaFrete { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<fasedaobra> fasedaobra { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<usuarioobra> usuarioobra { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<veiculoobra> veiculoobra { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<usuario> usuario { get; set; }
     }
 }

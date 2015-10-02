@@ -40,7 +40,6 @@ namespace BritecWebAPI
         public virtual DbSet<programa> programa { get; set; }
         public virtual DbSet<proprietario> proprietario { get; set; }
         public virtual DbSet<usuario> usuario { get; set; }
-        public virtual DbSet<usuarioobra> usuarioobra { get; set; }
         public virtual DbSet<veiculo> veiculo { get; set; }
         public virtual DbSet<veiculoobra> veiculoobra { get; set; }
     }
