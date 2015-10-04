@@ -21,6 +21,7 @@ namespace BritecWebAPI
             this.controleaplicacaomassa = new HashSet<controleaplicacaomassa>();
             this.veiculoobra = new HashSet<veiculoobra>();
             this.obra = new HashSet<obra>();
+            this.patologia = new HashSet<patologia>();
         }
     
         public string CloudId { get; set; }
@@ -35,5 +36,7 @@ namespace BritecWebAPI
         public virtual ICollection<veiculoobra> veiculoobra { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<obra> obra { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<patologia> patologia { get; set; }
     }
 }

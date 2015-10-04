@@ -42,5 +42,7 @@ namespace BritecWebAPI
         public virtual DbSet<usuario> usuario { get; set; }
         public virtual DbSet<veiculo> veiculo { get; set; }
         public virtual DbSet<veiculoobra> veiculoobra { get; set; }
+        public virtual DbSet<imagempatologia> imagempatologia { get; set; }
+        public virtual DbSet<patologia> patologia { get; set; }
     }
 }

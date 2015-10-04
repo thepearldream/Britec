@@ -151,6 +151,7 @@
     <Compile Include="Controllers\funcaoprogramasController.cs" />
     <Compile Include="Controllers\motoristasController.cs" />
     <Compile Include="Controllers\obrasController.cs" />
+    <Compile Include="Controllers\patologiasController.cs" />
     <Compile Include="Controllers\veiculoesController.cs" />
     <Compile Include="fasedaobra.cs">
       <DependentUpon>BritecEntities.tt</DependentUpon>
@@ -163,6 +164,9 @@
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="imagempatologia.cs">
+      <DependentUpon>BritecEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="itemaplicacao.cs">
       <DependentUpon>BritecEntities.tt</DependentUpon>
@@ -188,6 +192,9 @@
       <DependentUpon>BritecEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="observacaoabastecimento.cs">
+      <DependentUpon>BritecEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="patologia.cs">
       <DependentUpon>BritecEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="programa.cs">
@@ -216,6 +223,7 @@
     <Content Include="BritecEntities.edmx.diagram">
       <DependentUpon>BritecEntities.edmx</DependentUpon>
     </Content>
+    <None Include="Properties\PublishProfiles\BritecWebAPI.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

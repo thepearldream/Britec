@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="britecModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="britecModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="abastecimento">
           <Key>
             <PropertyRef Name="id" />
@@ -69,6 +69,17 @@
           <Property Name="Programa_id" Type="int" Nullable="false" />
           <Property Name="NivelPermissao_id" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="imagempatologia">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="urlImagem" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="Patologia_id" Type="bigint" Nullable="false" />
+          <Property Name="data" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="latitude" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="longitude" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
         <EntityType Name="itemaplicacao">
           <Key>
             <PropertyRef Name="id" />
@@ -125,6 +136,15 @@
           </Key>
           <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="observacao" Type="varchar" MaxLength="500" Nullable="false" />
+        </EntityType>
+        <EntityType Name="patologia">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="observacao" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="Obra_id" Type="bigint" Nullable="false" />
+          <Property Name="Usuario_CloudId" Type="varchar" MaxLength="40" Nullable="false" />
         </EntityType>
         <EntityType Name="programa">
           <Key>
@@ -287,6 +307,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="fk_ImagemPatologia_Patologia1">
+          <End Role="patologia" Type="Self.patologia" Multiplicity="1" />
+          <End Role="imagempatologia" Type="Self.imagempatologia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="patologia">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="imagempatologia">
+              <PropertyRef Name="Patologia_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fk_ItemAplicacao_ControleAplicacaoMassa1">
           <End Role="controleaplicacaomassa" Type="Self.controleaplicacaomassa" Multiplicity="1" />
           <End Role="itemaplicacao" Type="Self.itemaplicacao" Multiplicity="*" />
@@ -324,6 +356,30 @@
             </Principal>
             <Dependent Role="itemaplicacao">
               <PropertyRef Name="Veiculo_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Patologia_Obra1">
+          <End Role="obra" Type="Self.obra" Multiplicity="1" />
+          <End Role="patologia" Type="Self.patologia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="obra">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="patologia">
+              <PropertyRef Name="Obra_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Patologia_Usuario1">
+          <End Role="usuario" Type="Self.usuario" Multiplicity="1" />
+          <End Role="patologia" Type="Self.patologia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuario">
+              <PropertyRef Name="CloudId" />
+            </Principal>
+            <Dependent Role="patologia">
+              <PropertyRef Name="Usuario_CloudId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -443,11 +499,13 @@
           <EntitySet Name="fasedaobra" EntityType="Self.fasedaobra" Schema="britec" store:Type="Tables" />
           <EntitySet Name="funcao" EntityType="Self.funcao" Schema="britec" store:Type="Tables" />
           <EntitySet Name="funcaoprograma" EntityType="Self.funcaoprograma" Schema="britec" store:Type="Tables" />
+          <EntitySet Name="imagempatologia" EntityType="Self.imagempatologia" Schema="britec" store:Type="Tables" />
           <EntitySet Name="itemaplicacao" EntityType="Self.itemaplicacao" Schema="britec" store:Type="Tables" />
           <EntitySet Name="motorista" EntityType="Self.motorista" Schema="britec" store:Type="Tables" />
           <EntitySet Name="nivelpermissao" EntityType="Self.nivelpermissao" Schema="britec" store:Type="Tables" />
           <EntitySet Name="obra" EntityType="Self.obra" Schema="britec" store:Type="Tables" />
           <EntitySet Name="observacaoabastecimento" EntityType="Self.observacaoabastecimento" Schema="britec" store:Type="Tables" />
+          <EntitySet Name="patologia" EntityType="Self.patologia" Schema="britec" store:Type="Tables" />
           <EntitySet Name="programa" EntityType="Self.programa" Schema="britec" store:Type="Tables" />
           <EntitySet Name="proprietario" EntityType="Self.proprietario" Schema="britec" store:Type="Tables" />
           <EntitySet Name="usuario" EntityType="Self.usuario" Schema="britec" store:Type="Tables" />
@@ -490,6 +548,10 @@
             <End Role="nivelpermissao" EntitySet="nivelpermissao" />
             <End Role="funcaoprograma" EntitySet="funcaoprograma" />
           </AssociationSet>
+          <AssociationSet Name="fk_ImagemPatologia_Patologia1" Association="Self.fk_ImagemPatologia_Patologia1">
+            <End Role="patologia" EntitySet="patologia" />
+            <End Role="imagempatologia" EntitySet="imagempatologia" />
+          </AssociationSet>
           <AssociationSet Name="fk_ItemAplicacao_ControleAplicacaoMassa1" Association="Self.fk_ItemAplicacao_ControleAplicacaoMassa1">
             <End Role="controleaplicacaomassa" EntitySet="controleaplicacaomassa" />
             <End Role="itemaplicacao" EntitySet="itemaplicacao" />
@@ -501,6 +563,14 @@
           <AssociationSet Name="fk_ItemAplicacao_Veiculo1" Association="Self.fk_ItemAplicacao_Veiculo1">
             <End Role="veiculo" EntitySet="veiculo" />
             <End Role="itemaplicacao" EntitySet="itemaplicacao" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Patologia_Obra1" Association="Self.fk_Patologia_Obra1">
+            <End Role="obra" EntitySet="obra" />
+            <End Role="patologia" EntitySet="patologia" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Patologia_Usuario1" Association="Self.fk_Patologia_Usuario1">
+            <End Role="usuario" EntitySet="usuario" />
+            <End Role="patologia" EntitySet="patologia" />
           </AssociationSet>
           <AssociationSet Name="fk_Trecho_Obra1" Association="Self.fk_Trecho_Obra1">
             <End Role="obra" EntitySet="obra" />
@@ -539,8 +609,7 @@
             <End Role="veiculo" EntitySet="veiculo" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="britecModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -681,6 +750,7 @@
           <NavigationProperty Name="fasedaobra" Relationship="Self.fk_Trecho_Obra1" FromRole="obra" ToRole="fasedaobra" />
           <NavigationProperty Name="veiculoobra" Relationship="Self.fk_Veiculo_has_Obra_Obra1" FromRole="obra" ToRole="veiculoobra" />
           <NavigationProperty Name="usuario" Relationship="Self.usuarioobra" FromRole="obra" ToRole="usuario" />
+          <NavigationProperty Name="patologia" Relationship="britecModel.fk_Patologia_Obra1" FromRole="obra" ToRole="patologia" />
         </EntityType>
         <EntityType Name="observacaoabastecimento">
           <Key>
@@ -719,6 +789,7 @@
           <NavigationProperty Name="funcao" Relationship="Self.fk_Usuario_Funcao1" FromRole="usuario" ToRole="funcao" />
           <NavigationProperty Name="veiculoobra" Relationship="Self.fk_Veiculo_has_Obra_Usuario1" FromRole="usuario" ToRole="veiculoobra" />
           <NavigationProperty Name="obra" Relationship="Self.usuarioobra" FromRole="usuario" ToRole="obra" />
+          <NavigationProperty Name="patologia" Relationship="britecModel.fk_Patologia_Usuario1" FromRole="usuario" ToRole="patologia" />
         </EntityType>
         <EntityType Name="veiculo">
           <Key>
@@ -1084,7 +1155,81 @@
             <End Role="obra" EntitySet="obra" />
             <End Role="usuario" EntitySet="usuario" />
           </AssociationSet>
+          <EntitySet Name="imagempatologia" EntityType="britecModel.imagempatologia" />
+          <EntitySet Name="patologia" EntityType="britecModel.patologia" />
+          <AssociationSet Name="fk_ImagemPatologia_Patologia1" Association="britecModel.fk_ImagemPatologia_Patologia1">
+            <End Role="patologia" EntitySet="patologia" />
+            <End Role="imagempatologia" EntitySet="imagempatologia" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Patologia_Obra1" Association="britecModel.fk_Patologia_Obra1">
+            <End Role="obra" EntitySet="obra" />
+            <End Role="patologia" EntitySet="patologia" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Patologia_Usuario1" Association="britecModel.fk_Patologia_Usuario1">
+            <End Role="usuario" EntitySet="usuario" />
+            <End Role="patologia" EntitySet="patologia" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="imagempatologia">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="urlImagem" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Patologia_id" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="patologia" Relationship="britecModel.fk_ImagemPatologia_Patologia1" FromRole="imagempatologia" ToRole="patologia" />
+          <Property Name="data" Type="DateTime" Nullable="false" />
+          <Property Name="latitude" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="longitude" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="patologia">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="observacao" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Obra_id" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="imagempatologia" Relationship="britecModel.fk_ImagemPatologia_Patologia1" FromRole="patologia" ToRole="imagempatologia" />
+          <NavigationProperty Name="obra" Relationship="britecModel.fk_Patologia_Obra1" FromRole="patologia" ToRole="obra" />
+          <Property Name="Usuario_CloudId" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="usuario" Relationship="britecModel.fk_Patologia_Usuario1" FromRole="patologia" ToRole="usuario" />
+        </EntityType>
+        <Association Name="fk_ImagemPatologia_Patologia1">
+          <End Type="britecModel.patologia" Role="patologia" Multiplicity="1" />
+          <End Type="britecModel.imagempatologia" Role="imagempatologia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="patologia">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="imagempatologia">
+              <PropertyRef Name="Patologia_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Patologia_Obra1">
+          <End Type="britecModel.obra" Role="obra" Multiplicity="1" />
+          <End Type="britecModel.patologia" Role="patologia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="obra">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="patologia">
+              <PropertyRef Name="Obra_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Patologia_Usuario1">
+          <End Type="britecModel.usuario" Role="usuario" Multiplicity="1" />
+          <End Type="britecModel.patologia" Role="patologia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuario">
+              <PropertyRef Name="CloudId" />
+            </Principal>
+            <Dependent Role="patologia">
+              <PropertyRef Name="Usuario_CloudId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1275,6 +1420,28 @@
               <ScalarProperty Name="CloudId" ColumnName="Usuario_CloudId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="imagempatologia">
+            <EntityTypeMapping TypeName="britecModel.imagempatologia">
+              <MappingFragment StoreEntitySet="imagempatologia">
+                <ScalarProperty Name="longitude" ColumnName="longitude" />
+                <ScalarProperty Name="latitude" ColumnName="latitude" />
+                <ScalarProperty Name="data" ColumnName="data" />
+                <ScalarProperty Name="Patologia_id" ColumnName="Patologia_id" />
+                <ScalarProperty Name="urlImagem" ColumnName="urlImagem" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="patologia">
+            <EntityTypeMapping TypeName="britecModel.patologia">
+              <MappingFragment StoreEntitySet="patologia">
+                <ScalarProperty Name="Usuario_CloudId" ColumnName="Usuario_CloudId" />
+                <ScalarProperty Name="Obra_id" ColumnName="Obra_id" />
+                <ScalarProperty Name="observacao" ColumnName="observacao" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

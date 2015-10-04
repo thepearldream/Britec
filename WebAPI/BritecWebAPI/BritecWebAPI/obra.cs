@@ -20,6 +20,7 @@ namespace BritecWebAPI
             this.fasedaobra = new HashSet<fasedaobra>();
             this.veiculoobra = new HashSet<veiculoobra>();
             this.usuario = new HashSet<usuario>();
+            this.patologia = new HashSet<patologia>();
         }
     
         public long id { get; set; }
@@ -37,5 +38,7 @@ namespace BritecWebAPI
         public virtual ICollection<veiculoobra> veiculoobra { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<usuario> usuario { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<patologia> patologia { get; set; }
     }
 }
