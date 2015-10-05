@@ -36,7 +36,6 @@ namespace BritecWebAPI
         public virtual DbSet<motorista> motorista { get; set; }
         public virtual DbSet<nivelpermissao> nivelpermissao { get; set; }
         public virtual DbSet<obra> obra { get; set; }
-        public virtual DbSet<observacaoabastecimento> observacaoabastecimento { get; set; }
         public virtual DbSet<programa> programa { get; set; }
         public virtual DbSet<proprietario> proprietario { get; set; }
         public virtual DbSet<usuario> usuario { get; set; }

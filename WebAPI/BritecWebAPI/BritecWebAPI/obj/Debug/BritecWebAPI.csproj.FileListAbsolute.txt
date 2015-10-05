@@ -32,4 +32,3 @@ C:\Mobile\Britec\WebAPI\BritecWebAPI\BritecWebAPI\bin\System.Web.Http.WebHost.xm
 C:\Mobile\Britec\WebAPI\BritecWebAPI\BritecWebAPI\obj\Debug\BritecWebAPI.dll
 C:\Mobile\Britec\WebAPI\BritecWebAPI\BritecWebAPI\obj\Debug\BritecWebAPI.pdb
 C:\Mobile\Britec\WebAPI\BritecWebAPI\BritecWebAPI\bin\MySql.Web.dll
-C:\Mobile\Britec\WebAPI\BritecWebAPI\BritecWebAPI\obj\Debug\BritecWebAPI.csprojResolveAssemblyReference.cache

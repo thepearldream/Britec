@@ -1,4 +1,4 @@
-﻿namespace BritecWebAPI.Models
+﻿namespace BritecWebAPI.Models.Obra
 {
     public class InfoFaseDaObra
     {

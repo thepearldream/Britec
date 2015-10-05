@@ -147,6 +147,7 @@
     <Compile Include="controleaplicacaomassa.cs">
       <DependentUpon>BritecEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\abastecimentoesController.cs" />
     <Compile Include="Controllers\controleaplicacaomassasController.cs" />
     <Compile Include="Controllers\funcaoprogramasController.cs" />
     <Compile Include="Controllers\motoristasController.cs" />
@@ -171,13 +172,15 @@
     <Compile Include="itemaplicacao.cs">
       <DependentUpon>BritecEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Abastecimento\InfoAbastecimento.cs" />
     <Compile Include="Models\ControleAplicacao\AplicacaoMassa.cs" />
     <Compile Include="Models\ControleAplicacao\Frete.cs" />
     <Compile Include="Models\ControleAplicacao\Resumo.cs" />
-    <Compile Include="Models\InfoFaseDaObra.cs" />
+    <Compile Include="Models\Obra\InfoFaseDaObra.cs" />
     <Compile Include="Models\InfoMotorista.cs" />
     <Compile Include="Models\InfoVeiculo.cs" />
-    <Compile Include="Models\Obra.cs" />
+    <Compile Include="Models\Obra\InfoVeiculoObra.cs" />
+    <Compile Include="Models\Obra\Obra.cs" />
     <Compile Include="Models\ParansInfoUsuario.cs" />
     <Compile Include="Models\ParansLista.cs" />
     <Compile Include="Models\Permissao.cs" />
@@ -189,9 +192,6 @@
       <DependentUpon>BritecEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="obra.cs">
-      <DependentUpon>BritecEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="observacaoabastecimento.cs">
       <DependentUpon>BritecEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="patologia.cs">

@@ -16,14 +16,12 @@
         <EntityTypeShape EntityType="britecModel.motorista" Width="1.5" PointX="5.25" PointY="13.25" IsExpanded="true" />
         <EntityTypeShape EntityType="britecModel.nivelpermissao" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="britecModel.obra" Width="1.5" PointX="0.75" PointY="6.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="britecModel.observacaoabastecimento" Width="1.5" PointX="5.25" PointY="10.375" IsExpanded="true" />
         <EntityTypeShape EntityType="britecModel.programa" Width="1.5" PointX="0.75" PointY="16.25" IsExpanded="true" />
         <EntityTypeShape EntityType="britecModel.proprietario" Width="1.5" PointX="0.75" PointY="13.375" IsExpanded="true" />
         <EntityTypeShape EntityType="britecModel.usuario" Width="1.5" PointX="3" PointY="4" IsExpanded="true" />
         <EntityTypeShape EntityType="britecModel.veiculo" Width="1.5" PointX="3" PointY="11.75" IsExpanded="true" />
         <EntityTypeShape EntityType="britecModel.veiculoobra" Width="1.5" PointX="5.25" PointY="3.75" IsExpanded="true" />
         <AssociationConnector Association="britecModel.fk_Abastecimento_CategoriaAbastecimento1" ManuallyRouted="false" />
-        <AssociationConnector Association="britecModel.fk_Abastecimento_ObservacaoAbastecimento1" ManuallyRouted="false" />
         <AssociationConnector Association="britecModel.fk_Abastecimento_Usuario1" ManuallyRouted="false" />
         <AssociationConnector Association="britecModel.fk_Abastecimento_VeiculoObra1" ManuallyRouted="false" />
         <AssociationConnector Association="britecModel.fk_Veiculo_CategoriaVeiculo1" ManuallyRouted="false" />

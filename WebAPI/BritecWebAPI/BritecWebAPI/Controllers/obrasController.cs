@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Data;
+using System.Data.Entity;
 using System.Linq;
 using System.Web.Http;
 using BritecWebAPI.Models;
+using BritecWebAPI.Models.Obra;
 
 namespace BritecWebAPI.Controllers
 {
@@ -32,7 +34,7 @@ namespace BritecWebAPI.Controllers
         }
 
         [HttpPost]
-        public List<InfoFaseDaObra> getFasesDaObra(parans_getFasesDaObra parans)
+        public List<InfoFaseDaObra> getFasesDaObra(parans_getInfoObra parans)
         {
             var lstFaseObra = new List<InfoFaseDaObra>();
             var rowsFaseObra = db.fasedaobra.Where(fo => fo.Obra_id == parans.Obra_id).OrderBy(fo => fo.descricao).ToList();
@@ -46,9 +48,23 @@ namespace BritecWebAPI.Controllers
             return lstFaseObra;
         }
 
+        [HttpPost]
+        public List<InfoVeiculoObra> getVeiculosObra(parans_getInfoObra parans)
+        {
+            var lstVeiculoObra = new List<InfoVeiculoObra>();
+            var rowsVeiculoObra = db.veiculoobra.Include(vo => vo.veiculo).Where(vo => vo.Obra_id == parans.Obra_id).OrderBy(vo => vo.veiculo.descricao).ToList();
+            foreach (var veiculoobraRow in rowsVeiculoObra)
+            {
+                var veiculo = new InfoVeiculoObra();
+                
+                lstVeiculoObra.Add(veiculo);
+            }
+            return lstVeiculoObra;
+        }
+
     }
-#region "Parâmetros"
-    public class parans_getFasesDaObra
+#region Parâmetros
+    public class parans_getInfoObra
     {
         public long Obra_id { get; set; }
     }

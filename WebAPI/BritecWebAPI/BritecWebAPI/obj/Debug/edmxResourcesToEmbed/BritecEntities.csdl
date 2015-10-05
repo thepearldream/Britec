@@ -9,14 +9,13 @@
     <Property Name="horimetro" Type="Double" Nullable="false" />
     <Property Name="quantidade" Type="Double" Nullable="false" />
     <Property Name="CategoriaAbastecimento_id" Type="Int32" Nullable="false" />
-    <Property Name="ObservacaoAbastecimento_id" Type="Int64" />
     <Property Name="Apontador_CloudId" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="VeiculoObra_Veiculo_id" Type="Int64" Nullable="false" />
     <Property Name="VeiculoObra_Obra_id" Type="Int64" Nullable="false" />
     <NavigationProperty Name="categoriaabastecimento" Relationship="Self.fk_Abastecimento_CategoriaAbastecimento1" FromRole="abastecimento" ToRole="categoriaabastecimento" />
-    <NavigationProperty Name="observacaoabastecimento" Relationship="Self.fk_Abastecimento_ObservacaoAbastecimento1" FromRole="abastecimento" ToRole="observacaoabastecimento" />
     <NavigationProperty Name="usuario" Relationship="Self.fk_Abastecimento_Usuario1" FromRole="abastecimento" ToRole="usuario" />
     <NavigationProperty Name="veiculoobra" Relationship="Self.fk_Abastecimento_VeiculoObra1" FromRole="abastecimento" ToRole="veiculoobra" />
+    <Property Name="Observacao" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="categoriaabastecimento">
     <Key>
@@ -139,14 +138,6 @@
     <NavigationProperty Name="usuario" Relationship="Self.usuarioobra" FromRole="obra" ToRole="usuario" />
     <NavigationProperty Name="patologia" Relationship="britecModel.fk_Patologia_Obra1" FromRole="obra" ToRole="patologia" />
   </EntityType>
-  <EntityType Name="observacaoabastecimento">
-    <Key>
-      <PropertyRef Name="id" />
-    </Key>
-    <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="observacao" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
-    <NavigationProperty Name="abastecimento" Relationship="Self.fk_Abastecimento_ObservacaoAbastecimento1" FromRole="observacaoabastecimento" ToRole="abastecimento" />
-  </EntityType>
   <EntityType Name="programa">
     <Key>
       <PropertyRef Name="id" />
@@ -215,18 +206,6 @@
       </Principal>
       <Dependent Role="abastecimento">
         <PropertyRef Name="CategoriaAbastecimento_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="fk_Abastecimento_ObservacaoAbastecimento1">
-    <End Role="observacaoabastecimento" Type="Self.observacaoabastecimento" Multiplicity="0..1" />
-    <End Role="abastecimento" Type="Self.abastecimento" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="observacaoabastecimento">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="abastecimento">
-        <PropertyRef Name="ObservacaoAbastecimento_id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -456,7 +435,6 @@
     <EntitySet Name="motorista" EntityType="Self.motorista" />
     <EntitySet Name="nivelpermissao" EntityType="Self.nivelpermissao" />
     <EntitySet Name="obra" EntityType="Self.obra" />
-    <EntitySet Name="observacaoabastecimento" EntityType="Self.observacaoabastecimento" />
     <EntitySet Name="programa" EntityType="Self.programa" />
     <EntitySet Name="proprietario" EntityType="Self.proprietario" />
     <EntitySet Name="usuario" EntityType="Self.usuario" />
@@ -464,10 +442,6 @@
     <EntitySet Name="veiculoobra" EntityType="Self.veiculoobra" />
     <AssociationSet Name="fk_Abastecimento_CategoriaAbastecimento1" Association="Self.fk_Abastecimento_CategoriaAbastecimento1">
       <End Role="categoriaabastecimento" EntitySet="categoriaabastecimento" />
-      <End Role="abastecimento" EntitySet="abastecimento" />
-    </AssociationSet>
-    <AssociationSet Name="fk_Abastecimento_ObservacaoAbastecimento1" Association="Self.fk_Abastecimento_ObservacaoAbastecimento1">
-      <End Role="observacaoabastecimento" EntitySet="observacaoabastecimento" />
       <End Role="abastecimento" EntitySet="abastecimento" />
     </AssociationSet>
     <AssociationSet Name="fk_Abastecimento_Usuario1" Association="Self.fk_Abastecimento_Usuario1">

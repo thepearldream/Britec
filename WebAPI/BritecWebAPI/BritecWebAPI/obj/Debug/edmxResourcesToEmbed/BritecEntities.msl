@@ -4,12 +4,12 @@
     <EntitySetMapping Name="abastecimento">
       <EntityTypeMapping TypeName="britecModel.abastecimento">
         <MappingFragment StoreEntitySet="abastecimento">
+          <ScalarProperty Name="Observacao" ColumnName="Observacao" />
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="data" ColumnName="data" />
           <ScalarProperty Name="horimetro" ColumnName="horimetro" />
           <ScalarProperty Name="quantidade" ColumnName="quantidade" />
           <ScalarProperty Name="CategoriaAbastecimento_id" ColumnName="CategoriaAbastecimento_id" />
-          <ScalarProperty Name="ObservacaoAbastecimento_id" ColumnName="ObservacaoAbastecimento_id" />
           <ScalarProperty Name="Apontador_CloudId" ColumnName="Apontador_CloudId" />
           <ScalarProperty Name="VeiculoObra_Veiculo_id" ColumnName="VeiculoObra_Veiculo_id" />
           <ScalarProperty Name="VeiculoObra_Obra_id" ColumnName="VeiculoObra_Obra_id" />
@@ -119,14 +119,6 @@
           <ScalarProperty Name="cliente" ColumnName="cliente" />
           <ScalarProperty Name="local" ColumnName="local" />
           <ScalarProperty Name="ValorPorToneladaFrete" ColumnName="ValorPorToneladaFrete" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="observacaoabastecimento">
-      <EntityTypeMapping TypeName="britecModel.observacaoabastecimento">
-        <MappingFragment StoreEntitySet="observacaoabastecimento">
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="observacao" ColumnName="observacao" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

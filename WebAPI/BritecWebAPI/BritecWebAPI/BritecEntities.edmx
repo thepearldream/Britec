@@ -14,7 +14,7 @@
           <Property Name="horimetro" Type="double" Nullable="false" />
           <Property Name="quantidade" Type="double" Nullable="false" />
           <Property Name="CategoriaAbastecimento_id" Type="int" Nullable="false" />
-          <Property Name="ObservacaoAbastecimento_id" Type="bigint" />
+          <Property Name="Observacao" Type="varchar" MaxLength="500" />
           <Property Name="Apontador_CloudId" Type="varchar" MaxLength="40" Nullable="false" />
           <Property Name="VeiculoObra_Veiculo_id" Type="bigint" Nullable="false" />
           <Property Name="VeiculoObra_Obra_id" Type="bigint" Nullable="false" />
@@ -130,13 +130,6 @@
           <Property Name="local" Type="varchar" MaxLength="150" />
           <Property Name="ValorPorToneladaFrete" Type="double" Nullable="false" />
         </EntityType>
-        <EntityType Name="observacaoabastecimento">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="observacao" Type="varchar" MaxLength="500" Nullable="false" />
-        </EntityType>
         <EntityType Name="patologia">
           <Key>
             <PropertyRef Name="id" />
@@ -206,18 +199,6 @@
             </Principal>
             <Dependent Role="abastecimento">
               <PropertyRef Name="CategoriaAbastecimento_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_Abastecimento_ObservacaoAbastecimento1">
-          <End Role="observacaoabastecimento" Type="Self.observacaoabastecimento" Multiplicity="0..1" />
-          <End Role="abastecimento" Type="Self.abastecimento" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="observacaoabastecimento">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="abastecimento">
-              <PropertyRef Name="ObservacaoAbastecimento_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -504,7 +485,6 @@
           <EntitySet Name="motorista" EntityType="Self.motorista" Schema="britec" store:Type="Tables" />
           <EntitySet Name="nivelpermissao" EntityType="Self.nivelpermissao" Schema="britec" store:Type="Tables" />
           <EntitySet Name="obra" EntityType="Self.obra" Schema="britec" store:Type="Tables" />
-          <EntitySet Name="observacaoabastecimento" EntityType="Self.observacaoabastecimento" Schema="britec" store:Type="Tables" />
           <EntitySet Name="patologia" EntityType="Self.patologia" Schema="britec" store:Type="Tables" />
           <EntitySet Name="programa" EntityType="Self.programa" Schema="britec" store:Type="Tables" />
           <EntitySet Name="proprietario" EntityType="Self.proprietario" Schema="britec" store:Type="Tables" />
@@ -514,10 +494,6 @@
           <EntitySet Name="veiculoobra" EntityType="Self.veiculoobra" Schema="britec" store:Type="Tables" />
           <AssociationSet Name="fk_Abastecimento_CategoriaAbastecimento1" Association="Self.fk_Abastecimento_CategoriaAbastecimento1">
             <End Role="categoriaabastecimento" EntitySet="categoriaabastecimento" />
-            <End Role="abastecimento" EntitySet="abastecimento" />
-          </AssociationSet>
-          <AssociationSet Name="fk_Abastecimento_ObservacaoAbastecimento1" Association="Self.fk_Abastecimento_ObservacaoAbastecimento1">
-            <End Role="observacaoabastecimento" EntitySet="observacaoabastecimento" />
             <End Role="abastecimento" EntitySet="abastecimento" />
           </AssociationSet>
           <AssociationSet Name="fk_Abastecimento_Usuario1" Association="Self.fk_Abastecimento_Usuario1">
@@ -622,14 +598,13 @@
           <Property Name="horimetro" Type="Double" Nullable="false" />
           <Property Name="quantidade" Type="Double" Nullable="false" />
           <Property Name="CategoriaAbastecimento_id" Type="Int32" Nullable="false" />
-          <Property Name="ObservacaoAbastecimento_id" Type="Int64" />
           <Property Name="Apontador_CloudId" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="VeiculoObra_Veiculo_id" Type="Int64" Nullable="false" />
           <Property Name="VeiculoObra_Obra_id" Type="Int64" Nullable="false" />
           <NavigationProperty Name="categoriaabastecimento" Relationship="Self.fk_Abastecimento_CategoriaAbastecimento1" FromRole="abastecimento" ToRole="categoriaabastecimento" />
-          <NavigationProperty Name="observacaoabastecimento" Relationship="Self.fk_Abastecimento_ObservacaoAbastecimento1" FromRole="abastecimento" ToRole="observacaoabastecimento" />
           <NavigationProperty Name="usuario" Relationship="Self.fk_Abastecimento_Usuario1" FromRole="abastecimento" ToRole="usuario" />
           <NavigationProperty Name="veiculoobra" Relationship="Self.fk_Abastecimento_VeiculoObra1" FromRole="abastecimento" ToRole="veiculoobra" />
+          <Property Name="Observacao" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="categoriaabastecimento">
           <Key>
@@ -752,14 +727,6 @@
           <NavigationProperty Name="usuario" Relationship="Self.usuarioobra" FromRole="obra" ToRole="usuario" />
           <NavigationProperty Name="patologia" Relationship="britecModel.fk_Patologia_Obra1" FromRole="obra" ToRole="patologia" />
         </EntityType>
-        <EntityType Name="observacaoabastecimento">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="observacao" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="abastecimento" Relationship="Self.fk_Abastecimento_ObservacaoAbastecimento1" FromRole="observacaoabastecimento" ToRole="abastecimento" />
-        </EntityType>
         <EntityType Name="programa">
           <Key>
             <PropertyRef Name="id" />
@@ -828,18 +795,6 @@
             </Principal>
             <Dependent Role="abastecimento">
               <PropertyRef Name="CategoriaAbastecimento_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_Abastecimento_ObservacaoAbastecimento1">
-          <End Role="observacaoabastecimento" Type="Self.observacaoabastecimento" Multiplicity="0..1" />
-          <End Role="abastecimento" Type="Self.abastecimento" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="observacaoabastecimento">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="abastecimento">
-              <PropertyRef Name="ObservacaoAbastecimento_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1069,7 +1024,6 @@
           <EntitySet Name="motorista" EntityType="Self.motorista" />
           <EntitySet Name="nivelpermissao" EntityType="Self.nivelpermissao" />
           <EntitySet Name="obra" EntityType="Self.obra" />
-          <EntitySet Name="observacaoabastecimento" EntityType="Self.observacaoabastecimento" />
           <EntitySet Name="programa" EntityType="Self.programa" />
           <EntitySet Name="proprietario" EntityType="Self.proprietario" />
           <EntitySet Name="usuario" EntityType="Self.usuario" />
@@ -1077,10 +1031,6 @@
           <EntitySet Name="veiculoobra" EntityType="Self.veiculoobra" />
           <AssociationSet Name="fk_Abastecimento_CategoriaAbastecimento1" Association="Self.fk_Abastecimento_CategoriaAbastecimento1">
             <End Role="categoriaabastecimento" EntitySet="categoriaabastecimento" />
-            <End Role="abastecimento" EntitySet="abastecimento" />
-          </AssociationSet>
-          <AssociationSet Name="fk_Abastecimento_ObservacaoAbastecimento1" Association="Self.fk_Abastecimento_ObservacaoAbastecimento1">
-            <End Role="observacaoabastecimento" EntitySet="observacaoabastecimento" />
             <End Role="abastecimento" EntitySet="abastecimento" />
           </AssociationSet>
           <AssociationSet Name="fk_Abastecimento_Usuario1" Association="Self.fk_Abastecimento_Usuario1">
@@ -1239,12 +1189,12 @@
           <EntitySetMapping Name="abastecimento">
             <EntityTypeMapping TypeName="britecModel.abastecimento">
               <MappingFragment StoreEntitySet="abastecimento">
+                <ScalarProperty Name="Observacao" ColumnName="Observacao" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="data" ColumnName="data" />
                 <ScalarProperty Name="horimetro" ColumnName="horimetro" />
                 <ScalarProperty Name="quantidade" ColumnName="quantidade" />
                 <ScalarProperty Name="CategoriaAbastecimento_id" ColumnName="CategoriaAbastecimento_id" />
-                <ScalarProperty Name="ObservacaoAbastecimento_id" ColumnName="ObservacaoAbastecimento_id" />
                 <ScalarProperty Name="Apontador_CloudId" ColumnName="Apontador_CloudId" />
                 <ScalarProperty Name="VeiculoObra_Veiculo_id" ColumnName="VeiculoObra_Veiculo_id" />
                 <ScalarProperty Name="VeiculoObra_Obra_id" ColumnName="VeiculoObra_Obra_id" />
@@ -1354,14 +1304,6 @@
                 <ScalarProperty Name="cliente" ColumnName="cliente" />
                 <ScalarProperty Name="local" ColumnName="local" />
                 <ScalarProperty Name="ValorPorToneladaFrete" ColumnName="ValorPorToneladaFrete" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="observacaoabastecimento">
-            <EntityTypeMapping TypeName="britecModel.observacaoabastecimento">
-              <MappingFragment StoreEntitySet="observacaoabastecimento">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="observacao" ColumnName="observacao" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
