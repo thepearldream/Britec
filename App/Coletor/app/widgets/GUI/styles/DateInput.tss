@@ -1,7 +1,7 @@
 "#boxControles": {
 	width: Titanium.UI.FILL,
 	height: Alloy.Globals.CustomComponentHeight,
-	backgroundColor: "white"
+	backgroundColor: "transparent"
 }
 
 "#linhaDesc": {

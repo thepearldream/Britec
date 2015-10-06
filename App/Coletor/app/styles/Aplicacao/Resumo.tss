@@ -1,0 +1,5 @@
+
+"#boxResumo" : {
+  width:Titanium.UI.FILL,
+  height: Titanium.UI.FILL
+}

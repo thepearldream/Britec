@@ -10,7 +10,7 @@
  * @property {Number} CustomComponentHeight
  * Altura padrão dos controles. Exemplo: Botões
  */
-Alloy.Globals.CustomComponentHeight = 40;
+Alloy.Globals.CustomComponentHeight = 35;
 /**
  * @property {Object} CustomImageSize Tamanho padrão dos icones
  * @property {Number} CustomImageSize.height Altura
@@ -251,6 +251,7 @@ Alloy.Globals.logout = function(){
  */
 function executeLogout(parans){
 	if(parans.value){
+		Alloy.Globals.Obra = null;
 		Alloy.Globals.carregando();
 		Alloy.Globals.Cliente.at(0).destroy({silent: true});
 		Alloy.Globals.Cliente.fetch();

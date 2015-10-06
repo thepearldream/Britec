@@ -1,5 +1,7 @@
 var args = arguments[0] || {};
 
+var btnAdd = null;
+
 var fasesObra = Alloy.createCollection("InfoFaseDaObra");
 
 fasesObra.fetch();
@@ -8,12 +10,13 @@ var chaves = ["Id"];
 
 $.init = function(args){
 	Alloy.Globals.configWindow($.winControleAplicacao, $);
-	$.minhaTopBar.iniciar("Controle de aplicação de massa");
+	$.minhaTopBar.iniciar("Contr. de aplic.");
+	btnAdd = $.minhaTopBar.addRightButtom("/images/add.png", add);
 	$.periodoInicial.init({nome: "Data inicial da aplicação"});
-	//$.periodoInicial.setSelected({valor: new Date()});
+	$.periodoInicial.setSelected({valor: new Date()});
 	$.periodoFinal.init({nome: "Data final da aplicação"});
-	//$.periodoFinal.setSelected({valor: new Date()});
-	$.faseobra.init({nome: "Fases da obra", colecao: obras, chave: chaves, coluna: "Descricao"});
+	$.periodoFinal.setSelected({valor: new Date()});
+	$.faseobra.init({nome: "Fases da obra", colecao: fasesObra, chave: chaves, coluna: "Descricao"});
 };
 
 function obtemFasesObra(e){
@@ -32,7 +35,11 @@ function obtemFasesObra(e){
 }
 
 $.winControleAplicacao.addEventListener("open", function(e){
-	//obtemFasesObra();
+	obtemFasesObra();
+	var lstAplicacao = Alloy.createController("Aplicacao/ListaAplicacao", {pai: $});
+	var lstFrete = Alloy.createController("Aplicacao/ListaFrete", {pai: $});
+	var res = Alloy.createController("Aplicacao/Resumo", {pai: $});
+	$.minhaScrollable.init([lstAplicacao.getView(), lstFrete.getView(), res.getView()], ["Aplic.", "Frete", "Resumo"], {cacheSize: 3});
 });
 
 function sucessFasesObra(ret){
@@ -41,4 +48,8 @@ function sucessFasesObra(ret){
 
 function failFasesObra(ret){
 	Alloy.Globals.Alerta("Erro", "Erro ao sincronizar os dados. descricao: " + ret.error);
+}
+
+function add(e){
+	Alloy.Globals.Alerta("Alerta", "Teste de add");
 }

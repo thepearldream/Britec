@@ -1,7 +1,5 @@
-"#boxConteudo": {
+"#tabsBox": {
 	width: Titanium.UI.FILL,
-	top: 50,
-	bottom: 0,
-	width: Titanium.UI.FILL,
-	layout:"vertical"
+	top: 280,
+	bottom: 0
 }

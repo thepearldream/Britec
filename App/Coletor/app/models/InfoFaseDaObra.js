@@ -1,7 +1,7 @@
 exports.definition = {
 	config: {
 		columns: {
-		    "Id": "bigint PRIMARY_KEY",
+		    "Id": "int PRIMARY_KEY",
 		    "Descricao": "string"
 		},
 		adapter: {

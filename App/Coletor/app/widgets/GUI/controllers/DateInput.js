@@ -23,7 +23,7 @@ var picker = Widget.createWidget("GUI", "PopUpPicker");
 $.init = function(parans){
 	try{
 		$.lblDesc.text = parans.nome;
-		picker.init($.lblDesc.text, new Date(), true);	
+		picker.init($.lblDesc.text, new Date(), true, parans.tipo);	
 	}
 	catch(e){
 		Alloy.Globals.onError(e.message, "init", "app/widgets/GUI/controllers/ComboBox.js");

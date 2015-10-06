@@ -64,5 +64,5 @@ function habilitaBotoes(e){
 
 function contrAplc(e){
 	var novo = Alloy.createController("Aplicacao/ControleDeAplicacao");
-	Alloy.Globals.Transicao.nova(novo, novo.init, {});
+	Alloy.createWidget("Util", "Transicao").nova(novo, novo.init, {});
 }

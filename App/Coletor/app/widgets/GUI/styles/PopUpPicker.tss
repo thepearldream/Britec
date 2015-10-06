@@ -22,7 +22,7 @@
 	width: "90%",
 	left: "5%",
 	top: 10,
-	height: Titanium.UI.SIZE
+	height: 250
 }
 "#boxBtn": {
 	width: Titanium.UI.FILL,

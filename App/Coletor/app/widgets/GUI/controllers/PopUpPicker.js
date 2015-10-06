@@ -25,12 +25,15 @@ var currentValue = new Date();
  * @alteracao 09/07/2015 191658 Projeto Carlos Eduardo Santos Alves Domingos
  * Criação.
  */
-$.init = function(titulo, value, hasCancel){
+$.init = function(titulo, value, hasCancel, tipo){
 	try{
 		$.titulo.setText(titulo || "Alerta");
 		if(value){
 			$.picker.setValue(value);
 			currentValue = value;
+		}
+		if(tipo){
+			$.picker.setType(tipo);
 		}
 		if(hasCancel){
 			$.btnOk.width = "40%";
