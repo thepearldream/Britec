@@ -39,7 +39,17 @@ Alloy.Globals.MainColorLight = "#bbeaa2";
  * Endereço do domínio da empresa. Instanciado após o login.
  * @type {String}
  */
-Alloy.Globals.MainDomain = "http://192.168.25.191:8484/";
+Alloy.Globals.MainDomain = null;
+
+Alloy.Globals.emProducao = false;
+
+if(Alloy.Globals.emProducao){
+	Alloy.Globals.MainDomain = "http://192.168.2.221:8686/";
+}else{
+	Alloy.Globals.MainDomain = "http://192.168.2.221:8686/";
+}
+
+Alloy.Globals.Obra = null;
 
 //Acesso a nuvem do appcelerator
 var Cloud = require('ti.cloud');
@@ -66,8 +76,8 @@ Alloy.Globals.currentWindow = function(){
 	return Alloy.Globals.pilhaWindow[Alloy.Globals.pilhaWindow.length - 1];
 };
 
-var progressIndicator;
-var viewCarregando;
+var progressIndicator = null;
+var viewCarregando = null;
 if(Ti.Platform.name === "android"){
 	progressIndicator = Ti.UI.Android.createProgressIndicator({
 	  message: 'Carregando...',
@@ -292,10 +302,10 @@ var callbackServicos = function(nome){
 			case "Sair": 
 				Alloy.Globals.logout();
 				break;
-			/*case "Alterar dados": 
-				var novo = Alloy.createController("Perfil/Cadastro", {tipo: "atualizar"});
-				Alloy.Globals.Transicao.proximo(novo, novo.init, {});
-				break;*/
+			case "Início": 
+				var novo = Alloy.createController("Principal");
+				Alloy.createWidget("Util", "Transicao").nova(novo, novo.init, {});
+				break;
 			default :
 				alert("Servico não implementado.");
 				break;	
@@ -317,7 +327,7 @@ var callbackServicos = function(nome){
  */
 Alloy.Globals.iniciarServicos = function(){
 	Alloy.Globals.ListaServicos.resetar();
-	//Alloy.Globals.ListaServicos.adicionarServico("/images/perfil.png", "Alterar dados", callbackServicos);
+	Alloy.Globals.ListaServicos.adicionarServico("/images/home.png", "Início", callbackServicos);
 	Alloy.Globals.ListaServicos.adicionarServico("/images/logout.png", "Sair", callbackServicos);
 };
 

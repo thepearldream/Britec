@@ -1,4 +1,14 @@
-
-".container" : {
-  
+"#boxConteudo": {
+	width: Titanium.UI.FILL,
+	top: 50,
+	bottom: 0,
+	width: Titanium.UI.FILL,
+	layout:"vertical"
+}
+"#lblBemVindo": {
+	textAlign: Titanium.UI.TEXT_ALIGNMENT_LEFT,
+	width: Titanium.UI.FILL,
+	height: Titanium.UI.SIZE,
+	top: 10,
+	width: "90%"
 }

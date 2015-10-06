@@ -1,5 +1,14 @@
 <Alloy>
 	<Window class="janela" id="winPrincipal">
 		<Widget src="GUI" id="minhaTopBar" name="Topbar" />
+		<View id="boxConteudo" >
+			<Label id="lblBemVindo" /> 
+			<View height="Ti.UI.SIZE" top=10>
+				<Widget src="GUI" name="ComboBox" id="obra" />
+			</View> 
+			<Button id="btnCtrlAplic" onClick="contrAplc" class="CustomButton shadowView" top="15" color="black" width="90%" enabled="false" >Controle de aplicação de massa</Button> 
+			<Button id="btnCtrlAbs" class="CustomButton shadowView" top="15" color="black" width="90%" enabled="false" >Controle de abastecimento</Button>
+			<Button id="btnCtrlPat" class="CustomButton shadowView" top="15" color="black" width="90%" enabled="false" >Patologias</Button>
+		</View>
 	</Window>
 </Alloy>
