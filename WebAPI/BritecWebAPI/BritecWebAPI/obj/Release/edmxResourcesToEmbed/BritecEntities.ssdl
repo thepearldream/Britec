@@ -9,7 +9,7 @@
     <Property Name="horimetro" Type="double" Nullable="false" />
     <Property Name="quantidade" Type="double" Nullable="false" />
     <Property Name="CategoriaAbastecimento_id" Type="int" Nullable="false" />
-    <Property Name="ObservacaoAbastecimento_id" Type="bigint" />
+    <Property Name="Observacao" Type="varchar" MaxLength="500" />
     <Property Name="Apontador_CloudId" Type="varchar" MaxLength="40" Nullable="false" />
     <Property Name="VeiculoObra_Veiculo_id" Type="bigint" Nullable="false" />
     <Property Name="VeiculoObra_Obra_id" Type="bigint" Nullable="false" />
@@ -125,13 +125,6 @@
     <Property Name="local" Type="varchar" MaxLength="150" />
     <Property Name="ValorPorToneladaFrete" Type="double" Nullable="false" />
   </EntityType>
-  <EntityType Name="observacaoabastecimento">
-    <Key>
-      <PropertyRef Name="id" />
-    </Key>
-    <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="observacao" Type="varchar" MaxLength="500" Nullable="false" />
-  </EntityType>
   <EntityType Name="patologia">
     <Key>
       <PropertyRef Name="id" />
@@ -201,18 +194,6 @@
       </Principal>
       <Dependent Role="abastecimento">
         <PropertyRef Name="CategoriaAbastecimento_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="fk_Abastecimento_ObservacaoAbastecimento1">
-    <End Role="observacaoabastecimento" Type="Self.observacaoabastecimento" Multiplicity="0..1" />
-    <End Role="abastecimento" Type="Self.abastecimento" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="observacaoabastecimento">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="abastecimento">
-        <PropertyRef Name="ObservacaoAbastecimento_id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -499,7 +480,6 @@
     <EntitySet Name="motorista" EntityType="Self.motorista" Schema="britec" store:Type="Tables" />
     <EntitySet Name="nivelpermissao" EntityType="Self.nivelpermissao" Schema="britec" store:Type="Tables" />
     <EntitySet Name="obra" EntityType="Self.obra" Schema="britec" store:Type="Tables" />
-    <EntitySet Name="observacaoabastecimento" EntityType="Self.observacaoabastecimento" Schema="britec" store:Type="Tables" />
     <EntitySet Name="patologia" EntityType="Self.patologia" Schema="britec" store:Type="Tables" />
     <EntitySet Name="programa" EntityType="Self.programa" Schema="britec" store:Type="Tables" />
     <EntitySet Name="proprietario" EntityType="Self.proprietario" Schema="britec" store:Type="Tables" />
@@ -509,10 +489,6 @@
     <EntitySet Name="veiculoobra" EntityType="Self.veiculoobra" Schema="britec" store:Type="Tables" />
     <AssociationSet Name="fk_Abastecimento_CategoriaAbastecimento1" Association="Self.fk_Abastecimento_CategoriaAbastecimento1">
       <End Role="categoriaabastecimento" EntitySet="categoriaabastecimento" />
-      <End Role="abastecimento" EntitySet="abastecimento" />
-    </AssociationSet>
-    <AssociationSet Name="fk_Abastecimento_ObservacaoAbastecimento1" Association="Self.fk_Abastecimento_ObservacaoAbastecimento1">
-      <End Role="observacaoabastecimento" EntitySet="observacaoabastecimento" />
       <End Role="abastecimento" EntitySet="abastecimento" />
     </AssociationSet>
     <AssociationSet Name="fk_Abastecimento_Usuario1" Association="Self.fk_Abastecimento_Usuario1">

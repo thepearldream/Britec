@@ -10,7 +10,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
   </PropertyGroup>
   <ItemGroup>
     <File Include="bin/BritecWebAPI.dll">
-      <publishTime>10/04/2015 01:36:11</publishTime>
+      <publishTime>10/05/2015 15:29:53</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>10/01/2015 15:46:09</publishTime>
@@ -79,7 +79,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/01/2015 09:46:43</publishTime>
     </File>
     <File Include="BritecEntities.edmx.diagram">
-      <publishTime>10/03/2015 21:58:16</publishTime>
+      <publishTime>10/05/2015 12:01:39</publishTime>
     </File>
     <File Include="Global.asax">
       <publishTime>10/01/2015 09:46:27</publishTime>
