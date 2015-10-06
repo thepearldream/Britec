@@ -1,0 +1,5 @@
+<Alloy>
+	<Window class="janela" id="winPrincipal">
+		<Widget src="GUI" id="minhaTopBar" name="Topbar" />
+	</Window>
+</Alloy>
