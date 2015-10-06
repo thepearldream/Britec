@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Entity;
 using System.Linq;
 using System.Web.Http;
 using BritecWebAPI.Models;
@@ -122,6 +123,45 @@ namespace BritecWebAPI.Controllers
                 .ToList();
 
             return rowsResumo;
+        }
+
+        [HttpPost]
+        public List<AplicacaoMassa> getListAplicacao(parans_getListItensObra parans)
+        {
+            var lstAplicacao = new List<AplicacaoMassa>();
+
+            List<itemaplicacao> aplicacaoRows = null;
+            if (parans.Fase_id != null)
+            {
+                aplicacaoRows = db.itemaplicacao.Where(ia => ia.data <= parans.PeriodoFinal && ia.data >= parans.PeriodoInicial && ia.Fase_id == parans.Fase_id).ToList();
+            }
+            else
+            {
+                aplicacaoRows = db.itemaplicacao.Where(ia => ia.data <= parans.PeriodoFinal && ia.data >= parans.PeriodoInicial).ToList();
+            }
+            
+            foreach(var aplicacaoRow in aplicacaoRows)
+            {
+                var apl = new AplicacaoMassa();
+                apl.Comprimento = aplicacaoRow.comprimento;
+                apl.data = aplicacaoRow.data;
+                apl.Espessura = aplicacaoRow.espessura;
+                apl.Estaca = aplicacaoRow.estaca;
+                apl.Fase_id = aplicacaoRow.Fase_id;
+                apl.HoraFim = aplicacaoRow.horaFim;
+                apl.HoraInicio = aplicacaoRow.horaInicio;
+                apl.id = aplicacaoRow.id;
+                apl.Largura = aplicacaoRow.largura;
+                apl.Motorista_id = aplicacaoRow.Motorista_id;
+                apl.Nota = aplicacaoRow.nota;
+                apl.Temperatura = aplicacaoRow.temperatura;
+                apl.Toneladas = aplicacaoRow.toneladas;
+                apl.usuarioId = aplicacaoRow.Apontador_CloudId;
+                apl.Veiculo_id = aplicacaoRow.Veiculo_id;
+                lstAplicacao.Add(apl);
+            }
+
+            return lstAplicacao;
         }
 
     }
