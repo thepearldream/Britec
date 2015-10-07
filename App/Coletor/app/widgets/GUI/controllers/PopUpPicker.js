@@ -33,7 +33,7 @@ $.init = function(titulo, value, hasCancel, tipo){
 			currentValue = value;
 		}
 		if(tipo){
-			$.picker.setType(tipo);
+			$.picker.type = tipo;
 		}
 		if(hasCancel){
 			$.btnOk.width = "40%";

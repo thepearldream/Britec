@@ -18,11 +18,18 @@
 	left: 0,
 	textAlign: Titanium.UI.TEXT_ALIGNMENT_LEFT
 }
-"#picker": {
+"#picker[platform=ios]": {
 	width: "90%",
 	left: "5%",
 	top: 10,
 	height: 250
+}
+"#picker[platform=android]": {
+	width: "90%",
+	left: "5%",
+	top: 10,
+	height: Titanium.UI.SIZE,
+	format24: false
 }
 "#boxBtn": {
 	width: Titanium.UI.FILL,

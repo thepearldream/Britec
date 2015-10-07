@@ -51,5 +51,6 @@ function failFasesObra(ret){
 }
 
 function add(e){
-	Alloy.Globals.Alerta("Alerta", "Teste de add");
+	var aplic = Alloy.createController("Aplicacao/Aplicacao");
+	Alloy.Globals.Transicao.proximo(aplic, aplic.init, {});
 }

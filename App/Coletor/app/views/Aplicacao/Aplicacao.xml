@@ -1,0 +1,41 @@
+<Alloy>
+	<Window class="janela" id="winAplicacao">
+		<Widget src="GUI" id="minhaTopBar" name="Topbar" />
+		<ScrollView id="boxConteudo"> 
+			<View height="Ti.UI.SIZE" top=5>
+				<Widget src="GUI" name="LblTextField" id="nota" />
+			</View>
+			<View height="Ti.UI.SIZE" top=5>
+				<Widget src="GUI" name="ComboBox" id="fasesObra" />
+			</View>
+			<View height="Ti.UI.SIZE" top=5>
+				<Widget src="GUI" name="LblTextField" id="estaca" />
+			</View>
+			<View height="Ti.UI.SIZE" top=5>
+				<Widget src="GUI" name="DateInput" id="periodoInicial" />
+			</View>
+			<View height="Ti.UI.SIZE" top=5>
+				<Widget src="GUI" name="DateInput" id="periodoFinal" />
+			</View>
+			<View height="Ti.UI.SIZE" top=5>
+				<Widget src="GUI" name="ComboBox" id="motoristas" />
+			</View>
+			<View height="Ti.UI.SIZE" top=5>
+				<Widget src="GUI" name="ComboBox" id="veiculos" />
+			</View>
+			<View height="Ti.UI.SIZE" top=5>
+				<Widget src="GUI" name="LblTextField" id="largura" />
+			</View>
+			<View height="Ti.UI.SIZE" top=5>
+				<Widget src="GUI" name="LblTextField" id="comprimento" />
+			</View>
+			<View height="Ti.UI.SIZE" top=5>
+				<Widget src="GUI" name="LblTextField" id="toneladas" />
+			</View>
+			<View height="Ti.UI.SIZE" top=5>
+				<Widget src="GUI" name="LblTextField" id="temperatura" />
+			</View>
+			<Label id="lblEspessura" class="descricao" top="5" color="black" />
+		</ScrollView>
+	</Window>
+</Alloy>

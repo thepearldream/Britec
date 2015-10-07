@@ -1,0 +1,5 @@
+"#boxConteudo": {
+	top: 50,
+	bottom: 0, 
+	layout: 'vertical'
+}

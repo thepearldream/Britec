@@ -23,7 +23,10 @@ var picker = Widget.createWidget("GUI", "PopUpPicker");
 $.init = function(parans){
 	try{
 		$.lblDesc.text = parans.nome;
-		picker.init($.lblDesc.text, new Date(), true, parans.tipo);	
+		if(parans.tipo == Ti.UI.PICKER_TYPE_TIME){
+			$.btCalendario.setBackgroundImage("/images/clock.png");
+		}
+		picker.init($.lblDesc.text, new Date(), true, (parans.tipo || Ti.UI.PICKER_TYPE_DATE));	
 	}
 	catch(e){
 		Alloy.Globals.onError(e.message, "init", "app/widgets/GUI/controllers/ComboBox.js");

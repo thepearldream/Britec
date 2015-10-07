@@ -3,7 +3,7 @@
 		<View id="boxTitulo">
 			<Label id="titulo" class="descricaoTitulo" />
 		</View>
-		<Picker id="picker" type="Ti.UI.PICKER_TYPE_DATE" onChange="alteraValor" /> 
+		<Picker id="picker" onChange="alteraValor" /> 
 		<View id="boxBtn">
 			<Button id="btnOk" onClick="clickOk" class="CustomButton">Ok</Button>
 			<Button id="btnCancel" onClick="clickCancel" class="CustomButton">Cancelar</Button>

@@ -10,7 +10,7 @@
  * @property {Number} CustomComponentHeight
  * Altura padrão dos controles. Exemplo: Botões
  */
-Alloy.Globals.CustomComponentHeight = 35;
+Alloy.Globals.CustomComponentHeight = 40;
 /**
  * @property {Object} CustomImageSize Tamanho padrão dos icones
  * @property {Number} CustomImageSize.height Altura
@@ -46,7 +46,7 @@ Alloy.Globals.emProducao = false;
 if(Alloy.Globals.emProducao){
 	Alloy.Globals.MainDomain = "http://192.168.2.221:8686/";
 }else{
-	Alloy.Globals.MainDomain = "http://192.168.2.221:8686/";
+	Alloy.Globals.MainDomain = "http://192.168.25.76:8686/";
 }
 
 Alloy.Globals.Obra = null;
