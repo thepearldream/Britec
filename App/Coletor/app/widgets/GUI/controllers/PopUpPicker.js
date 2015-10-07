@@ -32,7 +32,8 @@ $.init = function(titulo, value, hasCancel, tipo){
 			$.picker.setValue(value);
 			currentValue = value;
 		}
-		if(tipo){
+		if(tipo != undefined){
+			Ti.API.info("Entrou: " + tipo);
 			$.picker.type = tipo;
 		}
 		if(hasCancel){

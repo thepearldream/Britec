@@ -46,7 +46,7 @@ Alloy.Globals.emProducao = false;
 if(Alloy.Globals.emProducao){
 	Alloy.Globals.MainDomain = "http://192.168.2.221:8686/";
 }else{
-	Alloy.Globals.MainDomain = "http://192.168.25.76:8686/";
+	Alloy.Globals.MainDomain = "http://192.168.2.221:8686/";
 }
 
 Alloy.Globals.Obra = null;

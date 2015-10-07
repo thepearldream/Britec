@@ -26,7 +26,7 @@ $.init = function(parans){
 		if(parans.tipo == Ti.UI.PICKER_TYPE_TIME){
 			$.btCalendario.setBackgroundImage("/images/clock.png");
 		}
-		picker.init($.lblDesc.text, new Date(), true, (parans.tipo || Ti.UI.PICKER_TYPE_DATE));	
+		picker.init($.lblDesc.text, new Date(), true, Ti.UI.PICKER_TYPE_TIME);	
 	}
 	catch(e){
 		Alloy.Globals.onError(e.message, "init", "app/widgets/GUI/controllers/ComboBox.js");

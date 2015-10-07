@@ -29,7 +29,7 @@
 	left: "5%",
 	top: 10,
 	height: Titanium.UI.SIZE,
-	format24: false
+	format24: true
 }
 "#boxBtn": {
 	width: Titanium.UI.FILL,
