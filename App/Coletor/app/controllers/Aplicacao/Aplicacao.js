@@ -14,13 +14,15 @@ infoVeiculos.fetch();
 
 var chaves = ["Id"];
 
+var espessura = null;
+
 $.init = function(parans){
 	Alloy.Globals.configWindow($.winAplicacao, $);
 	$.minhaTopBar.iniciar("Aplicação");
 	$.minhaTopBar.addRightButtom("/images/aprova.png", checkSave);
 	/*texto*/
 	$.nota.init({nome: "Nota", next: $.estaca});
-	$.estaca.init({nome: "Estaca", next: $.largura});
+	$.estaca.init({nome: "Estaca", keyboardType: Ti.UI.KEYBOARD_NUMBER_PAD, next: $.largura});
 	$.largura.init({nome: "Largura", keyboardType: Ti.UI.KEYBOARD_NUMBER_PAD, next: $.comprimento});
 	$.comprimento.init({nome: "Comprimento", keyboardType: Ti.UI.KEYBOARD_NUMBER_PAD, next: $.toneladas});
 	$.toneladas.init({nome: "Toneladas", keyboardType: Ti.UI.KEYBOARD_NUMBER_PAD, next: $.temperatura});
@@ -28,6 +30,7 @@ $.init = function(parans){
 	
 	/*dates*/
 	$.periodoInicial.init({nome: "Hora inicial da aplicação", tipo: Ti.UI.PICKER_TYPE_TIME});
+	$.periodoInicial.setSelected({valor: new Date()});
 	$.periodoFinal.init({nome: "Hora final da aplicação", tipo: Ti.UI.PICKER_TYPE_TIME});
 	
 	/*combobox*/
@@ -103,6 +106,118 @@ function failSincronizacao(ret){
 	Alloy.Globals.Alerta("Erro", "Erro ao sincronizar os dados. descricao: " + ret.error);
 }
 
+function calculaEspessura(e){
+	if($.largura.getInputValue() != "" && $.comprimento.getInputValue() != "" && $.toneladas.getInputValue() != ""){
+		var area = parseFloat($.comprimento.getInputValue()) * parseFloat($.toneladas.getInputValue());
+		espessura = ((parseFloat($.toneladas.getInputValue())/area)*2.4*100).toFixed(2);
+		$.lblEspessura.text = "Espessura: " + espessura.toString() + "cm";
+	}else{
+		espessura = null;
+		$.lblEspessura.text = "Espessura: - ";
+	}
+}
+
 function checkSave(e){
-	
+	var check = Alloy.createWidget("GUI", "Mensagem");
+	if($.nota.getInputValue() == ""){
+		check.init("Alerta", "Preencha o número da nota.");
+		check.show({callback: $.nota.selecionar});
+		return;
+	}
+	if($.fasesObra.getSelected().chave == ""){
+		check.init("Alerta", "É necessário selecionar a fase da obra.");
+		check.show({callback: $.fasesObra.selecionar});
+		return;		
+	}
+	if($.estaca.getInputValue() == ""){
+		check.init("Alerta", "Preencha a estaca.");
+		check.show({callback: $.estaca.selecionar});
+		return;
+	}
+	if($.periodoInicial.getSelected().data == ""){
+		check.init("Alerta", "Preencha a hora do início da aplicação.");
+		check.show({callback: $.periodoInicial.selecionar});
+		return;
+	}
+	if($.periodoFinal.getSelected().data == ""){
+		check.init("Alerta", "Preencha a hora de termino da aplicação.");
+		check.show({callback: $.periodoFinal.selecionar});
+		return;
+	}
+	if($.motoristas.getSelected().chave == ""){
+		check.init("Alerta", "É necessário selecionar o motorista.");
+		check.show({callback: $.motoristas.selecionar});
+		return;		
+	}
+	if($.veiculos.getSelected().chave == ""){
+		check.init("Alerta", "É necessário selecionar o veículo.");
+		check.show({callback: $.veiculos.selecionar});
+		return;
+	}
+	if($.largura.getInputValue() == ""){
+		check.init("Alerta", "Preencha a largura.");
+		check.show({callback: $.largura.selecionar});
+		return;
+	}
+	if($.comprimento.getInputValue() == ""){
+		check.init("Alerta", "Preencha o comprimento.");
+		check.show({callback: $.comprimento.selecionar});
+		return;
+	}
+	if($.toneladas.getInputValue() == ""){
+		check.init("Alerta", "Preencha a quantidade de toneladas de massa na aplicação.");
+		check.show({callback: $.toneladas.selecionar});
+		return;
+	}
+	if($.temperatura.getInputValue() == ""){
+		check.init("Alerta", "Preencha a temperatura da massa.");
+		check.show({callback: $.temperatura.selecionar});
+		return;
+	}
+	var check = Alloy.createWidget("GUI", "Mensagem");
+	check.init("Alerta", "Confirma o envio dessa anplicação ?", true);
+	check.show({callback: enviarAplicacao});
+}
+
+function enviarAplicacao(){
+	var ws = Alloy.createWidget("WebService").iniciarHttpRequest({
+		callback: sucessEnviarAplicacao,
+		error: failEnviarAplicacao,
+		url:  Alloy.Globals.MainDomain + "api/controleaplicacaomassas/inserirAplicacao", 
+		metodo: "POST", 
+		timeout: 120000
+	});
+	if(ws){
+		var hoje = Alloy.Globals.format.customFormatData(new Date(), undefined, "YYYY-MM-DD");
+		ws.adicionaParametro({usuarioId: Alloy.Globals.Cliente.at(0).get("id"), 
+			Nota: $.nota.getInputValue(), 
+			Fase_id: $.fasesObra.getSelected().chave[0], 
+			Estaca: $.estaca.getInputValue(), 
+			data: hoje + " 00:00:00", 
+			HoraInicio: hoje + " " + $.periodoInicial.getSelected().data, 
+			HoraFim: hoje + " " + $.periodoFinal.getSelected().data, 
+			Motorista_id: $.motoristas.getSelected().chave[0], 
+			Veiculo_id: $.veiculos.getSelected().chave[0], 
+			Largura: $.largura.getInputValue(), 
+			Comprimento: $.comprimento.getInputValue(), 
+			Toneladas: $.toneladas.getInputValue(), 
+			Temperatura: $.temperatura.getInputValue(), 
+			Espessura: espessura});
+		ws.NovoEnvia();
+	}
+}
+
+function sucessEnviarAplicacao(ret){
+	var check = Alloy.createWidget("GUI", "Mensagem");
+	check.init("Sucesso", "Cadastro enviado com sucesso !");
+	check.show({callback: voltar});
+}
+
+function failEnviarAplicacao(ret){
+	Alloy.Globals.Alerta("Erro", "Erro ao enviar a aplicação. descricao: " + ret.error);
+}
+
+function voltar(){
+	Alloy.Globals.Transicao.anterior();
+	args.pai.callRefresh();
 }

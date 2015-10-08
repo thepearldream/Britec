@@ -11,6 +11,7 @@ var args = arguments[0] || {};
  */
 var picker = Widget.createWidget("GUI", "PopUpPicker");
 
+var tipo = undefined;
 
 /**
  * @method init
@@ -26,7 +27,8 @@ $.init = function(parans){
 		if(parans.tipo == Ti.UI.PICKER_TYPE_TIME){
 			$.btCalendario.setBackgroundImage("/images/clock.png");
 		}
-		picker.init($.lblDesc.text, new Date(), true, Ti.UI.PICKER_TYPE_TIME);	
+		tipo = parans.tipo;
+		picker.init($.lblDesc.text, new Date(), true, (tipo==undefined?Ti.UI.PICKER_TYPE_DATE:tipo));	
 	}
 	catch(e){
 		Alloy.Globals.onError(e.message, "init", "app/widgets/GUI/controllers/ComboBox.js");
@@ -88,7 +90,12 @@ $.getSelected = function(){
  * Criação.
  */
 $.setSelected = function(parans){
-	$.selectedDate.text = Alloy.Globals.format.toDiaMesAno(parans.valor);
+	if(tipo == Ti.UI.PICKER_TYPE_TIME){
+		var valor = Alloy.Globals.format.generateCustomData(parans.valor);
+		$.selectedDate.text = valor.Hora + ":" + valor.Minuto + ":00";
+	}else{
+		$.selectedDate.text = Alloy.Globals.format.toDiaMesAno(parans.valor);	
+	}
 	$.trigger('change', {
     	source: $.selectedDate,
     	data: $.selectedDate.text

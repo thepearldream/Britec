@@ -80,7 +80,6 @@ $.setGroup = function(colecao, index){
 				return;
 			}
 		});
-		
 	}
 };
 

@@ -1,5 +1,16 @@
-
 "#boxResumo" : {
-  width:Titanium.UI.FILL,
-  height: Titanium.UI.FILL
+	width:Titanium.UI.FILL,
+	height: Titanium.UI.FILL
+}
+"#dados": {
+	width:Titanium.UI.FILL,
+	height: Titanium.UI.FILL,
+	showVerticalScrollIndicator: true,
+	layout: 'vertical'
+}
+".dado": {
+	width: "90%",
+	height: Titanium.UI.SIZE,
+	textAlign: Titanium.UI.TEXT_ALIGNMENT_LEFT,
+	top: 5
 }

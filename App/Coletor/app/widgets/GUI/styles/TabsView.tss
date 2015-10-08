@@ -4,7 +4,7 @@
 }
 "#boxTabsView": {
 	showPagingControl: false,
-	backgroundColor: "white",
+	backgroundColor: "transparent",
 	top: 40,
 	bottom: 0,
 	width: Titanium.UI.FILL

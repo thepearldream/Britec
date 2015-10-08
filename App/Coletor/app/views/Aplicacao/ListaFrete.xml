@@ -1,5 +1,17 @@
 <Alloy>
-	<View id="boxFrete">
-		<Label>Frete</Label>
-	</View>
+	<Collection id="fretes" src="Frete" instance="true" />
+	<View id="boxFrete"> 
+		<TableView id="minhaListaFrete" dataCollection="$.fretes" dataTransform="formatar" backgroundColor="transparent" >
+			<TableViewRow class="RowDetail" className="ListaFreteRow" backgroundColor="transparent" >
+				<View class="shadowView" layout="vertical" width="95%" height="Ti.UI.SIZE" top="10">
+					<Label text="{Motorista}" class="tituloRowLista descricaoTitulo" /> 
+					<Label text="{Toneladas}" class="descricaoRowLista descricao" />
+					<Label text="{Viagens}" class="descricaoRowLista descricao" />
+					<Label text="{MediaToneladasViagem}" class="descricaoRowLista descricao" />
+					<Label text="{ValorBruto}" class="descricaoRowLista descricao" />
+					<View height="10" />
+				</View>
+			</TableViewRow>
+		</TableView>
+	</View>  
 </Alloy>

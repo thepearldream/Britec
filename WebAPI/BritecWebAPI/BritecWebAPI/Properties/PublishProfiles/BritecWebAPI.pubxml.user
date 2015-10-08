@@ -10,7 +10,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
   </PropertyGroup>
   <ItemGroup>
     <File Include="bin/BritecWebAPI.dll">
-      <publishTime>10/05/2015 15:29:53</publishTime>
+      <publishTime>10/08/2015 09:03:35</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>10/01/2015 15:46:09</publishTime>
@@ -88,7 +88,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/01/2015 15:46:11</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>10/03/2015 19:40:10</publishTime>
+      <publishTime>10/07/2015 11:35:23</publishTime>
     </File>
   </ItemGroup>
 </Project>

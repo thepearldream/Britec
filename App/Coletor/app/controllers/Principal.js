@@ -66,3 +66,8 @@ function contrAplc(e){
 	var novo = Alloy.createController("Aplicacao/ControleDeAplicacao");
 	Alloy.createWidget("Util", "Transicao").nova(novo, novo.init, {});
 }
+
+function contrAbast(e){
+	var novo = Alloy.createController("Abastecimento/ListaAbastecimento");
+	Alloy.createWidget("Util", "Transicao").nova(novo, novo.init, {});
+}

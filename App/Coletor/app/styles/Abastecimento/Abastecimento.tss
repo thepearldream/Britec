@@ -4,3 +4,8 @@
 	layout: 'vertical',
 	showVerticalScrollIndicator: true
 }
+"#boxDesc": {
+	width: Titanium.UI.FILL,
+	height: 250,
+	top: 5
+}

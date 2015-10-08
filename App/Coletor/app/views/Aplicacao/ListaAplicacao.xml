@@ -1,5 +1,18 @@
 <Alloy>
-	<View id="boxAplicacao">
-		<Label>Aplicacao</Label>
-	</View>
+	<Collection id="aplicacoes" src="AplicacaoMassa" instance="true" />
+	<View id="boxAplicacao"> 
+		<TableView id="minhaListaAplicacao" dataCollection="$.aplicacoes" dataTransform="formatar" backgroundColor="transparent" >
+			<TableViewRow class="RowDetail" className="ListaAplicacaoRow" id="{id}" backgroundColor="transparent" >
+				<View class="shadowView" layout="vertical" width="95%" height="Ti.UI.SIZE" top="10">
+					<Label text="{Nota}" class="tituloRowLista descricaoTitulo" /> 
+					<Label text="{Estaca}" class="descricaoRowLista descricao" />
+					<Label text="{HoraInicio}" class="descricaoRowLista descricao" />
+					<Label text="{HoraFim}" class="descricaoRowLista descricao" />
+					<Label text="{Espessura}" class="descricaoRowLista descricao" />
+					<Label text="{Toneladas}" class="descricaoRowLista descricao" />
+					<View height="10" />
+				</View>
+			</TableViewRow>
+		</TableView>
+	</View>  
 </Alloy>

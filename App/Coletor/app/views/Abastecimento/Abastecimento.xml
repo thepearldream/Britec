@@ -1,0 +1,24 @@
+<Alloy>
+	<Window class="janela" id="winAbastecimento">
+		<Widget src="GUI" id="minhaTopBar" name="Topbar" />
+		<ScrollView id="boxConteudo"> 
+			<View height="Ti.UI.SIZE" top=5>
+				<Widget src="GUI" name="DateInput" id="data" />
+			</View>
+			<View height="Ti.UI.SIZE" top=5>
+				<Widget src="GUI" name="ComboBox" id="veiculos" />
+			</View>
+			<View height="Ti.UI.SIZE" top=5>
+				<Widget src="GUI" name="LblTextField" id="horimetro" />
+			</View>
+			<Widget src="GUI" name="RadioGroup" id="grpCombustivel" titulo="Tipo abastecimento" onChange="alteraAbastecimento" />
+			<View height="Ti.UI.SIZE" top=5>
+				<Widget src="GUI" name="LblTextField" id="quantidade" />
+			</View>
+			<View id="boxDesc">
+				<Widget src="GUI" name="LblTextBox" id="observacao" />
+			</View>
+			<View height="10" />
+		</ScrollView>
+	</Window>
+</Alloy>

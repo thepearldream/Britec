@@ -2,13 +2,13 @@
 	<Window class="janela" id="winControleAplicacao">
 		<Widget src="GUI" id="minhaTopBar" name="Topbar" />
 		<View height="Ti.UI.SIZE" top=55>
-			<Widget src="GUI" name="DateInput" id="periodoInicial" />
+			<Widget src="GUI" name="DateInput" onChange="refresh" id="periodoInicial" />
 		</View>
 		<View height="Ti.UI.SIZE" top=130>
-			<Widget src="GUI" name="DateInput" id="periodoFinal" />
+			<Widget src="GUI" name="DateInput" onChange="refresh" id="periodoFinal" />
 		</View>
 		<View height="Ti.UI.SIZE" top=205>
-			<Widget src="GUI" name="ComboBox" id="faseobra" />
+			<Widget src="GUI" name="ComboBox" onChange="refresh" id="faseobra" />
 		</View> 
 		<View id="tabsBox">
 			<Widget id="minhaScrollable" src="GUI" name="TabsView" />

@@ -34,6 +34,30 @@ function obtemFasesObra(e){
 	}
 }
 
+$.getPeriodoInicial = function(){
+	return Alloy.Globals.format.customFormatData($.periodoInicial.getSelected().data, "DD/MM/YYYY", "YYYY-MM-DD HH:mm:ss");
+};
+
+$.getPeriodoFinal = function(){
+	return Alloy.Globals.format.customFormatData($.periodoFinal.getSelected().data, "DD/MM/YYYY", "YYYY-MM-DD HH:mm:ss");
+};
+
+$.getFaseId = function(){
+	if($.faseobra.getSelected().chave == ""){
+		return null;
+	}else{
+		return $.faseobra.getSelected().chave[0];	
+	}
+};
+
+function refresh(){
+	$.trigger("change", {});
+};
+
+$.callRefresh = function(){
+	refresh();
+};
+
 $.winControleAplicacao.addEventListener("open", function(e){
 	obtemFasesObra();
 	var lstAplicacao = Alloy.createController("Aplicacao/ListaAplicacao", {pai: $});
@@ -51,6 +75,6 @@ function failFasesObra(ret){
 }
 
 function add(e){
-	var aplic = Alloy.createController("Aplicacao/Aplicacao");
+	var aplic = Alloy.createController("Aplicacao/Aplicacao", {pai: $});
 	Alloy.Globals.Transicao.proximo(aplic, aplic.init, {});
 }

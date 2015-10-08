@@ -56,7 +56,9 @@ namespace BritecWebAPI.Controllers
             foreach (var veiculoobraRow in rowsVeiculoObra)
             {
                 var veiculo = new InfoVeiculoObra();
-                
+                veiculo.Id = veiculoobraRow.veiculo.id;
+                veiculo.PlacaDescricao = veiculoobraRow.veiculo.placa + " - " + veiculoobraRow.veiculo.descricao;
+                veiculo.Obra_id = veiculoobraRow.Obra_id;
                 lstVeiculoObra.Add(veiculo);
             }
             return lstVeiculoObra;

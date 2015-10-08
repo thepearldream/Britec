@@ -75,8 +75,8 @@ namespace BritecWebAPI.Controllers
         {
             var lstFrete = new List<Frete>();
             StringBuilder consultaSQL = new StringBuilder();
-            consultaSQL.AppendLine("select sum(i.toneladas) as Toneladas, avg(i.toneladas) as MediaToneladasViagem, ");
-            consultaSQL.AppendLine("	count(*) as Viagens, round((o.ValorPorToneladaFrete * sum(i.toneladas)), 2) As ValorBruto, CONCAT(m.nome, m.sobrenome) as Motorista ");
+            consultaSQL.AppendLine("select sum(i.toneladas) as Toneladas, round(avg(i.toneladas), 2) as MediaToneladasViagem, ");
+            consultaSQL.AppendLine("	count(*) as Viagens, round((o.ValorPorToneladaFrete * sum(i.toneladas)), 2) As ValorBruto, CONCAT(CONCAT(m.nome, ' '), m.sobrenome) as Motorista ");
             consultaSQL.AppendLine("from itemaplicacao  i ");
             consultaSQL.AppendLine("	inner join fasedaobra f on f.id = i.Fase_id ");
             consultaSQL.AppendLine("    inner join obra o on o.id = f.Obra_id ");
@@ -103,7 +103,7 @@ namespace BritecWebAPI.Controllers
         {
             var lstResumo = new List<Resumo>();
             StringBuilder consultaSQL = new StringBuilder();
-            consultaSQL.AppendLine("select round(sum(i.toneladas), 2) as CargaAcumulada, avg(i.espessura) as EspessuraMedia, ");
+            consultaSQL.AppendLine("select round(sum(i.toneladas), 2) as CargaAcumulada, round(avg(i.espessura), 2) as EspessuraMedia, ");
             consultaSQL.AppendLine("	round(sum(i.comprimento * i.largura), 2) As AreaTotal, ");
             consultaSQL.AppendLine("    count(*) as QuantidadeCaminhoes, avg(o.ValorPorToneladaFrete) as ValorTonelada, ");
             consultaSQL.AppendLine("    round(sum(i.toneladas) * avg(o.ValorPorToneladaFrete), 2) As ValorTotalBrutoFrete ");

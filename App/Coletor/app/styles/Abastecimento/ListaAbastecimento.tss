@@ -1,0 +1,10 @@
+"#mestre": {
+	top: 50,
+	bottom: 0
+}
+"#minhaListaFrete" : {
+  width: Titanium.UI.FILL,
+  height: Titanium.UI.FIL,
+  scrollable: true,
+  showVerticalScrollIndicator: true
+}

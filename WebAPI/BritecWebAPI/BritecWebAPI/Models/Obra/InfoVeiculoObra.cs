@@ -5,8 +5,8 @@ using System.Web;
 
 namespace BritecWebAPI.Models.Obra
 {
-    public class InfoVeiculoObra
+    public class InfoVeiculoObra : InfoVeiculo
     {
-
+        public long Obra_id { get; set; } 
     }
 }

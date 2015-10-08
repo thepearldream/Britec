@@ -1,5 +1,12 @@
 <Alloy>
 	<View id="boxResumo">
-		<Label>Resumo</Label>
+		<ScrollView id="dados">
+			<Label class="descricaoTitulo dado" id="CargaAcumulada" /> 
+			<Label class="descricaoTitulo dado" id="EspessuraMedia" /> 
+			<Label class="descricaoTitulo dado" id="AreaTotal" /> 
+			<Label class="descricaoTitulo dado" id="QuantidadeCaminhoes" /> 
+			<Label class="descricaoTitulo dado" id="ValorTonelada" /> 
+			<Label class="descricaoTitulo dado" id="ValorTotalBrutoFrete" />
+		</ScrollView> 
 	</View>
 </Alloy>

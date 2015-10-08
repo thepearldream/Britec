@@ -121,6 +121,13 @@ $.setEnabled = function(status){
 	}
 };
 
+function change(e){
+	$.trigger("change", {
+		valor: e.value,
+		source: e.source
+	});
+}
+
 $.novoNome.addEventListener('focus', function() {
     $.linha.setBackgroundColor(Alloy.Globals.MainColorLight);
 });

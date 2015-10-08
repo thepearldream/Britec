@@ -1,0 +1,18 @@
+<Alloy>
+	<Collection id="abastecimentos" src="InfoAbastecimento" instance="true" />
+	<Window id="winListaAbastecimento" class="janela" backgroundColor="#f1f1f1" >
+		<Widget src="GUI" id="minhaTopBar" name="Topbar" />
+		<View id="mestre">
+			<TableView id="minhaListaAbastecimento" dataCollection="$.abastecimentos" dataTransform="formatar" backgroundColor="transparent" >
+				<TableViewRow class="RowDetail" className="ListaAbastecimentoRow" id="{Id}" backgroundColor="transparent" >
+					<View class="shadowView" layout="vertical" width="95%" height="Ti.UI.SIZE" top="10">
+						<Label text="{DataAbastecimento}" class="tituloRowLista descricaoTitulo" /> 
+						<Label text="{Placa}" class="tituloRowLista descricaoTitulo" /> 
+						<Label text="{DescricaoEquipamento}" class="descricaoRowLista descricao" />
+						<View height="10" />
+					</View>
+				</TableViewRow>
+			</TableView>
+		</View>
+	</Window>  
+</Alloy>

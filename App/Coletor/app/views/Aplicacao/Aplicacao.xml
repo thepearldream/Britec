@@ -24,18 +24,20 @@
 				<Widget src="GUI" name="ComboBox" id="veiculos" />
 			</View>
 			<View height="Ti.UI.SIZE" top=5>
-				<Widget src="GUI" name="LblTextField" id="largura" />
+				<Widget src="GUI" name="LblTextField" id="largura" onChange="calculaEspessura" />
 			</View>
 			<View height="Ti.UI.SIZE" top=5>
-				<Widget src="GUI" name="LblTextField" id="comprimento" />
+				<Widget src="GUI" name="LblTextField" id="comprimento" onChange="calculaEspessura" />
 			</View>
 			<View height="Ti.UI.SIZE" top=5>
-				<Widget src="GUI" name="LblTextField" id="toneladas" />
+				<Widget src="GUI" name="LblTextField" id="toneladas" onChange="calculaEspessura" />
 			</View>
 			<View height="Ti.UI.SIZE" top=5>
 				<Widget src="GUI" name="LblTextField" id="temperatura" />
 			</View>
-			<Label id="lblEspessura" class="descricao" top="5" color="black" />
+			<Label id="lblEspessura" class="titulo" top="5" color="black" text="Espessura: - " 
+				height="Titanium.UI.SIZE" width="90%" textAlign="Titanium.UI.TEXT_ALIGNMENT_LEFT" />
+			<View height="10" />
 		</ScrollView>
 	</Window>
 </Alloy>
