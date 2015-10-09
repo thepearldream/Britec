@@ -5,7 +5,6 @@
 	backgroundColor: "#E6E6E6",
 	height: "80%",
 	font:{fontSize: Alloy.Globals.CustomTextSize},
-	softKeyboardOnFocus : Ti.UI.Android.SOFT_KEYBOARD_HIDE_ON_FOCUS,
 	borderRadius: 4,
 	borderWidth: 0.5,
 	borderColor: "#B2B2B2"

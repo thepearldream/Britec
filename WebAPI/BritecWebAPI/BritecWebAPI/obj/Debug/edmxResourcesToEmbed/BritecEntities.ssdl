@@ -69,7 +69,7 @@
       <PropertyRef Name="id" />
     </Key>
     <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="urlImagem" Type="varchar" MaxLength="500" Nullable="false" />
+    <Property Name="imagem" Type="mediumblob" Nullable="false" />
     <Property Name="Patologia_id" Type="bigint" Nullable="false" />
     <Property Name="data" Type="datetime" Precision="0" Nullable="false" />
     <Property Name="latitude" Type="varchar" MaxLength="30" Nullable="false" />

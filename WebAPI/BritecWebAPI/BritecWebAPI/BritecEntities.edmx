@@ -74,7 +74,7 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="urlImagem" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="imagem" Type="mediumblob" Nullable="false" />
           <Property Name="Patologia_id" Type="bigint" Nullable="false" />
           <Property Name="data" Type="datetime" Precision="0" Nullable="false" />
           <Property Name="latitude" Type="varchar" MaxLength="30" Nullable="false" />
@@ -1125,12 +1125,12 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="urlImagem" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="Patologia_id" Type="Int64" Nullable="false" />
           <NavigationProperty Name="patologia" Relationship="britecModel.fk_ImagemPatologia_Patologia1" FromRole="imagempatologia" ToRole="patologia" />
           <Property Name="data" Type="DateTime" Nullable="false" />
           <Property Name="latitude" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="longitude" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="imagem" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <EntityType Name="patologia">
           <Key>
@@ -1365,11 +1365,11 @@
           <EntitySetMapping Name="imagempatologia">
             <EntityTypeMapping TypeName="britecModel.imagempatologia">
               <MappingFragment StoreEntitySet="imagempatologia">
+                <ScalarProperty Name="imagem" ColumnName="imagem" />
                 <ScalarProperty Name="longitude" ColumnName="longitude" />
                 <ScalarProperty Name="latitude" ColumnName="latitude" />
                 <ScalarProperty Name="data" ColumnName="data" />
                 <ScalarProperty Name="Patologia_id" ColumnName="Patologia_id" />
-                <ScalarProperty Name="urlImagem" ColumnName="urlImagem" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

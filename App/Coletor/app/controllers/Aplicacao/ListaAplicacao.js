@@ -8,19 +8,27 @@ args.pai.on("change", function(e){
 	getListaAplicacao();
 });
 
+var lblEmpty = Ti.UI.createLabel({
+	text: "Não existe nenhuma aplicação neste período/fase",
+	wordWrap: true,
+	font: {fontSize: 16},
+	width: "90%",
+	textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER
+});
+
+var vazia = false;
+
 function sucesso(){
 	try{
 		$.aplicacoes.trigger("change");
-		if($.aplicacoes.length == 0){
-			var lblEmpty = Ti.UI.createLabel({
-				text: "Não existe nenhuma aplicação neste período/fase",
-				wordWrap: true,
-				font: {fontSize: 16},
-				width: "90%",
-				textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER
-			});
-			$.boxAplicacao.remove($.minhaListaAplicacao);
+		if($.fretes.length == 0 && !vazia){
+			vazia = true;
+			$.minhaListaAplicacao.setVisible(false);
 			$.boxAplicacao.add(lblEmpty);
+		}else if(vazia){
+			vazia = false;
+			$.minhaListaAplicacao.setVisible(true);
+			$.boxAplicacao.remove(lblEmpty);
 		}
 	}
 	catch(e){
@@ -42,7 +50,8 @@ function getListaAplicacao(){
 	if(ws){
 		ws.adicionaParametro({PeriodoInicial: args.pai.getPeriodoInicial(), 
 			PeriodoFinal: args.pai.getPeriodoFinal(), 
-			Fase_id: args.pai.getFaseId()});
+			Fase_id: args.pai.getFaseId(), 
+			Obra_id: Alloy.Globals.Obra.id});
 		ws.NovoEnvia();
 	}	
 }

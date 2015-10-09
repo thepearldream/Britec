@@ -8,8 +8,6 @@ else{
 }
 Titanium.Geolocation.distanceFilter = 10;
 
-var camada = Alloy.createWidget("GUI", "Camada", {load: true}).getView();
-
 $.distLatLong =   function(lat1,lon1,lat2,lon2) {
   var R = 6371; // raio da terra
   var Lati = Math.PI/180*(lat2-lat1);  //Graus  - > Radianos
@@ -24,18 +22,15 @@ $.distLatLong =   function(lat1,lon1,lat2,lon2) {
 };
 
 $.pegaPosicaoAtual = function(callback, parans, callbackError){
-	Alloy.Globals.currentWindow().add(camada);
 	Titanium.Geolocation.getCurrentPosition(function(e){
 	    if (!e.success || e.error)
 	    {
 	    	if(callbackError){
 	    		callbackError({mensagem: "Não foi possível obter a sua localização, verifique se seu GPS está ativado."});	
 	    	}
-	        Alloy.Globals.currentWindow().remove(camada);
 	        return;
 	    }
 	    if(callback){
-	    	Alloy.Globals.currentWindow().remove(camada);
 	    	callback(parans, {latitude: e.coords.latitude, longitude: e.coords.longitude});
 	    }
 	});

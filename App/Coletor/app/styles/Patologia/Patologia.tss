@@ -1,0 +1,16 @@
+"#boxConteudo": {
+	top: 50,
+	bottom: 0, 
+	layout: 'vertical',
+	showVerticalScrollIndicator: true
+}
+"#currentImage": {
+	height: 350,
+	top: 5,
+	image: "/images/add.png"
+}
+"#boxDesc": {
+	width: Titanium.UI.FILL,
+	height: 250,
+	top: 10
+}

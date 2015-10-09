@@ -8,7 +8,7 @@
 			</View> 
 			<Button id="btnCtrlAplic" onClick="contrAplc" class="CustomButton shadowView" top="15" color="black" width="90%" enabled="false" >Controle de aplicação de massa</Button> 
 			<Button id="btnCtrlAbs" onClick="contrAbast" class="CustomButton shadowView" top="15" color="black" width="90%" enabled="false" >Controle de abastecimento</Button>
-			<Button id="btnCtrlPat" class="CustomButton shadowView" top="15" color="black" width="90%" enabled="false" >Patologias</Button>
+			<Button id="btnCtrlPat" onClick="contrPat" class="CustomButton shadowView" top="15" color="black" width="90%" enabled="false" >Patologias</Button>
 		</View>
 	</Window>
 </Alloy>

@@ -211,6 +211,8 @@ Alloy.Globals.Alerta = function(titulo, mensagem){
  */
 Alloy.Globals.GPS = Alloy.createWidget("Util", "GPS");
 
+Alloy.Globals.Camera = Alloy.createWidget("Util", "Camera");
+
 /**
  * @property {widgets.Util.Erro} telaErro Controller da tela de erro.
  * @private
@@ -304,6 +306,7 @@ var callbackServicos = function(nome){
 				Alloy.Globals.logout();
 				break;
 			case "Início": 
+				Alloy.Globals.iniciarServicos();
 				var novo = Alloy.createController("Principal");
 				Alloy.createWidget("Util", "Transicao").nova(novo, novo.init, {});
 				break;

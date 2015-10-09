@@ -15,11 +15,11 @@ namespace BritecWebAPI
     public partial class imagempatologia
     {
         public long id { get; set; }
-        public string urlImagem { get; set; }
         public long Patologia_id { get; set; }
         public System.DateTime data { get; set; }
         public string latitude { get; set; }
         public string longitude { get; set; }
+        public byte[] imagem { get; set; }
     
         public virtual patologia patologia { get; set; }
     }

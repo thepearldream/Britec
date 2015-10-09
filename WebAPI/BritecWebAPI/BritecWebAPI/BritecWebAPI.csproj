@@ -183,6 +183,7 @@
     <Compile Include="Models\Obra\Obra.cs" />
     <Compile Include="Models\ParansInfoUsuario.cs" />
     <Compile Include="Models\ParansLista.cs" />
+    <Compile Include="Models\Patologia\InfoPatologia.cs" />
     <Compile Include="Models\Permissao.cs" />
     <Compile Include="Models\StatusRequisicao.cs" />
     <Compile Include="motorista.cs">

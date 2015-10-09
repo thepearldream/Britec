@@ -1,0 +1,17 @@
+<Alloy>
+	<Collection id="patologias" src="InfoPatologia" instance="true" />
+	<Window id="winListaPatologia" class="janela" backgroundColor="#f1f1f1" >
+		<Widget src="GUI" id="minhaTopBar" name="Topbar" />
+		<View id="mestre">
+			<TableView id="minhaListaPatologia" dataCollection="$.patologias" dataTransform="formatar" backgroundColor="transparent" >
+				<TableViewRow class="RowDetail" className="ListaPatologiaRow" id="{Id}" backgroundColor="transparent" >
+					<View class="shadowView" layout="vertical" width="95%" height="Ti.UI.SIZE" top="10">
+						<Label text="{Data}" class="tituloRowLista descricaoTitulo" /> 
+						<Label text="{DescObra}" class="tituloRowLista descricaoTitulo" /> 
+						<View height="10" />
+					</View>
+				</TableViewRow>
+			</TableView>
+		</View>
+	</Window>  
+</Alloy>

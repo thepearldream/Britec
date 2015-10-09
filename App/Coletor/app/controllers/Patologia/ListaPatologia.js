@@ -3,13 +3,13 @@ var args = arguments[0] || {};
 var btnAdd = null;
 
 $.init = function(args){
-	Alloy.Globals.configWindow($.winListaAbastecimento, $);
-	$.minhaTopBar.iniciar("Contr. de abastec.");
+	Alloy.Globals.configWindow($.winListaPatologia, $);
+	$.minhaTopBar.iniciar("Contr. de patolog.");
 	btnAdd = $.minhaTopBar.addRightButtom("/images/add.png", add);
 };
 
 var lblEmpty = Ti.UI.createLabel({
-	text: "Não existe nenhum abastecimento nesta obra",
+	text: "Não existe nenhuma patologia nesta obra",
 	wordWrap: true,
 	font: {fontSize: 16},
 	width: "90%",
@@ -20,14 +20,14 @@ var vazia = false;
 
 function sucesso(){
 	try{
-		$.abastecimentos.trigger("change");
-		if($.abastecimentos.length == 0 && !vazia){
+		$.patologias.trigger("change");
+		if($.patologias.length == 0 && !vazia){
 			vazia = true;
-			$.minhaListaAbastecimento.setVisible(false);
+			$.minhaListaPatologia.setVisible(false);
 			$.mestre.add(lblEmpty);
 		}else if(vazia){
 			vazia = false;
-			$.minhaListaAbastecimento.setVisible(true);
+			$.minhaListaPatologia.setVisible(true);
 			$.mestre.remove(lblEmpty);
 		}
 	}
@@ -36,20 +36,20 @@ function sucesso(){
 	}
 }
 
-$.winListaAbastecimento.addEventListener("open", function(e){
-	getListaAbastecimentos();
+$.winListaPatologia.addEventListener("open", function(e){
+	getListaPatologias();
 });
 
-function getListaAbastecimentos(){
+function getListaPatologias(){
 	var ws = Alloy.createWidget("WebService").iniciarHttpRequest({
 		callback: sucesso,
 		error: function(e){
 			Alloy.Globals.Alerta("Erro", "Erro ao tentar obter a lista de abastecimentos");
 		},
-		url:  Alloy.Globals.MainDomain + "api/abastecimentoes/getAbastecimentos", 
+		url:  Alloy.Globals.MainDomain + "api/patologias/getListPatologia", 
 		metodo: "POST", 
 		timeout: 120000,
-		colecao: $.abastecimentos
+		colecao: $.patologias
 	});
 	if(ws){
 		ws.adicionaParametro({Obra_id: Alloy.Globals.Obra.id});
@@ -58,18 +58,17 @@ function getListaAbastecimentos(){
 }
 
 $.callRefresh = function(){
-	getListaAbastecimentos();
+	getListaPatologias();
 };
 
 function formatar(model){
 	var md = model.toJSON();
-	md.DataAbastecimento = "Data: " + Alloy.Globals.format.customFormatData(md.DataAbastecimento, undefined, "DD/MM/YYYY");
-	md.Placa = "Veículo: " + md.Placa;
-	md.DescricaoEquipamento = "Equipamento: " + md.DescricaoEquipamento;
+	md.Data = "Data: " + Alloy.Globals.format.customFormatData(md.Data, undefined, "DD/MM/YYYY");
+	md.DescObra = "Obra: " + md.DescObra;
 	return md;
 }
 
 function add(e){
-	var abastecimento = Alloy.createController("Abastecimento/Abastecimento", {pai: $});
-	Alloy.Globals.Transicao.proximo(abastecimento, abastecimento.init, {});
+	var patologia = Alloy.createController("Patologia/Patologia", {pai: $});
+	Alloy.Globals.Transicao.proximo(patologia, patologia.init, {});
 }

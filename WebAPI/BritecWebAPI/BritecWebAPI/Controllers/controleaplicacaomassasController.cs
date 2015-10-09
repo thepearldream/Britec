@@ -86,13 +86,14 @@ namespace BritecWebAPI.Controllers
             {
                 consultaSQL.AppendLine("    i.Fase_id = @fase_id and ");
             }
-            consultaSQL.AppendLine("    i.data between @periodoinicial and @periodofinal");
+            consultaSQL.AppendLine("    i.data between @periodoinicial and @periodofinal and f.Obra_id = @obra_id ");
             consultaSQL.AppendLine("group by i.Motorista_id ");
             consultaSQL.AppendLine("order by m.nome");
 
             List<Frete> rowsFrete = db.Database.SqlQuery<Frete>(consultaSQL.ToString(), new MySqlParameter("@fase_id", parans.Fase_id), 
                         new MySqlParameter("@periodoinicial", parans.PeriodoInicial.ToString("yyyy-MM-dd HH:mm:ss")), 
-                        new MySqlParameter("@periodofinal", parans.PeriodoFinal.ToString("yyyy-MM-dd HH:mm:ss")))
+                        new MySqlParameter("@periodofinal", parans.PeriodoFinal.ToString("yyyy-MM-dd HH:mm:ss")),
+                        new MySqlParameter("@obra_id", parans.Obra_id))
                 .ToList();
 
             return rowsFrete;
@@ -103,10 +104,10 @@ namespace BritecWebAPI.Controllers
         {
             var lstResumo = new List<Resumo>();
             StringBuilder consultaSQL = new StringBuilder();
-            consultaSQL.AppendLine("select round(sum(i.toneladas), 2) as CargaAcumulada, round(avg(i.espessura), 2) as EspessuraMedia, ");
-            consultaSQL.AppendLine("	round(sum(i.comprimento * i.largura), 2) As AreaTotal, ");
-            consultaSQL.AppendLine("    count(*) as QuantidadeCaminhoes, avg(o.ValorPorToneladaFrete) as ValorTonelada, ");
-            consultaSQL.AppendLine("    round(sum(i.toneladas) * avg(o.ValorPorToneladaFrete), 2) As ValorTotalBrutoFrete ");
+            consultaSQL.AppendLine("select COALESCE(round(sum(i.toneladas), 2), 0) as CargaAcumulada, COALESCE(round(avg(i.espessura), 2), 0) as EspessuraMedia, ");
+            consultaSQL.AppendLine("	COALESCE(round(sum(i.comprimento * i.largura), 2), 0) As AreaTotal, ");
+            consultaSQL.AppendLine("    count(*) as QuantidadeCaminhoes, COALESCE(avg(o.ValorPorToneladaFrete), 0) as ValorTonelada, ");
+            consultaSQL.AppendLine("    COALESCE(round(sum(i.toneladas) * avg(o.ValorPorToneladaFrete), 2), 0) As ValorTotalBrutoFrete ");
             consultaSQL.AppendLine("from itemaplicacao  i ");
             consultaSQL.AppendLine("	inner join fasedaobra f on f.id = i.Fase_id ");
             consultaSQL.AppendLine("    inner join obra o on o.id = f.Obra_id ");
@@ -115,11 +116,12 @@ namespace BritecWebAPI.Controllers
             {
                 consultaSQL.AppendLine("    i.Fase_id = @fase_id and ");
             }
-            consultaSQL.AppendLine("    i.data between @periodoinicial and @periodofinal");
+            consultaSQL.AppendLine("    i.data between @periodoinicial and @periodofinal and f.Obra_id = @obra_id ");
 
             List<Resumo> rowsResumo = db.Database.SqlQuery<Resumo>(consultaSQL.ToString(), new MySqlParameter("@fase_id", parans.Fase_id),
                         new MySqlParameter("@periodoinicial", parans.PeriodoInicial.ToString("yyyy-MM-dd HH:mm:ss")),
-                        new MySqlParameter("@periodofinal", parans.PeriodoFinal.ToString("yyyy-MM-dd HH:mm:ss")))
+                        new MySqlParameter("@periodofinal", parans.PeriodoFinal.ToString("yyyy-MM-dd HH:mm:ss")),
+                        new MySqlParameter("@obra_id", parans.Obra_id))
                 .ToList();
 
             return rowsResumo;
@@ -137,7 +139,8 @@ namespace BritecWebAPI.Controllers
             }
             else
             {
-                aplicacaoRows = db.itemaplicacao.Where(ia => ia.data <= parans.PeriodoFinal && ia.data >= parans.PeriodoInicial).ToList();
+                aplicacaoRows = db.itemaplicacao.Where(ia => ia.data <= parans.PeriodoFinal && ia.data >= parans.PeriodoInicial
+                    && ia.controleaplicacaomassa.fasedaobra.Obra_id == parans.Obra_id).ToList();
             }
             
             foreach(var aplicacaoRow in aplicacaoRows)
@@ -170,6 +173,7 @@ namespace BritecWebAPI.Controllers
     {
         public DateTime PeriodoInicial { get; set; }
         public DateTime PeriodoFinal { get; set; }
+        public long Obra_id { get; set; }
         public Nullable<long> Fase_id { get; set; }
     }
     #endregion

@@ -36,7 +36,7 @@ function obtemVeiculosObra(e){
 		url:  Alloy.Globals.MainDomain + "api/obras/getVeiculosObra", 
 		metodo: "POST", 
 		timeout: 120000,
-		colecao: infoVeiculos
+		colecao: infoVeiculosObra
 	});
 	if(ws){
 		ws.adicionaParametro({Obra_id: Alloy.Globals.Obra.id});
@@ -45,7 +45,7 @@ function obtemVeiculosObra(e){
 }
 
 function sucessObtemVeiculosObra(ret){
-	infoVeiculos.trigger("change");
+	infoVeiculosObra.trigger("change");
 }
 
 function failSincronizacao(ret){
@@ -94,7 +94,6 @@ function enviarAbastecimento(){
 		timeout: 120000
 	});
 	if(ws){
-		var hoje = 
 		ws.adicionaParametro({
 			Obra_id: Alloy.Globals.Obra.id,
 			Veiculo_id: $.veiculos.getSelected().chave[0],

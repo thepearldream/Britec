@@ -14,6 +14,7 @@ using System.Web;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using BritecWebAPI.Models.Patologia;
 
 namespace BritecWebAPI.Controllers
 {
@@ -38,10 +39,31 @@ namespace BritecWebAPI.Controllers
 
                     db.patologia.Add(patol);
                     db.SaveChanges();
+
+                    foreach(InfoPatologia pat in parans.patologias)
+                    {
+
+                        imagempatologia imgpat = db.imagempatologia.Create();
+
+                        imgpat.patologia = patol;
+                        imgpat.latitude = pat.Latitude;
+                        imgpat.longitude = pat.Longitude;
+                        imgpat.data = pat.Data;
+                        imgpat.imagem = Convert.FromBase64String(pat.Imagem);
+
+                        db.imagempatologia.Add(imgpat);
+                        db.SaveChanges();
+
+                        pat.Obra_id = patol.Obra_id;
+                        pat.Patologia_id = patol.id;
+                        pat.DescObra = patol.obra.descricao;
+                    }
+
+
                     dbTrans.Commit();
 
                     ret.sucesso = true;
-                    ret.dados = new { id = patol.id };
+                    ret.dados = parans.patologias;
                     return ret;
                 }
                 catch (Exception e)
@@ -55,58 +77,24 @@ namespace BritecWebAPI.Controllers
         }
 
         [HttpPost]
-        public StatusRequisicao criaImagemPatologia(parans_criaImagemPatologia parans)
+        public List<InfoPatologia> getListPatologia(parans_getListPatologia parans)
         {
-
-            
-            var resposta = new StatusRequisicao();
-
-            using (var dbTrans = db.Database.BeginTransaction())
+            var lstPatologia = new List<InfoPatologia>();
+            var rowsPatologias = db.imagempatologia.Include(ip => ip.patologia).Include(ip => ip.patologia.obra).Where(ip => ip.patologia.Obra_id == parans.Obra_id).OrderByDescending(ip => ip.data).ToList();
+            foreach (var patologiaRow in rowsPatologias)
             {
-                try
-                {
-                    var pat = db.patologia.Include(p => p.obra).Where(p => p.id == parans.Patologia_id).FirstOrDefault();
-
-                    var diretorio = HttpContext.Current.Server.MapPath("~/") + "imagens\\obras\\" + pat.obra.id + "\\";
-
-                    imagempatologia imgpat = db.imagempatologia.Create();
-
-                    imgpat.patologia = pat;
-                    imgpat.latitude = parans.Latitude;
-                    imgpat.longitude = parans.Longitude;
-                    imgpat.data = parans.Data;
-                    imgpat.urlImagem = "";
-
-                    db.imagempatologia.Add(imgpat);
-                    db.SaveChanges();
-
-                    byte[] byteArray = Convert.FromBase64String(parans.Imagem);
-                    Image result = null;
-                    ImageFormat format = ImageFormat.Png;
-                    result = new Bitmap(new MemoryStream(byteArray));
-                    using (Image imageToExport = result)
-                    {
-                        (new FileInfo(diretorio)).Directory.Create();
-                        imageToExport.Save(diretorio + imgpat.id.ToString() + "." + format.ToString(), format);
-                    }
-
-                    imgpat.urlImagem = "imagens/obras/" + pat.obra.id.ToString() + "/" + imgpat.id.ToString() + ".png";
-
-                    db.SaveChanges();
-                    dbTrans.Commit();
-                    resposta.sucesso = true;
-                    resposta.dados = new { id = imgpat.id, urlImagem = imgpat.urlImagem };
-                }
-                catch (Exception e)
-                {
-                    dbTrans.Rollback();
-                    resposta.sucesso = false;
-                    resposta.mensagem = e.Message;
-                }
-
+                var pat = new InfoPatologia();
+                pat.Data = patologiaRow.data;
+                pat.Id = patologiaRow.id;
+                pat.Imagem = Convert.ToBase64String(patologiaRow.imagem);
+                pat.Latitude = patologiaRow.latitude;
+                pat.Longitude = patologiaRow.longitude;
+                pat.Patologia_id = patologiaRow.Patologia_id;
+                pat.Obra_id = patologiaRow.patologia.Obra_id;
+                pat.DescObra = patologiaRow.patologia.obra.descricao;
+                lstPatologia.Add(pat);
             }
-
-            return resposta;
+            return lstPatologia;
         }
 
     }
@@ -115,14 +103,11 @@ namespace BritecWebAPI.Controllers
     {
         public long Obra_id { get; set; }
         public string Observacao { get; set; }
+        public List<InfoPatologia> patologias { get; set; }
     }
-    public class parans_criaImagemPatologia
+    public class parans_getListPatologia
     {
-        public long Patologia_id { get; set; }
-        public string Imagem { get; set; }
-        public DateTime Data { get; set; }
-        public string Latitude { get; set; }
-        public string Longitude { get; set; }
+        public long Obra_id { get; set; }
     }
     #endregion
 }

@@ -71,3 +71,8 @@ function contrAbast(e){
 	var novo = Alloy.createController("Abastecimento/ListaAbastecimento");
 	Alloy.createWidget("Util", "Transicao").nova(novo, novo.init, {});
 }
+
+function contrPat(e){
+	var novo = Alloy.createController("Patologia/ListaPatologia");
+	Alloy.createWidget("Util", "Transicao").nova(novo, novo.init, {});
+}

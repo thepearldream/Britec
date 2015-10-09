@@ -8,19 +8,27 @@ args.pai.on("change", function(e){
 	getListaFrete();
 });
 
+var lblEmpty = Ti.UI.createLabel({
+	text: "Não existe nenhum frete neste período/fase",
+	wordWrap: true,
+	font: {fontSize: 16},
+	width: "90%",
+	textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER
+});
+
+var vazia = false;
+
 function sucesso(){
 	try{
 		$.fretes.trigger("change");
-		if($.fretes.length == 0){
-			var lblEmpty = Ti.UI.createLabel({
-				text: "Não existe nenhum frete neste período/fase",
-				wordWrap: true,
-				font: {fontSize: 16},
-				width: "90%",
-				textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER
-			});
-			$.boxFrete.remove($.minhaListaFrete);
+		if($.fretes.length == 0 && !vazia){
+			vazia = true;
+			$.minhaListaFrete.setVisible(false);
 			$.boxFrete.add(lblEmpty);
+		}else if(vazia){
+			vazia = false;
+			$.minhaListaFrete.setVisible(true);
+			$.boxFrete.remove(lblEmpty);
 		}
 	}
 	catch(e){
@@ -42,7 +50,8 @@ function getListaFrete(){
 	if(ws){
 		ws.adicionaParametro({PeriodoInicial: args.pai.getPeriodoInicial(), 
 			PeriodoFinal: args.pai.getPeriodoFinal(), 
-			Fase_id: args.pai.getFaseId()});
+			Fase_id: args.pai.getFaseId(), 
+			Obra_id: Alloy.Globals.Obra.id});
 		ws.NovoEnvia();
 	}	
 }

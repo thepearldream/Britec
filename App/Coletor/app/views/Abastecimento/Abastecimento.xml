@@ -11,7 +11,9 @@
 			<View height="Ti.UI.SIZE" top=5>
 				<Widget src="GUI" name="LblTextField" id="horimetro" />
 			</View>
-			<Widget src="GUI" name="RadioGroup" id="grpCombustivel" titulo="Tipo abastecimento" onChange="alteraAbastecimento" />
+			<View height="5" />
+			<Widget src="GUI" name="RadioGroup" height="Ti.UI.SIZE" width="90%" id="grpCombustivel" 
+				titulo="Tipo de abastecimento" onChange="alteraAbastecimento" />
 			<View height="Ti.UI.SIZE" top=5>
 				<Widget src="GUI" name="LblTextField" id="quantidade" />
 			</View>

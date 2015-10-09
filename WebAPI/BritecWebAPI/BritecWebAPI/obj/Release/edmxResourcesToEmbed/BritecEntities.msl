@@ -180,11 +180,11 @@
     <EntitySetMapping Name="imagempatologia">
       <EntityTypeMapping TypeName="britecModel.imagempatologia">
         <MappingFragment StoreEntitySet="imagempatologia">
+          <ScalarProperty Name="imagem" ColumnName="imagem" />
           <ScalarProperty Name="longitude" ColumnName="longitude" />
           <ScalarProperty Name="latitude" ColumnName="latitude" />
           <ScalarProperty Name="data" ColumnName="data" />
           <ScalarProperty Name="Patologia_id" ColumnName="Patologia_id" />
-          <ScalarProperty Name="urlImagem" ColumnName="urlImagem" />
           <ScalarProperty Name="id" ColumnName="id" />
         </MappingFragment>
       </EntityTypeMapping>

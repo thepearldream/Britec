@@ -1,0 +1,12 @@
+<Alloy>
+	<Window class="janela" id="winPatologia">
+		<Widget src="GUI" id="minhaTopBar" name="Topbar" />
+		<ScrollView id="boxConteudo"> 
+			<ImageView id="currentImage" onClick="pegaPatologia" />
+			<View id="boxDesc">
+				<Widget src="GUI" name="LblTextBox" id="observacao" />
+			</View>
+			<View height="10" />
+		</ScrollView>
+	</Window>
+</Alloy>

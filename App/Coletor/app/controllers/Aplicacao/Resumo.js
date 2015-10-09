@@ -40,7 +40,8 @@ function getResumo(){
 	if(ws){
 		ws.adicionaParametro({PeriodoInicial: args.pai.getPeriodoInicial(), 
 			PeriodoFinal: args.pai.getPeriodoFinal(), 
-			Fase_id: args.pai.getFaseId()});
+			Fase_id: args.pai.getFaseId(), 
+			Obra_id: Alloy.Globals.Obra.id});
 		ws.NovoEnvia();
 	}	
 }
