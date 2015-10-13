@@ -1,15 +1,51 @@
 var args = arguments[0] || {};
 
+var imagemAtual = null;
+
+var lstImagens = [];
+
+var btnEnvia = null;
+
 $.init = function(parans){
 	Alloy.Globals.configWindow($.winPatologia, $);
-	$.minhaTopBar.iniciar("Patologia");
-	$.minhaTopBar.addRightButtom("/images/aprova.png", checkSave);
+	$.minhaTopBar.iniciar("Não Conformidade");
+	btnEnvia = $.minhaTopBar.addRightButtom("/images/aprova.png", checkSave);
 	$.observacao.init({nome: "Observacao"});
 };
 
+$.winPatologia.addEventListener("open", function(e){
+	Alloy.Globals.carregando();
+	if(args.edit){
+		btnEnvia.enabled = false;
+		btnEnvia.visible = false;
+		$.observacao.setInputValue(args.patologia.Observacao);
+		$.observacao.setEnable(false);
+		$.btnNovaFoto.enable = false;
+		$.btnNovaFoto.visible = false;
+		$.currentImage.removeEventListener("click", pegaPatologia);
+		var imagensCol = Alloy.createCollection("InfoImagemPatologia");
+		imagensCol.fetch({query: "select * from InfoImagemPatologia where Patologia_id = " + args.patologia.Id });
+		for(var i = 0; i < imagensCol.length; i++){
+			var imgPatologiaRow  = imagensCol.at(i).toJSON();
+			addImage({
+				edit: false,
+				imagem: Ti.Utils.base64decode(imgPatologiaRow.Imagem), 
+				latitude: imgPatologiaRow.Latitude, 
+				longitude: imgPatologiaRow.Longitude, 
+				data: imgPatologiaRow.Data
+			});
+		}
+	}
+	Alloy.Globals.carregou();
+});
+
 function checkSave(e){
 	var check = Alloy.createWidget("GUI", "Mensagem");
-	
+	if($.imagens.children.length <= 1){
+		check.init("Alerta", "É obrigatório pelo menos uma foto.");
+		check.show({callback: function(){}});
+		return;
+	}
 	if($.observacao.getInputValue() == ""){
 		check.init("Alerta", "A observação é obrigatória.");
 		check.show({callback: $.observacao.selecionar});
@@ -22,6 +58,10 @@ function checkSave(e){
 }
 
 function pegaPatologia(){
+	if($.imagens.children.length == 6){
+		Alloy.Globals.Alerta("Atenção", "O quantidade máxima de imagens por patologia é 5.");
+		return ;
+	}
 	Alloy.Globals.Camera.tiraFoto({
 		callback: pegaImagem,
 		erro: function(e){ Alloy.Globals.Alerta("Erro", "Ocorreu um erro ao obter a imagem. Descrição: " + error.code); }
@@ -41,83 +81,172 @@ function montaImagemPatologia(evt, coords){
 	var relacaoLargura = 1;
 	var relacaoAltura = 1;
 	
+	var dataAtual = new Date();
+	
 	if(evt.media.getWidth() > evt.media.getHeight()){
-		relacaoAltura = 0.6;
+		relacaoAltura = 0.7;
 	}else if(evt.media.getWidth() < evt.media.getHeight()){
-		relacaoLargura = 0.6;
+		relacaoLargura = 0.7;
 	}
 	
-	var altura = 1000 * relacaoAltura;
-	var largura = 1000 * relacaoLargura;
+	var altura = 350 * relacaoAltura;
+	var largura = 350 * relacaoLargura;
+	
+	var imagem = null;
 	
 	var viewImage = Ti.UI.createView({
 		width: largura,
-		height: altura
+		height: altura,
+		backgroundColor: "transparent"
 	});
 	
 	var imgViewAux = Ti.UI.createImageView({
-		image: evt.media.imageAsResized(largura, altura),
-		width: largura,
-		height: altura
+		image: evt.media.imageAsThumbnail(1000),
+		width: Ti.UI.FILL,
+		height: Ti.UI.FILL
 	});
 	
 	viewImage.add(imgViewAux);
 	
+	imgViewAux.addEventListener('load', function(e){
+		imagem = viewImage.toImage();
+		$.currentImage.setImage(imagem);
+		addImage({edit: true, imagem: imagem, latitude: coords.latitude, 
+			longitude: coords.longitude, data: dataAtual});
+		Alloy.Globals.carregou();
+	});
+	
 	var viewInfoAux = Ti.UI.createView({
 		layout: 'vertical',
-		height: Ti.UI.SIZE,
 		width: Ti.UI.SIZE,
-		bottom: 10
+		height: Ti.UI.SIZE,
+		right: 10,
+		bottom: 10,
+		backgroundColor: 'transparent'
 	});
 	viewImage.add(viewInfoAux);
 	
 	var dataLabel = Ti.UI.createLabel({
-		font: {fontSize: 16},
+		font: {fontSize: 7},
+		width: Ti.UI.FILL,
 		color: "white",
-		text: Alloy.Globals.format.customFormatData(new Date(), undefined, "YYYY-MM-DD"),
+		text: "Data: " + Alloy.Globals.format.customFormatData(dataAtual, undefined, "DD/MM/YYYY"),
 		textAlign: Ti.UI.TEXT_ALIGNMENT_RIGHT
 	});
 	viewInfoAux.add(dataLabel);
 	
 	var horaLabel = Ti.UI.createLabel({
-		font: {fontSize: 16},
+		font: {fontSize: 7},
+		width: Ti.UI.FILL,
 		color: "white",
-		text: Alloy.Globals.format.customFormatData(new Date(), undefined, "HH:mm:ss"),
+		text: "Hora: " + Alloy.Globals.format.customFormatData(dataAtual, undefined, "HH:mm:ss"),
 		textAlign: Ti.UI.TEXT_ALIGNMENT_RIGHT
 	});
-	viewInfoAux.add(dataLabel);
+	viewInfoAux.add(horaLabel);
 	
 	var latitudeLabel = Ti.UI.createLabel({
-		font: {fontSize: 16},
+		font: {fontSize: 7},
+		width: Ti.UI.FILL,
 		color: "white",
-		text: coords.latitude,
+		text: "Latitude: " + coords.latitude,
 		textAlign: Ti.UI.TEXT_ALIGNMENT_RIGHT
 	});
 	viewInfoAux.add(latitudeLabel);
 	
 	var longitudeLabel = Ti.UI.createLabel({
-		font: {fontSize: 16},
+		font: {fontSize: 7},
+		width: Ti.UI.FILL,
 		color: "white",
-		text: coords.longitude,
+		text: "Longitude: " + coords.longitude,
 		textAlign: Ti.UI.TEXT_ALIGNMENT_RIGHT
 	});
 	viewInfoAux.add(longitudeLabel);
 	
-	$.currentImage.setImage(viewImage.toImage());
+	imagem = viewImage.toImage();
 	
-	Alloy.Globals.carregou();
 }
 
-function enviarPatologia(){
-	
-	var patologias = [];
-	
-	patologias.push({
-		Data: Alloy.Globals.format.customFormatData(new Date(), undefined, "YYYY-MM-DD HH:mm:ss"),
-		Latitude: "-16.6868824",
-		Longitude: "-49.2647885",
-		Imagem: Ti.Utils.base64encode($.currentImage.image).text
+function addImage(parans){
+	var imgView = Ti.UI.createImageView({
+		width: 40,
+		height: 40,
+		right: 5,
+		indice: $.imagens.children.length,
+		image: parans.imagem
 	});
+	
+	lstImagens.push({
+		Data: Alloy.Globals.format.customFormatData(parans.data, undefined, "YYYY-MM-DD HH:mm:ss"),
+		Latitude: parans.latitude,
+		Longitude: parans.longitude,
+		Imagem: Ti.Utils.base64encode(parans.imagem).text
+	});
+	
+	imgView.addEventListener("click", function(e){
+		if(e.source.indice != imagemAtual){
+			imagemAtual = e.source.indice;
+			susbtituiImagemPrincipal(e.source.image);
+		}
+	});
+	
+	if(parans.edit == true){
+		imgView.addEventListener("longclick", checkRemoveImagem);	
+	}
+	
+	imagemAtual = imgView.indice;
+	
+	if($.imagens.children.length == 1){
+		$.currentImage.removeEventListener("click", pegaPatologia);
+	}
+	
+	susbtituiImagemPrincipal(parans.imagem);
+	$.imagens.add(imgView);
+	adaptaPlusBtn();
+}
+
+function susbtituiImagemPrincipal(imagem){
+	$.currentImage.setImage(imagem);
+}
+
+function adaptaPlusBtn(){
+	$.imagens.remove($.btnNovaFoto);
+	$.imagens.add($.btnNovaFoto);
+}
+
+function checkRemoveImagem(e){
+	var removeImagem = function (clk){
+		if(!clk.value){
+			return ;
+		}
+		Alloy.Globals.carregando();
+		for(var i = e.source.indice; i <= $.imagens.children.length; i++){
+			$.imagens.children[i - 1].indice = $.imagens.children[i - 1].indice - 1;
+			lstImagens.splice($.imagens.children[i - 1].indice - 1, 1);
+		}
+		$.imagens.remove(e.source);
+		
+		if($.imagens.children.length <= 1){
+			$.currentImage.addEventListener("click", pegaPatologia);
+			$.currentImage.setImage("/images/camera.png");
+		}else if($.imagens.children[e.source.indice] != undefined && $.imagens.children[e.source.indice].image != undefined){
+			$.currentImage.setImage($.imagens.children[e.source.indice].image);
+		}else{
+			Ti.API.info(JSON.stringify($.imagens.children));
+			$.currentImage.setImage($.imagens.children[e.source.indice - 1].image);
+		}
+		
+		Alloy.Globals.carregou();
+	};
+	var check = Alloy.createWidget("GUI", "Mensagem");
+	check.init("Alerta", "Gostaria de remover a imagem ?", true);
+	check.show({callback: removeImagem});
+}
+
+function enviarPatologia(e){
+	if(!e.value){
+		return ;
+	}
+	var patologias = lstImagens;
 	
 	var ws = Alloy.createWidget("WebService").iniciarHttpRequest({
 		callback: sucessEnviarPatologia,
@@ -127,6 +256,12 @@ function enviarPatologia(){
 		timeout: 120000
 	});
 	if(ws){
+		Ti.API.info(JSON.stringify({
+			Obra_id: Alloy.Globals.Obra.id,
+			usuarioId: Alloy.Globals.Cliente.at(0).get("id"),
+			Observacao: $.observacao.getInputValue(),
+			patologias: patologias
+		}));
 		ws.adicionaParametro({
 			Obra_id: Alloy.Globals.Obra.id,
 			usuarioId: Alloy.Globals.Cliente.at(0).get("id"),
@@ -141,7 +276,7 @@ function sucessEnviarPatologia(ret){
 	var res = ret.at(0).toJSON();
 	if(res.sucesso){
 		var check = Alloy.createWidget("GUI", "Mensagem");
-		check.init("Sucesso", "Abastecimento enviado com sucesso !");
+		check.init("Sucesso", "Patologia enviada com sucesso !");
 		check.show({callback: voltar});
 	}else{
 		Alloy.Globals.Alerta("Erro", "Ocorreu um erro ao inserir a patologia: descrição: " + res.mensagem);
@@ -156,3 +291,5 @@ function voltar(){
 	Alloy.Globals.Transicao.anterior();
 	args.pai.callRefresh();
 }
+
+

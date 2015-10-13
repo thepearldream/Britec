@@ -310,6 +310,21 @@ var callbackServicos = function(nome){
 				var novo = Alloy.createController("Principal");
 				Alloy.createWidget("Util", "Transicao").nova(novo, novo.init, {});
 				break;
+			case "Contr. Aplic.": 
+				Alloy.Globals.iniciarServicos();
+				var novo = Alloy.createController("Aplicacao/ControleDeAplicacao");
+				Alloy.createWidget("Util", "Transicao").nova(novo, novo.init, {});
+				break;
+			case "Contr. Abast.": 
+				Alloy.Globals.iniciarServicos();
+				var novo = Alloy.createController("Abastecimento/ListaAbastecimento");
+				Alloy.createWidget("Util", "Transicao").nova(novo, novo.init, {});
+				break;
+			case "Contr. Não Confor.": 
+				Alloy.Globals.iniciarServicos();
+				var novo = Alloy.createController("Patologia/ListaPatologia");
+				Alloy.createWidget("Util", "Transicao").nova(novo, novo.init, {});
+				break;
 			default :
 				alert("Servico não implementado.");
 				break;	
@@ -332,6 +347,9 @@ var callbackServicos = function(nome){
 Alloy.Globals.iniciarServicos = function(){
 	Alloy.Globals.ListaServicos.resetar();
 	Alloy.Globals.ListaServicos.adicionarServico("/images/home.png", "Início", callbackServicos);
+	Alloy.Globals.ListaServicos.adicionarServico("/images/aplicacao.png", "Contr. Aplic.", callbackServicos);
+	Alloy.Globals.ListaServicos.adicionarServico("/images/abastecimento.png", "Contr. Abast.", callbackServicos);
+	Alloy.Globals.ListaServicos.adicionarServico("/images/naoconformidade.png", "Contr. Não Confor.", callbackServicos);
 	Alloy.Globals.ListaServicos.adicionarServico("/images/logout.png", "Sair", callbackServicos);
 };
 

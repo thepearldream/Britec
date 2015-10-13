@@ -11,7 +11,7 @@ var chaves = ["Id"];
 $.init = function(args){
 	Alloy.Globals.configWindow($.winControleAplicacao, $);
 	$.minhaTopBar.iniciar("Contr. de aplic.");
-	btnAdd = $.minhaTopBar.addRightButtom("/images/add.png", add);
+	btnAdd = $.minhaTopBar.addRightButtom("/images/add_white.png", add);
 	$.periodoInicial.init({nome: "Data inicial da aplicação"});
 	$.periodoInicial.setSelected({valor: new Date()});
 	$.periodoFinal.init({nome: "Data final da aplicação"});

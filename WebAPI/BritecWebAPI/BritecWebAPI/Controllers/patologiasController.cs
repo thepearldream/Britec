@@ -40,7 +40,7 @@ namespace BritecWebAPI.Controllers
                     db.patologia.Add(patol);
                     db.SaveChanges();
 
-                    foreach(InfoPatologia pat in parans.patologias)
+                    foreach(InfoImagemPatologia pat in parans.patologias)
                     {
 
                         imagempatologia imgpat = db.imagempatologia.Create();
@@ -54,9 +54,7 @@ namespace BritecWebAPI.Controllers
                         db.imagempatologia.Add(imgpat);
                         db.SaveChanges();
 
-                        pat.Obra_id = patol.Obra_id;
-                        pat.Patologia_id = patol.id;
-                        pat.DescObra = patol.obra.descricao;
+                        pat.Patologia_id = patol.id; 
                     }
 
 
@@ -80,18 +78,25 @@ namespace BritecWebAPI.Controllers
         public List<InfoPatologia> getListPatologia(parans_getListPatologia parans)
         {
             var lstPatologia = new List<InfoPatologia>();
-            var rowsPatologias = db.imagempatologia.Include(ip => ip.patologia).Include(ip => ip.patologia.obra).Where(ip => ip.patologia.Obra_id == parans.Obra_id).OrderByDescending(ip => ip.data).ToList();
+            var rowsPatologias = db.patologia.Include(p => p.obra).Where(p => p.Obra_id == parans.Obra_id).ToList();
             foreach (var patologiaRow in rowsPatologias)
             {
                 var pat = new InfoPatologia();
-                pat.Data = patologiaRow.data;
                 pat.Id = patologiaRow.id;
-                pat.Imagem = Convert.ToBase64String(patologiaRow.imagem);
-                pat.Latitude = patologiaRow.latitude;
-                pat.Longitude = patologiaRow.longitude;
-                pat.Patologia_id = patologiaRow.Patologia_id;
-                pat.Obra_id = patologiaRow.patologia.Obra_id;
-                pat.DescObra = patologiaRow.patologia.obra.descricao;
+                pat.Obra_id = patologiaRow.Obra_id;
+                pat.Observacao = patologiaRow.observacao;
+                pat.imagens = new List<InfoImagemPatologia>();
+                foreach (imagempatologia imgpatRow in patologiaRow.imagempatologia)
+                {
+                    var imgpat = new InfoImagemPatologia();
+                    imgpat.Data = imgpatRow.data;
+                    imgpat.Id = imgpatRow.id;
+                    imgpat.Imagem = Convert.ToBase64String(imgpatRow.imagem);
+                    imgpat.Latitude = imgpatRow.latitude;
+                    imgpat.Longitude = imgpatRow.longitude;
+                    imgpat.Patologia_id = imgpatRow.Patologia_id;
+                    pat.imagens.Add(imgpat);
+                }
                 lstPatologia.Add(pat);
             }
             return lstPatologia;
@@ -103,7 +108,7 @@ namespace BritecWebAPI.Controllers
     {
         public long Obra_id { get; set; }
         public string Observacao { get; set; }
-        public List<InfoPatologia> patologias { get; set; }
+        public List<InfoImagemPatologia> patologias { get; set; }
     }
     public class parans_getListPatologia
     {

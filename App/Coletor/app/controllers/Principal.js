@@ -10,14 +10,14 @@ obras.fetch();
 
 var chaves = ["id"];
 
-if(Alloy.Globals.Obra != null){
-	habilitaBotoes({chave: [Alloy.Globals.Obra.id], text: Alloy.Globals.Obra.descricao});
-}
-
 $.init = function(args){
 	Alloy.Globals.configWindow($.winPrincipal, $);
 	$.minhaTopBar.iniciar("Britec Coletor");
+	$.minhaTopBar.desabilitarServicos();
 	$.obra.init({nome: "Obras", colecao: obras, chave: chaves, coluna: "descricao"});
+	if(Alloy.Globals.Obra != null){
+		initBotoes({});
+	}
 };
 
 function obtemListaObra(e){
@@ -50,7 +50,11 @@ function failListaObra(ret){
 
 function habilitaBotoes(e){
 	if(e != undefined){
-		Alloy.Globals.Obra = obras.where({id: e.chave[0]})[0].toJSON();
+		var lclObras = obras.where({id: e.chave[0]});
+		if(lclObras.length > 0){
+			Alloy.Globals.Obra = lclObras[0].toJSON();	
+		}
+		$.minhaTopBar.habilitarServicos();
 		$.btnCtrlAplic.setEnabled(true);
 		$.btnCtrlAbs.setEnabled(true);
 		$.btnCtrlPat.setEnabled(true);
@@ -60,6 +64,10 @@ function habilitaBotoes(e){
 		$.btnCtrlPat.setEnabled(false);
 		Alloy.Globals.Obra = null;
 	}
+}
+
+function initBotoes(){
+	$.obra.setSelected(Alloy.Globals.Obra.descricao, [Alloy.Globals.Obra.id]);
 }
 
 function contrAplc(e){

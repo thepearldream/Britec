@@ -4,8 +4,8 @@ var btnAdd = null;
 
 $.init = function(args){
 	Alloy.Globals.configWindow($.winListaPatologia, $);
-	$.minhaTopBar.iniciar("Contr. de patolog.");
-	btnAdd = $.minhaTopBar.addRightButtom("/images/add.png", add);
+	$.minhaTopBar.iniciar("Contr. de Não Confor.");
+	btnAdd = $.minhaTopBar.addRightButtom("/images/add_white.png", add);
 };
 
 var lblEmpty = Ti.UI.createLabel({
@@ -18,8 +18,9 @@ var lblEmpty = Ti.UI.createLabel({
 
 var vazia = false;
 
-function sucesso(){
+function sucesso(ret){
 	try{
+		preencheDadosPatologia(ret.toJSON());
 		$.patologias.trigger("change");
 		if($.patologias.length == 0 && !vazia){
 			vazia = true;
@@ -36,6 +37,29 @@ function sucesso(){
 	}
 }
 
+function preencheDadosPatologia(dados){
+	for(var i = 0; i < dados.length; i++){
+		var mdPatologia = Alloy.createModel("InfoPatologia", {
+			Id: dados[i].Id,
+			Obra_id: dados[i].Obra_id,
+			Observacao: dados[i].Observacao
+		});
+		mdPatologia.save();
+		$.patologias.add(mdPatologia, {silent: true});
+		for(var j = 0; j < dados[i].imagens.length; j++){
+			var mdImagemPatologia = Alloy.createModel("InfoImagemPatologia",{
+				Id: dados[i].imagens[j].Id,
+			    Patologia_id: dados[i].imagens[j].Patologia_id,
+			    Imagem: dados[i].imagens[j].Imagem,
+			    Data: dados[i].imagens[j].Data,
+			    Latitude: dados[i].imagens[j].Latitude,
+			    Longitude: dados[i].imagens[j].Longitude
+			});
+			mdImagemPatologia.save();
+		}
+	}
+}
+
 $.winListaPatologia.addEventListener("open", function(e){
 	getListaPatologias();
 });
@@ -48,8 +72,7 @@ function getListaPatologias(){
 		},
 		url:  Alloy.Globals.MainDomain + "api/patologias/getListPatologia", 
 		metodo: "POST", 
-		timeout: 120000,
-		colecao: $.patologias
+		timeout: 120000
 	});
 	if(ws){
 		ws.adicionaParametro({Obra_id: Alloy.Globals.Obra.id});
@@ -63,9 +86,17 @@ $.callRefresh = function(){
 
 function formatar(model){
 	var md = model.toJSON();
-	md.Data = "Data: " + Alloy.Globals.format.customFormatData(md.Data, undefined, "DD/MM/YYYY");
-	md.DescObra = "Obra: " + md.DescObra;
+	md.LblNumero = "Número: " + md.Id;
+	md.Observacao = "Observação: " + md.Observacao;
 	return md;
+}
+
+function detalhar(e){
+	Ti.API.info(JSON.stringify(e.row));
+	var row = e.row;
+	var patologia = $.patologias.where({Id: row.modelo})[0];
+	var patologia = Alloy.createController("Patologia/Patologia", {pai: $, edit: true, patologia: patologia.toJSON()});
+	Alloy.Globals.Transicao.proximo(patologia, patologia.init, {});
 }
 
 function add(e){

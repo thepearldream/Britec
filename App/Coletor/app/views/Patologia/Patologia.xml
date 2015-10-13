@@ -2,7 +2,12 @@
 	<Window class="janela" id="winPatologia">
 		<Widget src="GUI" id="minhaTopBar" name="Topbar" />
 		<ScrollView id="boxConteudo"> 
-			<ImageView id="currentImage" onClick="pegaPatologia" />
+			<ImageView id="currentImage" onClick="pegaPatologia"  />
+			<View id="boxImages" >
+				<ScrollView id="imagens">
+					<Button id="btnNovaFoto" onClick="pegaPatologia" />
+				</ScrollView> 
+			</View>
 			<View id="boxDesc">
 				<Widget src="GUI" name="LblTextBox" id="observacao" />
 			</View>

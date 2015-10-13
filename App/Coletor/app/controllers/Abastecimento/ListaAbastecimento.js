@@ -5,7 +5,7 @@ var btnAdd = null;
 $.init = function(args){
 	Alloy.Globals.configWindow($.winListaAbastecimento, $);
 	$.minhaTopBar.iniciar("Contr. de abastec.");
-	btnAdd = $.minhaTopBar.addRightButtom("/images/add.png", add);
+	btnAdd = $.minhaTopBar.addRightButtom("/images/add_white.png", add);
 };
 
 var lblEmpty = Ti.UI.createLabel({

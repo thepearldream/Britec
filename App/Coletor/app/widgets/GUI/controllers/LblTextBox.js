@@ -57,3 +57,13 @@ $.desfocar = function(){
 $.selecionar = function(){
 	$.desc.focus();
 };
+
+$.setEnable = function(status){
+	if(status){
+		$.desc.editable = true;
+		$.desc.setBackgroundColor("white");
+	}else{
+		$.desc.editable = false;
+		$.desc.setBackgroundColor("#E6E6E6");
+	}
+};

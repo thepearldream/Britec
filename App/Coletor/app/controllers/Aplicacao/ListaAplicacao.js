@@ -21,7 +21,7 @@ var vazia = false;
 function sucesso(){
 	try{
 		$.aplicacoes.trigger("change");
-		if($.fretes.length == 0 && !vazia){
+		if($.aplicacoes.length == 0 && !vazia){
 			vazia = true;
 			$.minhaListaAplicacao.setVisible(false);
 			$.boxAplicacao.add(lblEmpty);

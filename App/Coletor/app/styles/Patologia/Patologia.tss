@@ -4,13 +4,41 @@
 	layout: 'vertical',
 	showVerticalScrollIndicator: true
 }
-"#currentImage": {
-	height: 350,
+"#currentImage[formFactor=handheld]": {
 	top: 5,
-	image: "/images/add.png"
+	width: 300,
+	height: 300,
+	image: "/images/camera.png"
+}
+"#currentImage[formFactor=tablet]": {
+	top: 5,
+	width: 450,
+	height: 450,
+	image: "/images/camera.png"
 }
 "#boxDesc": {
 	width: Titanium.UI.FILL,
-	height: 250,
+	height: 180,
 	top: 10
+}
+"#boxImages": {
+	top: 10,
+	width: "90%",
+	height: 45,
+	borderRadius: 2,
+	borderWidth: 0.5,
+	borderColor: "black"
+}
+"#imagens": {
+	width:"95%",
+	height: 40,
+	layout: "horizontal",
+	showHorizontalScrollIndicator: true,
+	scrollingEnabled: true
+}
+"#btnNovaFoto": {
+	width: 40,
+	height: 40,
+	right: 5,
+	backgroundImage: "/images/add.png"
 }

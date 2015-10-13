@@ -3,12 +3,13 @@
 	<Window id="winListaPatologia" class="janela" backgroundColor="#f1f1f1" >
 		<Widget src="GUI" id="minhaTopBar" name="Topbar" />
 		<View id="mestre">
-			<TableView id="minhaListaPatologia" dataCollection="$.patologias" dataTransform="formatar" backgroundColor="transparent" >
-				<TableViewRow class="RowDetail" className="ListaPatologiaRow" id="{Id}" backgroundColor="transparent" >
-					<View class="shadowView" layout="vertical" width="95%" height="Ti.UI.SIZE" top="10">
-						<Label text="{Data}" class="tituloRowLista descricaoTitulo" /> 
-						<Label text="{DescObra}" class="tituloRowLista descricaoTitulo" /> 
-						<View height="10" />
+			<TableView id="minhaListaPatologia" dataCollection="$.patologias" dataTransform="formatar" backgroundColor="transparent" 
+				onClick="detalhar" >
+				<TableViewRow class="RowDetail" className="ListaPatologiaRow" modelo="{Id}" backgroundColor="transparent" >
+					<View class="shadowView" layout="vertical" width="95%" height="Ti.UI.SIZE" top="5">
+						<Label text="{LblNumero}" class="tituloRowLista descricaoTitulo" /> 
+						<Label text="{Observacao}" class="tituloRowLista descricaoTitulo" /> 
+						<View height="5" />
 					</View>
 				</TableViewRow>
 			</TableView>

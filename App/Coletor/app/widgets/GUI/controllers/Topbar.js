@@ -6,6 +6,8 @@
  */
 var args = arguments[0] || {};
 
+var ativada = true;
+
 var inputSearch = null;
 var searchBar = null;
 var semaforo = false;
@@ -222,6 +224,9 @@ function montarSearchBar(parans){
  * Criação. 
  */
 $.boxListaServico.addEventListener("click", function(e){
+	if(!ativada){
+		return ;
+	}
 	if(Alloy.Globals.currentWindow()._previousWin){
 		Alloy.createWidget("Util", "Transicao").anterior();
 	}
@@ -229,3 +234,11 @@ $.boxListaServico.addEventListener("click", function(e){
 		Alloy.Globals.ListaServicos.abrir();
 	}
 });
+
+$.desabilitarServicos = function(){
+	ativada = false;
+};
+
+$.habilitarServicos = function(){
+	ativada = true;
+};

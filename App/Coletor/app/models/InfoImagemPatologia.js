@@ -2,12 +2,15 @@ exports.definition = {
 	config: {
 		columns: {
 		    "Id": "int PRIMARY_KEY",
-		    "Obra_id": "int",
-		    "Observacao": "string"
+		    "Patologia_id": "int",
+		    "Imagem": "string",
+		    "Data": "datetime",
+		    "Latitude": "string",
+		    "Longitude": "string"
 		},
 		adapter: {
 			type: "sql",
-			collection_name: "InfoPatologia",
+			collection_name: "InfoImagemPatologia",
 			idAttribute: "Id"
 		}
 	},
