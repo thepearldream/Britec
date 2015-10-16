@@ -1,19 +1,22 @@
 exports.definition = {
 	config: {
 		columns: {
-		    "id": "int PRIMARY_KEY",
+		    "id": "int",
 		    "descricao": "string",
 		    "dataInicio": "datetime",
 		    "dataFimPrevisto": "datetime",
 		    "dataFim": "datetime",
 		    "cliente": "string",
 		    "local": "string",
-		    "valorFrete": "double"
+		    "valorFrete": "double",
+		    "_localId": "Integer PRIMARY KEY AUTOINCREMENT",
+		    "_sincronizado": "INTEGER",
+		    "_editado": "INTEGER"
 		},
 		adapter: {
 			type: "sql",
 			collection_name: "Obra",
-			idAttribute: "id" 
+			idAttribute: "_localId" 
 		}
 	},
 	extendModel: function(Model) {

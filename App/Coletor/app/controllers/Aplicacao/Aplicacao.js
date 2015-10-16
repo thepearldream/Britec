@@ -21,11 +21,11 @@ $.init = function(parans){
 	$.minhaTopBar.iniciar("Aplicação");
 	$.minhaTopBar.addRightButtom("/images/aprova.png", checkSave);
 	/*texto*/
-	$.nota.init({nome: "Nota", next: $.estaca});
+	$.nota.init({nome: "Número da nota fiscal", next: $.estaca});
 	$.estaca.init({nome: "Estaca", keyboardType: Ti.UI.KEYBOARD_NUMBER_PAD, next: $.largura});
-	$.largura.init({nome: "Largura", keyboardType: Ti.UI.KEYBOARD_NUMBER_PAD, next: $.comprimento});
-	$.comprimento.init({nome: "Comprimento", keyboardType: Ti.UI.KEYBOARD_NUMBER_PAD, next: $.toneladas});
-	$.toneladas.init({nome: "Toneladas", keyboardType: Ti.UI.KEYBOARD_NUMBER_PAD, next: $.temperatura});
+	$.largura.init({nome: "Calculo de espessura: Largura", keyboardType: Ti.UI.KEYBOARD_NUMBER_PAD, next: $.comprimento});
+	$.comprimento.init({nome: "Calculo de espessura: Comprimento", keyboardType: Ti.UI.KEYBOARD_NUMBER_PAD, next: $.toneladas});
+	$.toneladas.init({nome: "Calculo de espessura: Toneladas", keyboardType: Ti.UI.KEYBOARD_NUMBER_PAD, next: $.temperatura});
 	$.temperatura.init({nome: "Temperatura", keyboardType: Ti.UI.KEYBOARD_NUMBER_PAD});
 	
 	/*dates*/
@@ -44,6 +44,12 @@ $.winAplicacao.addEventListener("open", function(e){
 	obtemMotoristas();
 	obtemVeiculos();
 });
+
+function preencheFormulario(){
+	if(args.edit == true){
+		var aplicacao = args.aplicacao.toJSON();
+	}
+}
 
 function obtemFasesObra(e){
 	var ws = Alloy.createWidget("WebService").iniciarHttpRequest({
@@ -108,8 +114,8 @@ function failSincronizacao(ret){
 
 function calculaEspessura(e){
 	if($.largura.getInputValue() != "" && $.comprimento.getInputValue() != "" && $.toneladas.getInputValue() != ""){
-		var area = parseFloat($.comprimento.getInputValue()) * parseFloat($.toneladas.getInputValue());
-		espessura = ((parseFloat($.toneladas.getInputValue())/area)*2.4*100).toFixed(2);
+		var area = parseFloat($.comprimento.getInputValue()) * parseFloat($.largura.getInputValue());
+		espessura = ((parseFloat($.toneladas.getInputValue())/area)/2.4*100).toFixed(2);
 		$.lblEspessura.text = "Espessura: " + espessura.toString() + "cm";
 	}else{
 		espessura = null;
@@ -180,29 +186,38 @@ function checkSave(e){
 }
 
 function enviarAplicacao(){
+	var hoje = Alloy.Globals.format.customFormatData(new Date(), undefined, "YYYY-MM-DD");
+	var mdAplicacao = Alloy.createModel("AplicacaoMassa", {
+		usuarioId: Alloy.Globals.Cliente.at(0).get("id"),
+		Nota: $.nota.getInputValue(), 
+		Fase_id: $.fasesObra.getSelected().chave[0], 
+		Estaca: $.estaca.getInputValue(), 
+		data: hoje + " 00:00:00", 
+		HoraInicio: hoje + " " + $.periodoInicial.getSelected().data, 
+		HoraFim: hoje + " " + $.periodoFinal.getSelected().data, 
+		Motorista_id: $.motoristas.getSelected().chave[0], 
+		Veiculo_id: $.veiculos.getSelected().chave[0], 
+		Largura: $.largura.getInputValue(), 
+		Comprimento: $.comprimento.getInputValue(), 
+		Toneladas: $.toneladas.getInputValue(), 
+		Temperatura: $.temperatura.getInputValue(), 
+		Espessura: espessura
+	});
+	
 	var ws = Alloy.createWidget("WebService").iniciarHttpRequest({
 		callback: sucessEnviarAplicacao,
 		error: failEnviarAplicacao,
 		url:  Alloy.Globals.MainDomain + "api/controleaplicacaomassas/inserirAplicacao", 
 		metodo: "POST", 
-		timeout: 120000
+		timeout: 120000,
+		offSync: {
+			model: mdAplicacao,
+			modelName: "AplicacaoMassa",
+			tipo: Alloy.Globals.tipoSincronizacao.ENVIANDO
+		}
 	});
 	if(ws){
-		var hoje = Alloy.Globals.format.customFormatData(new Date(), undefined, "YYYY-MM-DD");
-		ws.adicionaParametro({usuarioId: Alloy.Globals.Cliente.at(0).get("id"), 
-			Nota: $.nota.getInputValue(), 
-			Fase_id: $.fasesObra.getSelected().chave[0], 
-			Estaca: $.estaca.getInputValue(), 
-			data: hoje + " 00:00:00", 
-			HoraInicio: hoje + " " + $.periodoInicial.getSelected().data, 
-			HoraFim: hoje + " " + $.periodoFinal.getSelected().data, 
-			Motorista_id: $.motoristas.getSelected().chave[0], 
-			Veiculo_id: $.veiculos.getSelected().chave[0], 
-			Largura: $.largura.getInputValue(), 
-			Comprimento: $.comprimento.getInputValue(), 
-			Toneladas: $.toneladas.getInputValue(), 
-			Temperatura: $.temperatura.getInputValue(), 
-			Espessura: espessura});
+		ws.adicionaParametro(mdAplicacao.toJSON());
 		ws.NovoEnvia();
 	}
 }

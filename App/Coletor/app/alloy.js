@@ -51,6 +51,8 @@ if(Alloy.Globals.emProducao){
 
 Alloy.Globals.Obra = null;
 
+Alloy.Globals.tipoSincronizacao = {RECEBENDO: "INPUT", ENVIANDO: "OUTPUT"};
+
 //Acesso a nuvem do appcelerator
 var Cloud = require('ti.cloud');
 Cloud.debug = true;  // optional; if you add this line, set it to false for production
@@ -172,7 +174,8 @@ Alloy.Globals.configPopUp = function(controller, showFunction, cancelFunction){
 /**
  * @property {Boolean} estaOnline Indica se o dispositivo está online.
  */
-Alloy.Globals.estaOnline = Ti.Network.online;
+Alloy.Globals.estaOnline = Ti.Network.getNetworkType()==Ti.Network.NETWORK_NONE?false:Ti.Network.online;
+Ti.API.info(Alloy.Globals.estaOnline);
 /**
  * @property {widgets.Util.Format} format Objeto utilizado para formatação de dados. Toda formatação de dados deve ser feita por esse objeto.
  */
@@ -360,6 +363,8 @@ Alloy.Globals.iniciarServicos = function(){
  * Criação. 
  */
 Ti.Network.addEventListener("change", function(e){
-	Alloy.Globals.estaOnline = e.online;
+	Alloy.Globals.estaOnline = e.networkType==Ti.Network.NETWORK_NONE?false:e.online;
+	Ti.API.info(e.networkTypeName);
+	Ti.API.info(Alloy.Globals.estaOnline);
 });
 

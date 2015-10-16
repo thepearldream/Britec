@@ -2,7 +2,7 @@ exports.definition = {
 	config: {
 		columns: {
 		    "usuarioId": "string",
-		    "id": "int PRIMARY_KEY",
+		    "id": "int",
 		    "Nota": "string",
 		    "Fase_id": "int",
 		    "Estaca": "int",
@@ -15,12 +15,15 @@ exports.definition = {
 		    "Comprimento": "double",
 		    "Toneladas": "double",
 		    "Temperatura": "double",
-		    "Espessura": "double"
+		    "Espessura": "double",
+		    "_localId": "Integer PRIMARY KEY AUTOINCREMENT",
+		    "_sincronizado": "INTEGER",
+		    "_editado": "INTEGER"
 		},
 		adapter: {
 			type: "sql",
 			collection_name: "AplicacaoMassa",
-			idAttribute: "id"
+			idAttribute: "_localId"
 		}
 	},
 	extendModel: function(Model) {

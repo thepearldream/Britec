@@ -1,13 +1,16 @@
 exports.definition = {
 	config: {
 		columns: {
-		    "Id": "int PRIMARY_KEY",
-		    "Nome": "string"
+		    "Id": "int",
+		    "Nome": "string",
+		    "_localId": "Integer PRIMARY KEY AUTOINCREMENT",
+		    "_sincronizado": "INTEGER",
+		    "_editado": "INTEGER"
 		},
 		adapter: {
 			type: "sql",
 			collection_name: "InfoMotorista",
-			idAttribute: "Id" 
+			idAttribute: "_localId" 
 		}
 	},
 	extendModel: function(Model) {

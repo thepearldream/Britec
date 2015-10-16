@@ -253,7 +253,14 @@ function enviarPatologia(e){
 		error: failEnviarPatologia,
 		url:  Alloy.Globals.MainDomain + "api/patologias/criaPatologia", 
 		metodo: "POST", 
-		timeout: 120000
+		timeout: 120000,
+		/*offSync: {
+			model: mdAplicacao,
+			tipo: Alloy.Globals.tipoSincronizacao.ENVIANDO,
+			nestedAttribute: {
+				
+			}
+		}*/
 	});
 	if(ws){
 		Ti.API.info(JSON.stringify({

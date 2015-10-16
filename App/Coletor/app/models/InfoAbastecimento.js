@@ -11,11 +11,15 @@ exports.definition = {
 		    "CategoriaAbastecimento_id": "int",
 		    "Observacao": "string",
 		    "DescricaoEquipamento": "string",
-		    "Placa": "string"
+		    "Placa": "string",
+		    "_localId": "Integer PRIMARY KEY AUTOINCREMENT",
+		    "_sincronizado": "INTEGER",
+		    "_editado": "INTEGER"
 		},
 		adapter: {
 			type: "sql",
-			collection_name: "InfoAbastecimento"
+			collection_name: "InfoAbastecimento",
+			idAttribute: "_localId"
 		}
 	},
 	extendModel: function(Model) {

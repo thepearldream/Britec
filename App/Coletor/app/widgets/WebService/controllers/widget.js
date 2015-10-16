@@ -32,10 +32,6 @@ var semLoader = false;
 $.iniciarHttpRequest = function(param)
 {
 	try{
-		if(!Alloy.Globals.estaOnline){
-			Alloy.Globals.Alerta("Sem conexão", "Você não está conectado a internet. Se conecte e então tente novamente.");
-			return ;
-		}
 		var funcaoRetornoS = function(ret){
 			param.callback(ret);
 			if(!semLoader){
@@ -48,6 +44,11 @@ $.iniciarHttpRequest = function(param)
 				Alloy.Globals.carregou();	
 			}
 		};
+		Ti.API.info(!Alloy.Globals.estaOnline);
+		if(!Alloy.Globals.estaOnline && param.offSync == undefined){
+			Alloy.Globals.Alerta("Sem conexão", "Você não está conectado a internet. Se conecte e então tente novamente.");
+			return ;
+		}
 		var varHttpRequest = Widget.createController("HttpRequest",{ 
 			url: param.url, 
 			metodo: param.metodo, 
@@ -56,7 +57,8 @@ $.iniciarHttpRequest = function(param)
 			timeout: param.timeout,
 			colecao: param.colecao,
 			collectionConfig: param.collectionConfig,
-			headerType: param.headerType
+			headerType: param.headerType,
+			offSync: param.offSync
 		});
 		if(!param.semLoader){
 			Alloy.Globals.carregando();

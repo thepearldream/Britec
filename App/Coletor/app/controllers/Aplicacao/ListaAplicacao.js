@@ -37,6 +37,12 @@ function sucesso(){
 }
 
 function getListaAplicacao(){
+	var parans = {
+		PeriodoInicial: args.pai.getPeriodoInicial(), 
+		PeriodoFinal: args.pai.getPeriodoFinal(), 
+		Fase_id: args.pai.getFaseId(), 
+		Obra_id: Alloy.Globals.Obra.id
+	};
 	var ws = Alloy.createWidget("WebService").iniciarHttpRequest({
 		callback: sucesso,
 		error: function(e){
@@ -45,13 +51,20 @@ function getListaAplicacao(){
 		url:  Alloy.Globals.MainDomain + "api/controleaplicacaomassas/getListAplicacao", 
 		metodo: "POST", 
 		timeout: 120000,
-		colecao: $.aplicacoes
+		colecao: $.aplicacoes,
+		offSync: {
+			tipo: Alloy.Globals.tipoSincronizacao.RECEBENDO,
+			parans: parans,
+			modelName: "AplicacaoMassa",
+			paransConfig: {
+				PeriodoInicial: {operator: ">=", column: "data"}, 
+				PeriodoFinal: {operator: "<=", column: "data"},
+				orderBy: " Order by Nota",
+				ignore: ["Obra_id"]
+			}
+		}
 	});
 	if(ws){
-		ws.adicionaParametro({PeriodoInicial: args.pai.getPeriodoInicial(), 
-			PeriodoFinal: args.pai.getPeriodoFinal(), 
-			Fase_id: args.pai.getFaseId(), 
-			Obra_id: Alloy.Globals.Obra.id});
 		ws.NovoEnvia();
 	}	
 }

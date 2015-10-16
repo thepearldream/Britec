@@ -133,15 +133,11 @@ namespace BritecWebAPI.Controllers
             var lstAplicacao = new List<AplicacaoMassa>();
 
             List<itemaplicacao> aplicacaoRows = null;
-            if (parans.Fase_id != null)
-            {
-                aplicacaoRows = db.itemaplicacao.Where(ia => ia.data <= parans.PeriodoFinal && ia.data >= parans.PeriodoInicial && ia.Fase_id == parans.Fase_id).ToList();
-            }
-            else
-            {
-                aplicacaoRows = db.itemaplicacao.Where(ia => ia.data <= parans.PeriodoFinal && ia.data >= parans.PeriodoInicial
-                    && ia.controleaplicacaomassa.fasedaobra.Obra_id == parans.Obra_id).ToList();
-            }
+            aplicacaoRows = db.itemaplicacao.Where(ia => 
+                (parans.PeriodoFinal!=DateTime.MinValue?ia.data <= parans.PeriodoFinal:true) 
+                && (parans.PeriodoInicial!= DateTime.MinValue ? ia.data >= parans.PeriodoInicial:true) 
+                && (parans.Fase_id!=null?ia.Fase_id == parans.Fase_id:true)
+            ).ToList();
             
             foreach(var aplicacaoRow in aplicacaoRows)
             {

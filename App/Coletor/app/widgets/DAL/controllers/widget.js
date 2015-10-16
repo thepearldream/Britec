@@ -60,3 +60,20 @@ $.refreshColecao = function(colecao, json){
 		Alloy.Globals.onError(e.message, "refreshColecao", "app/widgets/DAL/controllers/widget.js");
 	}
 };
+
+$.saveColecao = function(colecao, json, offSync){
+	if(offSync != undefined){
+		colecao.fetch({query: "select * from " + offSync.modelName + " where _sincronizado = 1 and _editado = 0"});
+		
+	}else{
+		colecao.fetch();
+	}
+	while(colecao.length > 0){
+		colecao.at(0).destroy({silent: true});
+	}
+	colecao.fetch();
+	colecao.add(json, {silent: true});
+	for( var i = 0; i < colecao.length; i++){
+		colecao.at(i).save({silent: true});
+	}
+};
